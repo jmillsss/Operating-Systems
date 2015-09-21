@@ -46,6 +46,12 @@ var TSOS;
             // rot13 <string>
             sc = new TSOS.ShellCommand(this.shellRot13, "rot13", "<string> - Does rot13 obfuscation on <string>.");
             this.commandList[this.commandList.length] = sc;
+            //  wherami
+            sc = new TSOS.ShellCommand(this.wherami, "whereami", " - Shows wher you are.");
+            this.commandList[this.commandList.length] = sc;
+            // date& time
+            sc = new TSOS.ShellCommand(this.date, "date", " - Shows the curent time and date.");
+            this.commandList[this.commandList.length] = sc;
             // prompt <string>
             sc = new TSOS.ShellCommand(this.shellPrompt, "prompt", "<string> - Sets the prompt.");
             this.commandList[this.commandList.length] = sc;
@@ -195,6 +201,27 @@ var TSOS;
                     case "help":
                         _StdOut.putText("Help displays a list of (hopefully) valid commands.");
                         break;
+                    case "ver":
+                        _StdOut.putText("Ver displays the current running version of TSOS");
+                        break;
+                    case "shutdown":
+                        _StdOut.putText("Shutdown shuts down the virtual Operating System");
+                        break;
+                    case "cls":
+                        _StdOut.putText("cls is used to clear the host log screen and reset the cursor's position");
+                        break;
+                    case "rot13":
+                        _StdOut.putText("Rot13 performs obfuscation on SPECIAL words");
+                        break;
+                    case "prompt":
+                        _StdOut.putText("Prompt allows you to change the prompt from the default: >");
+                        break;
+                    case "date":
+                        _StdOut.putText("date displays the current time and date");
+                        break;
+                    case "whereami":
+                        _StdOut.putText("whereami shows where u at dawg");
+                        break;
                     // TODO: Make descriptive MANual page entries for the the rest of the shell commands here.
                     default:
                         _StdOut.putText("No manual entry for " + args[0] + ".");
@@ -245,6 +272,19 @@ var TSOS;
             else {
                 _StdOut.putText("Usage: prompt <string>  Please supply a string.");
             }
+        };
+        Shell.prototype.wherami = function (args) {
+            _StdOut.putText("I am currently sitting in the library working on my Operating Sysytems Lab.");
+        };
+        Shell.prototype.date = function (agrs) {
+            var date = new Date();
+            var year = date.getFullYear();
+            var month = date.getMonth();
+            var day = date.getDay();
+            var hours = date.getHours();
+            var minutes = date.getMinutes();
+            var seconds = date.getSeconds();
+            _StdOut.putText("The current Time and date is " + hours + ":" + minutes + ":" + seconds + ", " + month + "/" + day + "/" + year);
         };
         return Shell;
     })();

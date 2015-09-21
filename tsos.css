@@ -32,17 +32,45 @@ h3 {
 
 #display {
   background-color:#DFDBC3;
-  border: 2px solid red;
+  border: 4px solid red;
   cursor: default;
+    text-align: center;
 }
 
-.normal_button {
-  width: 100px;
-}
 
 .footerText {
   color: black;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 8pt;
   text-align: center;
+}
+
+.start_button,
+.halt_button,
+.reset_button{
+    height: 25px;
+    width: 100px;
+     color: black;
+            border-radius: 4px;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+
+}
+
+
+.start_button {
+   background: rgb(28, 184, 65);
+}
+
+.halt_button {
+ background: rgb(202, 60, 60);
+}
+
+.reset_button {
+  background-color: yellow;
+
+}
+
+
+divMain{
+align-content: center;
 }
