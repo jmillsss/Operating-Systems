@@ -333,7 +333,7 @@ module TSOS {
         public date(agrs){
             var date = new Date();
 
-            var year = date.getFullYear();
+            var year =  date.getFullYear();
             var month = date.getUTCMonth();
             var day = date.getUTCDay();
             var hours =  date.getHours();

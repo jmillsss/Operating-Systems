@@ -45,11 +45,77 @@ var TSOS;
                 // TODO: Check for caps-lock and handle as shifted if so.
                 _KernelInputQueue.enqueue(chr);
             }
-            else if (((keyCode >= 48) && (keyCode <= 57)) ||
-                (keyCode == 32) ||
+            else if ((keyCode >= 48) && (keyCode <= 57)) {
+                _KernelInputQueue.enqueue(enableSymbol(keyCode, isShifted));
+            }
+            else if ((keyCode == 32) ||
                 (keyCode == 13)) {
                 chr = String.fromCharCode(keyCode);
                 _KernelInputQueue.enqueue(chr);
+            }
+            else if (puncChar(keyCode)) {
+                _KernelInputQueue.enqueue(enablePuncChar(keyCode, isShifted));
+            }
+            else if (keyCode == 8) {
+                // Trim the buffer
+                _Console.buffer = _Console.buffer.substring(0, _Console.buffer.length - 1);
+            }
+            function puncChar(ch) {
+                if ((ch >= 186 && ch <= 192) || (ch >= 219 && ch <= 222)) {
+                    return true;
+                }
+                return false;
+            }
+            function enablePuncChar(keyCode, isShifted) {
+                var lookupTable = {
+                    '186': ';',
+                    '187': '=',
+                    '188': ',',
+                    '189': '-',
+                    '190': '.',
+                    '191': '/',
+                    '192': '`',
+                    '219': '[',
+                    '220': '\\',
+                    '221': ']',
+                    '222': '\''
+                }, lookupTableShifted = {
+                    '186': ':',
+                    '187': '+',
+                    '188': '<',
+                    '189': '_',
+                    '190': '>',
+                    '191': '?',
+                    '192': '~',
+                    '219': '{',
+                    '220': '|',
+                    '221': '}',
+                    '222': '\"'
+                };
+                chr = lookupTable[keyCode];
+                if (isShifted) {
+                    chr = lookupTableShifted[keyCode];
+                }
+                return chr;
+            }
+            function enableSymbol(keyCode, isShifted) {
+                var lookupTableShifted = {
+                    '48': ')',
+                    '49': '!',
+                    '50': '@',
+                    '51': '#',
+                    '52': '$',
+                    '53': '%',
+                    '54': '^',
+                    '55': '&',
+                    '56': '*',
+                    '57': '('
+                };
+                chr = String.fromCharCode(keyCode);
+                if (isShifted) {
+                    chr = lookupTableShifted[keyCode];
+                }
+                return chr;
             }
         };
         return DeviceDriverKeyboard;
