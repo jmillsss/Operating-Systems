@@ -323,7 +323,7 @@ module TSOS {
         }
 
         public wherami(args){
-            _StdOut.putText("I am currently sitting in the library working on my Operating Systems Lab.");
+            _StdOut.putText("I am currently sitting in the library working on my Operating Systems Lab (also puling out my hair).");
         }
 
         public date(agrs){
