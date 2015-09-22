@@ -56,10 +56,6 @@ var TSOS;
             else if (puncChar(keyCode)) {
                 _KernelInputQueue.enqueue(enablePuncChar(keyCode, isShifted));
             }
-            else if (keyCode == 8) {
-                // Trim the buffer
-                _Console.buffer = _Console.buffer.substring(0, _Console.buffer.length - 1);
-            }
             function puncChar(ch) {
                 if ((ch >= 186 && ch <= 192) || (ch >= 219 && ch <= 222)) {
                     return true;

@@ -33,6 +33,11 @@ module TSOS {
             // Get a global reference to the canvas.  TODO: Should we move this stuff into a Display Device Driver?
             _Canvas = <HTMLCanvasElement>document.getElementById('display');
 
+            _Bar = document.getElementById('taskBarDisplay');
+            var theDate = new Date();
+            var month = theDate.getUTCMonth() + 1;
+            var date = month + "/" + theDate.getUTCDate() + "/" + theDate.getUTCFullYear() + " " + theDate.getHours() + ":" + theDate.getMinutes() + ":" + theDate.getSeconds();
+            _Bar.value = date;
             // Get a global reference to the drawing context.
             _DrawingContext = _Canvas.getContext("2d");
 
