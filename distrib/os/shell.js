@@ -58,6 +58,8 @@ var TSOS;
             // prompt <string>
             sc = new TSOS.ShellCommand(this.shellPrompt, "prompt", "<string> - Sets the prompt.");
             this.commandList[this.commandList.length] = sc;
+            //status
+            sc = new TSOS.ShellCommand();
             // ps  - list the running processes and their IDs
             // kill <id> - kills the specified process id.
             //
@@ -280,14 +282,10 @@ var TSOS;
             _StdOut.putText("I am currently sitting in the library working on my Operating Systems Lab (also puling out my hair).");
         };
         Shell.prototype.date = function (agrs) {
-            var date = new Date();
-            var year = date.getFullYear();
-            var month = date.getUTCMonth();
-            var day = date.getUTCDay();
-            var hours = date.getHours();
-            var minutes = date.getMinutes();
-            var seconds = date.getSeconds();
-            _StdOut.putText("The current Time and date is " + hours + ":" + minutes + ":" + seconds + ", " + month + "/" + day + "/" + year);
+            var theDate = new Date();
+            var month = theDate.getUTCMonth() + 1;
+            var date = month + "/" + theDate.getUTCDate() + "/" + theDate.getUTCFullYear() + " " + theDate.getHours() + ":" + theDate.getMinutes() + ":" + theDate.getSeconds();
+            _StdOut.putText(date);
         };
         Shell.prototype.triberaps = function (args) {
             if (args.length > 0) {

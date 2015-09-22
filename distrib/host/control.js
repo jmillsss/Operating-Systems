@@ -34,7 +34,7 @@ var TSOS;
             var theDate = new Date();
             var month = theDate.getUTCMonth() + 1;
             var date = month + "/" + theDate.getUTCDate() + "/" + theDate.getUTCFullYear() + " " + theDate.getHours() + ":" + theDate.getMinutes() + ":" + theDate.getSeconds();
-            _Bar.value = date;
+            _Bar.value = "Current Date & Time: " + date;
             // Get a global reference to the drawing context.
             _DrawingContext = _Canvas.getContext("2d");
             // Enable the added-in canvas text functions (see canvastext.ts for provenance and details).

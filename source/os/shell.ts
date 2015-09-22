@@ -97,7 +97,8 @@ module TSOS {
                                   "<string> - Sets the prompt.");
             this.commandList[this.commandList.length] = sc;
 
-
+            //status
+            sc = new ShellCommand()
 
 
 
@@ -336,17 +337,11 @@ module TSOS {
         }
 
         public date(agrs){
-            var date = new Date();
+            var theDate = new Date();
+            var month = theDate.getUTCMonth() + 1;
+            var date = month + "/" + theDate.getUTCDate() + "/" + theDate.getUTCFullYear() + " " + theDate.getHours() + ":" + theDate.getMinutes() + ":" + theDate.getSeconds();
 
-            var year =  date.getFullYear();
-            var month = date.getUTCMonth();
-            var day = date.getUTCDay();
-            var hours =  date.getHours();
-            var minutes = date.getMinutes();
-            var seconds = date.getSeconds();
-
-
-            _StdOut.putText("The current Time and date is " + hours + ":" + minutes + ":"+ seconds+ ", " + month + "/" + day + "/"  + year);
+            _StdOut.putText(date)
         }
 
         public triberaps(args) {

@@ -71,17 +71,24 @@ var TSOS;
                 this.currentXPosition = this.currentXPosition + offset;
             }
         };
+        Console.prototype.scroll = function () {
+            var myImageData = _DrawingContext.getImageData(0, 0, _Canvas.width, _Canvas.height);
+            _Canvas.height += 500;
+            _DrawingContext.putImageData(myImageData, 0, 0);
+        };
         Console.prototype.advanceLine = function () {
             this.currentXPosition = 0;
-            this.currentYPosition += _DefaultFontSize + _FontHeightMargin;
             /*
              * Font size measures from the baseline to the highest point in the font.
              * Font descent measures from the baseline to the lowest point in the font.
              * Font height margin is extra spacing between the lines.
              */
-            this.currentYPosition += _DefaultFontSize +
-                _DrawingContext.fontDescent(this.currentFont, this.currentFontSize) +
-                _FontHeightMargin;
+            this.currentYPosition += _DefaultFontSize + _DrawingContext.fontDescent(this.currentFont, this.currentFontSize)
+                + _FontHeightMargin;
+            if (this.currentYPosition > _Canvas.height) {
+                _Kernel.krnTrace("End of canvas");
+                this.scroll();
+            }
             //TODO: Handle scrolling. (iProject 1)
         };
         return Console;
