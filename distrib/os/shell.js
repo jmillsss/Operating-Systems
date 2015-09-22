@@ -214,7 +214,7 @@ var TSOS;
                         _StdOut.putText("Rot13 performs obfuscation on SPECIAL words");
                         break;
                     case "prompt":
-                        _StdOut.putText("Prompt allows you to change the prompt from the default: >");
+                        _StdOut.putText("Prompt allows you to change the prompt from the default which is: >");
                         break;
                     case "date":
                         _StdOut.putText("date displays the current time and date");
@@ -274,7 +274,7 @@ var TSOS;
             }
         };
         Shell.prototype.wherami = function (args) {
-            _StdOut.putText("I am currently sitting in the library working on my Operating Sysytems Lab.");
+            _StdOut.putText("I am currently sitting in the library working on my Operating Systems Lab (also puling out my hair).");
         };
         Shell.prototype.date = function (agrs) {
             var date = new Date();

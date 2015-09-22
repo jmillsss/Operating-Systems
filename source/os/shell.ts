@@ -264,7 +264,7 @@ module TSOS {
                         _StdOut.putText("Rot13 performs obfuscation on SPECIAL words");
                         break;
                     case "prompt":
-                        _StdOut.putText("Prompt allows you to change the prompt from the default: >");
+                        _StdOut.putText("Prompt allows you to change the prompt from the default which is: >");
                         break;
                     case "date":
                         _StdOut.putText("date displays the current time and date");
