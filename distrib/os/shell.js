@@ -52,6 +52,9 @@ var TSOS;
             // date& time
             sc = new TSOS.ShellCommand(this.date, "date", " - Shows the curent time and date.");
             this.commandList[this.commandList.length] = sc;
+            // man <topic>
+            sc = new TSOS.ShellCommand(this.triberaps, "triberaps", "<song> - Shows some Tribe song lyrics <song>.");
+            this.commandList[this.commandList.length] = sc;
             // prompt <string>
             sc = new TSOS.ShellCommand(this.shellPrompt, "prompt", "<string> - Sets the prompt.");
             this.commandList[this.commandList.length] = sc;
@@ -279,12 +282,32 @@ var TSOS;
         Shell.prototype.date = function (agrs) {
             var date = new Date();
             var year = date.getFullYear();
-            var month = date.getMonth();
-            var day = date.getDay();
+            var month = date.getUTCMonth();
+            var day = date.getUTCDay();
             var hours = date.getHours();
             var minutes = date.getMinutes();
             var seconds = date.getSeconds();
             _StdOut.putText("The current Time and date is " + hours + ":" + minutes + ":" + seconds + ", " + month + "/" + day + "/" + year);
+        };
+        Shell.prototype.triberaps = function (args) {
+            if (args.length > 0) {
+                var song = args[0];
+                switch (song) {
+                    case "kickit":
+                        _StdOut.putText("YES YOU CAN! Just as long as you wipe youre feet really good on the rythym rug");
+                        break;
+                    case "jazz":
+                        _StdOut.putText("We got the jazz we got the jazz");
+                        break;
+                    case "electric":
+                        _StdOut.putText("Honey, check it out, you got me mesmerized, with your black hair and fat-ass thighs");
+                    default:
+                        _StdOut.putText("No song lyrics for " + args[0] + ".");
+                }
+            }
+            else {
+                _StdOut.putText("Usage: man <song>  Please supply a song.");
+            }
         };
         return Shell;
     })();
