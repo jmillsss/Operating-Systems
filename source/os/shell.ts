@@ -97,9 +97,12 @@ module TSOS {
                                   "<string> - Sets the prompt.");
             this.commandList[this.commandList.length] = sc;
 
-            //status
-            sc = new ShellCommand()
 
+            //bsod
+            sc= new ShellCommand(this.shellError,
+                "error",
+                " - displays an error");
+            this.commandList[this.commandList.length]=sc;
 
 
 
@@ -356,12 +359,18 @@ module TSOS {
                         break;
                     case "electric":
                         _StdOut.putText("Honey, check it out, you got me mesmerized, with your black hair and fat-ass thighs");
+                        break;
                     default:
                         _StdOut.putText("No song lyrics for " + args[0] + ".");
                 }
             } else {
                 _StdOut.putText("Usage: man <song>  Please supply a song.");
             }
+        }
+        
+
+        public shellError(args){
+            _Kernel.krnTrapError("Error");
         }
 
 

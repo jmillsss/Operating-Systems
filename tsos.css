@@ -36,10 +36,9 @@ h3 {
 
 #display {
   background-color:#DFDBC3;
-  border: 4px solid red;
+  border: 3px solid red;
   cursor: default;
-    text-align: center;
-;
+    overflow: visible;
 }
 
 

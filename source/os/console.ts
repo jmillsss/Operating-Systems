@@ -75,10 +75,11 @@ module TSOS {
          }
 
 
-          public scroll():void{
+          public scroll(){
 
             var myImageData = _DrawingContext.getImageData(0, 0, _Canvas.width, _Canvas.height);
             _Canvas.height += 500;
+              _Canvas.width += 500;
             _DrawingContext.putImageData(myImageData, 0, 0)
 
     }
@@ -95,7 +96,11 @@ module TSOS {
                 + _FontHeightMargin;
 
             if(this.currentYPosition > _Canvas.height){
-                _Kernel.krnTrace("End of canvas");
+                _Kernel.krnTrace("End height of canvas");
+                this.scroll();
+            }
+            else if (this.currentXPosition > _Canvas.width) {
+                _Kernel.krnTrace("End of width of canvas");
                 this.scroll();
             }
              //TODO: Handle scrolling. (iProject 1)
