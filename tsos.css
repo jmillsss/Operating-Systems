@@ -38,7 +38,7 @@ h3 {
   background-color:#DFDBC3;
   border: 3px solid red;
   cursor: default;
-    overflow: visible;
+    overflow: scroll;
 }
 
 

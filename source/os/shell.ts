@@ -386,6 +386,12 @@ module TSOS {
 
 
         public shellError(args){
+            _DrawingContext.rect(0,0, _Canvas.width, _Canvas.height);
+            _DrawingContext.fillStyle = "#3090C7";
+            _DrawingContext.fill();
+
+
+
             _Kernel.krnTrapError("Error");
         }
 
