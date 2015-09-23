@@ -329,6 +329,53 @@ var TSOS;
             _Kernel.krnTrapError("Error");
         };
         Shell.prototype.shellLoad = function (args) {
+            _UserProgIn = document.getElementById('taProgramInput').value;
+            var accept = 0;
+            for (var i = 0; i < _UserProgIn.length; i++) {
+                if (_UserProgIn.charAt(i) == "0") {
+                }
+                else if (_UserProgIn.charAt(i) == "1") {
+                }
+                else if (_UserProgIn.charAt(i) == "2") {
+                }
+                else if (_UserProgIn.charAt(i) == "3") {
+                }
+                else if (_UserProgIn.charAt(i) == "4") {
+                }
+                else if (_UserProgIn.charAt(i) == "5") {
+                }
+                else if (_UserProgIn.charAt(i) == "6") {
+                }
+                else if (_UserProgIn.charAt(i) == "7") {
+                }
+                else if (_UserProgIn.charAt(i) == "8") {
+                }
+                else if (_UserProgIn.charAt(i) == "9") {
+                }
+                else if (_UserProgIn.charAt(i).toLocaleLowerCase() == "a") {
+                }
+                else if (_UserProgIn.charAt(i).toLocaleLowerCase() == "b") {
+                }
+                else if (_UserProgIn.charAt(i).toLocaleLowerCase() == "c") {
+                }
+                else if (_UserProgIn.charAt(i).toLocaleLowerCase() == "d") {
+                }
+                else if (_UserProgIn.charAt(i).toLocaleLowerCase() == "e") {
+                }
+                else if (_UserProgIn.charAt(i).toLocaleLowerCase() == "f") {
+                }
+                else if (_UserProgIn.charAt(i) == " ") {
+                }
+                else {
+                    accept += 1;
+                }
+            }
+            if (accept > 0) {
+                _StdOut.putText("The entered code is invalid!");
+            }
+            else {
+                _StdOut.putText("The entered code is valid!");
+            }
         };
         return Shell;
     })();
