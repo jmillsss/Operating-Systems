@@ -42,6 +42,7 @@ module TSOS {
             _StatusBar.value = "Current Date & Time: " + date;
 
 
+
             // Get a global reference to the drawing context.
             _DrawingContext = _Canvas.getContext("2d");
 

@@ -64,6 +64,9 @@ var TSOS;
             //load
             sc = new TSOS.ShellCommand(this.shellLoad, "load", " - Loads from the user program input section");
             this.commandList[this.commandList.length] = sc;
+            //status
+            sc = new TSOS.ShellCommand(this.shellStatus, "status", " - Allows user input for current status in Status Bar");
+            this.commandList[this.commandList.length] = sc;
             // ps  - list the running processes and their IDs
             // kill <id> - kills the specified process id.
             //
@@ -326,7 +329,7 @@ var TSOS;
             _DrawingContext.rect(0, 0, _Canvas.width, _Canvas.height);
             _DrawingContext.fillStyle = "#3090C7";
             _DrawingContext.fill();
-            _Kernel.krnTrapError("Error");
+            _Kernel.krnTrapError("BSOD");
         };
         Shell.prototype.shellLoad = function (args) {
             _UserProgIn = document.getElementById('taProgramInput').value;
@@ -376,6 +379,13 @@ var TSOS;
             else {
                 _StdOut.putText("The entered code is valid!");
             }
+        };
+        Shell.prototype.shellStatus = function (args) {
+            var status = "";
+            for (var i = 0; i < args.length; i++) {
+                status += args[i] + " ";
+            }
+            _StatusBar.value += "\n" + "Status: " + status;
         };
         return Shell;
     })();

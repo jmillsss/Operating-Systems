@@ -33,44 +33,44 @@ module TSOS {
 
             // ver
             sc = new ShellCommand(this.shellVer,
-                                  "ver",
-                                  "- Displays the current version data.");
+                "ver",
+                "- Displays the current version data.");
             this.commandList[this.commandList.length] = sc;
 
             // help
             sc = new ShellCommand(this.shellHelp,
-                                  "help",
-                                  "- This is the help command. Seek help.");
+                "help",
+                "- This is the help command. Seek help.");
             this.commandList[this.commandList.length] = sc;
 
             // shutdown
             sc = new ShellCommand(this.shellShutdown,
-                                  "shutdown",
-                                  "- Shuts down the virtual OS but leaves the underlying host / hardware simulation running.");
+                "shutdown",
+                "- Shuts down the virtual OS but leaves the underlying host / hardware simulation running.");
             this.commandList[this.commandList.length] = sc;
 
             // cls
             sc = new ShellCommand(this.shellCls,
-                                  "cls",
-                                  "- Clears the screen and resets the cursor position.");
+                "cls",
+                "- Clears the screen and resets the cursor position.");
             this.commandList[this.commandList.length] = sc;
 
             // man <topic>
             sc = new ShellCommand(this.shellMan,
-                                  "man",
-                                  "<topic> - Displays the MANual page for <topic>.");
+                "man",
+                "<topic> - Displays the MANual page for <topic>.");
             this.commandList[this.commandList.length] = sc;
 
             // trace <on | off>
             sc = new ShellCommand(this.shellTrace,
-                                  "trace",
-                                  "<on | off> - Turns the OS trace on or off.");
+                "trace",
+                "<on | off> - Turns the OS trace on or off.");
             this.commandList[this.commandList.length] = sc;
 
             // rot13 <string>
             sc = new ShellCommand(this.shellRot13,
-                                  "rot13",
-                                  "<string> - Does rot13 obfuscation on <string>.");
+                "rot13",
+                "<string> - Does rot13 obfuscation on <string>.");
             this.commandList[this.commandList.length] = sc;
 
             //  wherami
@@ -93,23 +93,28 @@ module TSOS {
 
             // prompt <string>
             sc = new ShellCommand(this.shellPrompt,
-                                  "prompt",
-                                  "<string> - Sets the prompt.");
+                "prompt",
+                "<string> - Sets the prompt.");
             this.commandList[this.commandList.length] = sc;
 
 
             //bsod
-            sc= new ShellCommand(this.shellError,
+            sc = new ShellCommand(this.shellError,
                 "error",
                 " - displays an error");
-            this.commandList[this.commandList.length]=sc;
+            this.commandList[this.commandList.length] = sc;
 
             //load
-            sc= new ShellCommand(this.shellLoad,
+            sc = new ShellCommand(this.shellLoad,
                 "load",
                 " - Loads from the user program input section");
-            this.commandList[this.commandList.length]=sc;
+            this.commandList[this.commandList.length] = sc;
 
+            //status
+            sc = new ShellCommand(this.shellStatus,
+                "status",
+                " - Allows user input for current status in Status Bar");
+            this.commandList[this.commandList.length] = sc;
 
 
             // ps  - list the running processes and their IDs
@@ -138,8 +143,8 @@ module TSOS {
             //
             // TypeScript/JavaScript may not support associative arrays in all browsers so we have to iterate over the
             // command list in attempt to find a match.  TODO: Is there a better way? Probably. Someone work it out and tell me in class.
-            var index: number = 0;
-            var found: boolean = false;
+            var index:number = 0;
+            var found:boolean = false;
             var fn = undefined;
             while (!found && index < this.commandList.length) {
                 if (this.commandList[index].command === cmd) {
@@ -177,7 +182,7 @@ module TSOS {
             this.putPrompt();
         }
 
-        public parseInput(buffer): UserCommand {
+        public parseInput(buffer):UserCommand {
             var retVal = new UserCommand();
 
             // 1. Remove leading and trailing spaces.
@@ -229,14 +234,14 @@ module TSOS {
         }
 
         public shellApology() {
-           if (_SarcasticMode) {
-              _StdOut.putText("I think we can put our differences behind us.");
-              _StdOut.advanceLine();
-              _StdOut.putText("For science . . . You monster.");
-              _SarcasticMode = false;
-           } else {
-              _StdOut.putText("For what?");
-           }
+            if (_SarcasticMode) {
+                _StdOut.putText("I think we can put our differences behind us.");
+                _StdOut.advanceLine();
+                _StdOut.putText("For science . . . You monster.");
+                _SarcasticMode = false;
+            } else {
+                _StdOut.putText("For what?");
+            }
         }
 
         public shellVer(args) {
@@ -252,8 +257,8 @@ module TSOS {
         }
 
         public shellShutdown(args) {
-             _StdOut.putText("Shutting down...");
-             // Call Kernel shutdown routine.
+            _StdOut.putText("Shutting down...");
+            // Call Kernel shutdown routine.
             _Kernel.krnShutdown();
             // TODO: Stop the final prompt from being displayed.  If possible.  Not a high priority.  (Damn OCD!)
         }
@@ -337,7 +342,7 @@ module TSOS {
         public shellRot13(args) {
             if (args.length > 0) {
                 // Requires Utils.ts for rot13() function.
-                _StdOut.putText(args.join(' ') + " = '" + Utils.rot13(args.join(' ')) +"'");
+                _StdOut.putText(args.join(' ') + " = '" + Utils.rot13(args.join(' ')) + "'");
             } else {
                 _StdOut.putText("Usage: rot13 <string>  Please supply a string.");
             }
@@ -351,11 +356,11 @@ module TSOS {
             }
         }
 
-        public wherami(args){
+        public wherami(args) {
             _StdOut.putText("I am currently sitting in the library working on my Operating Systems Lab (also puling out my hair).");
         }
 
-        public date(agrs){
+        public date(agrs) {
             var theDate = new Date();
             var month = theDate.getUTCMonth() + 1;
             var date = month + "/" + theDate.getUTCDate() + "/" + theDate.getUTCFullYear() + " " + theDate.getHours() + ":" + theDate.getMinutes() + ":" + theDate.getSeconds();
@@ -385,68 +390,81 @@ module TSOS {
         }
 
 
-        public shellError(args){
-            _DrawingContext.rect(0,0, _Canvas.width, _Canvas.height);
+        public shellError(args) {
+            _DrawingContext.rect(0, 0, _Canvas.width, _Canvas.height);
             _DrawingContext.fillStyle = "#3090C7";
             _DrawingContext.fill();
 
-            _Kernel.krnTrapError("Error");
+            _Kernel.krnTrapError("BSOD");
         }
-        public shellLoad(args){
+
+        public shellLoad(args) {
 
 
-            _UserProgIn= (<HTMLTextAreaElement>document.getElementById('taProgramInput')).value;
+            _UserProgIn = (<HTMLTextAreaElement>document.getElementById('taProgramInput')).value;
 
             var accept = 0;
 
 
-            for (var i=0; i < _UserProgIn.length; i++){
+            for (var i = 0; i < _UserProgIn.length; i++) {
 
-                if (_UserProgIn.charAt(i) == "0" ){
+                if (_UserProgIn.charAt(i) == "0") {
                 }
-                else if (_UserProgIn.charAt(i) == "1" ){
+                else if (_UserProgIn.charAt(i) == "1") {
                 }
-                else if (_UserProgIn.charAt(i) == "2"){
+                else if (_UserProgIn.charAt(i) == "2") {
                 }
-                else if (_UserProgIn.charAt(i) == "3"){
+                else if (_UserProgIn.charAt(i) == "3") {
                 }
-                else if (_UserProgIn.charAt(i) == "4"){
+                else if (_UserProgIn.charAt(i) == "4") {
                 }
-                else if (_UserProgIn.charAt(i) == "5"){
+                else if (_UserProgIn.charAt(i) == "5") {
                 }
-                else if (_UserProgIn.charAt(i) == "6"){
+                else if (_UserProgIn.charAt(i) == "6") {
                 }
-                else if (_UserProgIn.charAt(i) == "7"){
+                else if (_UserProgIn.charAt(i) == "7") {
                 }
-                else if (_UserProgIn.charAt(i) == "8"){
+                else if (_UserProgIn.charAt(i) == "8") {
                 }
-                else if (_UserProgIn.charAt(i) == "9"){
+                else if (_UserProgIn.charAt(i) == "9") {
                 }
-                else if (_UserProgIn.charAt(i).toLocaleLowerCase() == "a"){
+                else if (_UserProgIn.charAt(i).toLocaleLowerCase() == "a") {
                 }
-                else if (_UserProgIn.charAt(i).toLocaleLowerCase() == "b"){
+                else if (_UserProgIn.charAt(i).toLocaleLowerCase() == "b") {
                 }
-                else if (_UserProgIn.charAt(i).toLocaleLowerCase() == "c"){
+                else if (_UserProgIn.charAt(i).toLocaleLowerCase() == "c") {
                 }
-                else if (_UserProgIn.charAt(i).toLocaleLowerCase() == "d"){
+                else if (_UserProgIn.charAt(i).toLocaleLowerCase() == "d") {
                 }
-                else if (_UserProgIn.charAt(i).toLocaleLowerCase() == "e"){
+                else if (_UserProgIn.charAt(i).toLocaleLowerCase() == "e") {
                 }
-                else if (_UserProgIn.charAt(i).toLocaleLowerCase() == "f"){
+                else if (_UserProgIn.charAt(i).toLocaleLowerCase() == "f") {
                 }
-                else if (_UserProgIn.charAt(i) == " "){
+                else if (_UserProgIn.charAt(i) == " ") {
                 }
-                else{
+                else {
                     accept += 1;
                 }
-                    }
-                if (accept>0){
-                    _StdOut.putText("The entered code is invalid!")
-                }else{
-                    _StdOut.putText("The entered code is valid!")
-                }
+            }
+            if (accept > 0) {
+                _StdOut.putText("The entered code is invalid!")
+            } else {
+                _StdOut.putText("The entered code is valid!")
+            }
 
         }
 
+        public shellStatus(args) {
+            var status = "";
+
+            for (var i = 0; i < args.length; i++) {
+
+                status += args[i] + " ";
+
+                }
+            _StatusBar.value += "\n" + "Status: " + status;
+
+        }
+        }
     }
-}
+
