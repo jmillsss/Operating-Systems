@@ -367,7 +367,7 @@ module TSOS {
 
             _StdOut.putText(date)
         }
-
+        //tribe called quest lyrics func
         public triberaps(args) {
             if (args.length > 0) {
                 var song = args[0];
@@ -389,7 +389,7 @@ module TSOS {
             }
         }
 
-
+        //bsod
         public shellError(args) {
             _DrawingContext.rect(0, 0, _Canvas.width, _Canvas.height);
             _DrawingContext.fillStyle = "#3090C7";
@@ -398,6 +398,8 @@ module TSOS {
             _Kernel.krnTrapError("BSOD");
         }
 
+
+        //load
         public shellLoad(args) {
 
 
@@ -453,7 +455,7 @@ module TSOS {
             }
 
         }
-
+        //status
         public shellStatus(args) {
             var status = "";
 

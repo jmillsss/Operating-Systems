@@ -56,7 +56,7 @@ module TSOS {
                 // TODO: Write a case for Ctrl-C.
             }
         }
-
+        //handle backspace
         public backspace(): void{
 
             var stringBuffer = _Console.buffer;
@@ -82,6 +82,7 @@ module TSOS {
             _DrawingContext.fillStyle = ("#DFDBC3");
             _DrawingContext.fillRect(this.currentXPosition, (this.currentYPosition - _DefaultFontSize), charWidth, _DefaultFontSize + _FontHeightMargin + 1);
 
+            cursorPosition=(_Console.currentXPosition - charWidth);
             _Console.currentXPosition = cursorPosition;
 
         }

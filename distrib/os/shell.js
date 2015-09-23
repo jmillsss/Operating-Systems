@@ -304,6 +304,7 @@ var TSOS;
             var date = month + "/" + theDate.getUTCDate() + "/" + theDate.getUTCFullYear() + " " + theDate.getHours() + ":" + theDate.getMinutes() + ":" + theDate.getSeconds();
             _StdOut.putText(date);
         };
+        //tribe called quest lyrics func
         Shell.prototype.triberaps = function (args) {
             if (args.length > 0) {
                 var song = args[0];
@@ -325,12 +326,14 @@ var TSOS;
                 _StdOut.putText("Usage: man <song>  Please supply a song.");
             }
         };
+        //bsod
         Shell.prototype.shellError = function (args) {
             _DrawingContext.rect(0, 0, _Canvas.width, _Canvas.height);
             _DrawingContext.fillStyle = "#3090C7";
             _DrawingContext.fill();
             _Kernel.krnTrapError("BSOD");
         };
+        //load
         Shell.prototype.shellLoad = function (args) {
             _UserProgIn = document.getElementById('taProgramInput').value;
             var accept = 0;
@@ -380,6 +383,7 @@ var TSOS;
                 _StdOut.putText("The entered code is valid!");
             }
         };
+        //status
         Shell.prototype.shellStatus = function (args) {
             var status = "";
             for (var i = 0; i < args.length; i++) {

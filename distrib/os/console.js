@@ -54,6 +54,7 @@ var TSOS;
                 }
             }
         };
+        //handle backspace
         Console.prototype.backspace = function () {
             var stringBuffer = _Console.buffer;
             var lastchar = "";
@@ -75,6 +76,7 @@ var TSOS;
             _Console.currentXPosition = cursorPosition;
             _DrawingContext.fillStyle = ("#DFDBC3");
             _DrawingContext.fillRect(this.currentXPosition, (this.currentYPosition - _DefaultFontSize), charWidth, _DefaultFontSize + _FontHeightMargin + 1);
+            cursorPosition = (_Console.currentXPosition - charWidth);
             _Console.currentXPosition = cursorPosition;
         };
         Console.prototype.putText = function (text) {
