@@ -65,7 +65,7 @@ var TSOS;
             sc = new TSOS.ShellCommand(this.shellLoad, "load", " - Loads from the user program input section");
             this.commandList[this.commandList.length] = sc;
             //status
-            sc = new TSOS.ShellCommand(this.shellStatus, "status", " - Allows user input for current status in Status Bar");
+            sc = new TSOS.ShellCommand(this.shellStatus, "status", " <string> - Allows user input for current status in Status Bar");
             this.commandList[this.commandList.length] = sc;
             // ps  - list the running processes and their IDs
             // kill <id> - kills the specified process id.

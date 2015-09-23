@@ -113,7 +113,7 @@ module TSOS {
             //status
             sc = new ShellCommand(this.shellStatus,
                 "status",
-                " - Allows user input for current status in Status Bar");
+                " <string> - Allows user input for current status in Status Bar");
             this.commandList[this.commandList.length] = sc;
 
 
