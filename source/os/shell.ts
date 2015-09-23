@@ -367,7 +367,7 @@ module TSOS {
                 _StdOut.putText("Usage: man <song>  Please supply a song.");
             }
         }
-        
+
 
         public shellError(args){
             _Kernel.krnTrapError("Error");

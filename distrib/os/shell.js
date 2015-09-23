@@ -58,8 +58,9 @@ var TSOS;
             // prompt <string>
             sc = new TSOS.ShellCommand(this.shellPrompt, "prompt", "<string> - Sets the prompt.");
             this.commandList[this.commandList.length] = sc;
-            //status
-            sc = new TSOS.ShellCommand();
+            //bsod
+            sc = new TSOS.ShellCommand(this.shellError, "error", " - displays an error");
+            this.commandList[this.commandList.length] = sc;
             // ps  - list the running processes and their IDs
             // kill <id> - kills the specified process id.
             //
@@ -299,6 +300,7 @@ var TSOS;
                         break;
                     case "electric":
                         _StdOut.putText("Honey, check it out, you got me mesmerized, with your black hair and fat-ass thighs");
+                        break;
                     default:
                         _StdOut.putText("No song lyrics for " + args[0] + ".");
                 }
@@ -306,6 +308,9 @@ var TSOS;
             else {
                 _StdOut.putText("Usage: man <song>  Please supply a song.");
             }
+        };
+        Shell.prototype.shellError = function (args) {
+            _Kernel.krnTrapError("Error");
         };
         return Shell;
     })();

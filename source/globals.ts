@@ -31,9 +31,11 @@ var _OSclock: number = 0;  // Page 23.
 
 var _Mode: number = 0;     // (currently unused)  0 = Kernel Mode, 1 = User Mode.  See page 21.
 
+var _UserProgIn;
 var _Canvas: HTMLCanvasElement;         // Initialized in Control.hostInit().
 var _DrawingContext: any; // = _Canvas.getContext("2d");  // Assigned here for type safety, but re-initialized in Control.hostInit() for OCD and logic.
-var _Bar;
+var _StatusBar;
+var _Console: any;
 var _DefaultFontFamily: string = "sans";        // Ignored, I think. The was just a place-holder in 2008, but the HTML canvas may have use for it.
 var _DefaultFontSize: number = 13;
 var _FontHeightMargin: number = 4;              // Additional space added to font size when advancing a line.
@@ -51,7 +53,6 @@ var _StdIn;    // Same "to null or not to null" issue as above.
 var _StdOut;
 
 // UI
-var _Console: TSOS.Console;
 var _OsShell: TSOS.Shell;
 
 // At least this OS is not trying to kill you. (Yet.)
