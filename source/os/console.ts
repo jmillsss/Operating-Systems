@@ -62,17 +62,31 @@ module TSOS {
             var stringBuffer = _Console.buffer;
             var lastchar = "";
             var indexLastChar = 0;
+            var newBuffer = "";
             console.log(stringBuffer);
 
             for (var i=0; i < stringBuffer.length; i++ ){
 
                 if (i = (stringBuffer.length - 1)){
                     lastchar = stringBuffer.charAt(i);
+                }else {
+                    newBuffer += stringBuffer.charAt(i);
                 }
                 console.log(lastchar);
 
             }
             
+            var charWidth = CanvasTextFunctions.measure(_DefaultFontFamily, _DefaultFontSize, lastchar);
+
+
+            var cursorPosition = (this.currentXPosition - charWidth);
+
+            _DrawingContext.fillStyle = ("#DFDBC3")
+            _DrawingContext.fillRect(cursorPosition, this.currentYPosition - _DefaultFontSize, charWidth, _DefaultFontSize + _FontHeightMargin + 1);
+
+            this.currentXPosition = cursorPosition;
+
+
 
 
         }
