@@ -12,7 +12,7 @@
 // Global CONSTANTS (TypeScript 1.5 introduced const. Very cool.)
 //
 const APP_NAME: string    = "JMOS";   // Jarett Miller Operating System
-const APP_VERSION: string = "1.0";   // The first version of my OS
+const APP_VERSION: string = "47.0";   // The first version of my OS
 
 const CPU_CLOCK_INTERVAL: number = 150;   // This is in ms (milliseconds) so 1000 = 1 second.
 

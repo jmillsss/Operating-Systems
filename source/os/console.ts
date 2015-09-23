@@ -109,9 +109,9 @@ module TSOS {
           public scroll(){
 
             var myImageData = _DrawingContext.getImageData(0, 0, _Canvas.width, _Canvas.height);
-            _Canvas.height += 500;
+              _Canvas.height += 500;
               _Canvas.width += 500;
-            _DrawingContext.putImageData(myImageData, 0, 0)
+              _DrawingContext.putImageData(myImageData, 0, 0)
 
     }
 

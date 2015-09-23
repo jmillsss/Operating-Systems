@@ -300,10 +300,13 @@ module TSOS {
                         _StdOut.putText("triberaps show song lyrics for some songs (try 'jazz')");
                         break;
                     case "error":
-                        _StdOut.putText("error throws an error and shutsdown the OS");
+                        _StdOut.putText("error throws an error, shuts down the OS, and shows ");
                         break;
                     case "load":
                         _StdOut.putText("load validates user code in the textbox. Only hex digits and spaces");
+                        break;
+                    case "status":
+                        _StdOut.putText("status accepts a string and shows that string in the Status Bar under the Time & Date");
                         break;
                     // TODO: Make descriptive
                     // MANual page entries for the the rest of the shell commands here.
