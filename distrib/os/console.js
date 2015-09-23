@@ -54,6 +54,18 @@ var TSOS;
                 }
             }
         };
+        Console.prototype.backspace = function () {
+            var stringBuffer = _Console.buffer;
+            var lastchar = "";
+            var indexLastChar = 0;
+            console.log(stringBuffer);
+            for (var i = 0; i < stringBuffer.length; i++) {
+                if (i = (stringBuffer.length - 1)) {
+                    lastchar = stringBuffer.charAt(i);
+                }
+                console.log(lastchar);
+            }
+        };
         Console.prototype.putText = function (text) {
             // My first inclination here was to write two functions: putChar() and putString().
             // Then I remembered that JavaScript is (sadly) untyped and it won't differentiate

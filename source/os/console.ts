@@ -45,7 +45,8 @@ module TSOS {
                     _OsShell.handleInput(this.buffer);
                     // ... and reset our buffer.
                     this.buffer = "";
-                } else {
+                }
+                else {
                     // This is a "normal" character, so ...
                     // ... draw it on the screen...
                     this.putText(chr);
@@ -54,6 +55,26 @@ module TSOS {
                 }
                 // TODO: Write a case for Ctrl-C.
             }
+        }
+
+        public backspace(): void{
+
+            var stringBuffer = _Console.buffer;
+            var lastchar = "";
+            var indexLastChar = 0;
+            console.log(stringBuffer);
+
+            for (var i=0; i < stringBuffer.length; i++ ){
+
+                if (i = (stringBuffer.length - 1)){
+                    lastchar = stringBuffer.charAt(i);
+                }
+                console.log(lastchar);
+
+            }
+            
+
+
         }
 
         public putText(text): void {
