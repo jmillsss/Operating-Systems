@@ -49,6 +49,8 @@ var TSOS;
                 _KernelInputQueue.enqueue(enableSymbol(keyCode, isShifted));
             }
             else if ((keyCode == 32) ||
+                (keyCode == 8) ||
+                (keyCode == 9) ||
                 (keyCode == 13)) {
                 chr = String.fromCharCode(keyCode);
                 _KernelInputQueue.enqueue(chr);

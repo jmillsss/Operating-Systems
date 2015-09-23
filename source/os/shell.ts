@@ -292,7 +292,7 @@ module TSOS {
                         _StdOut.putText("whereami shows where u at dawg");
                         break;
                     case "triberaps":
-                        _StdOut.putText("triberaps show song lyrics for some songs");
+                        _StdOut.putText("triberaps show song lyrics for some songs (try 'jazz')");
                         break;
                     case "error":
                         _StdOut.putText("error throws an error and shutsdown the OS");
