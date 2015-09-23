@@ -61,6 +61,9 @@ var TSOS;
             //bsod
             sc = new TSOS.ShellCommand(this.shellError, "error", " - displays an error");
             this.commandList[this.commandList.length] = sc;
+            //load
+            sc = new TSOS.ShellCommand(this.shellLoad, "load", " - Loads from the user program input section");
+            this.commandList[this.commandList.length] = sc;
             // ps  - list the running processes and their IDs
             // kill <id> - kills the specified process id.
             //
@@ -311,6 +314,8 @@ var TSOS;
         };
         Shell.prototype.shellError = function (args) {
             _Kernel.krnTrapError("Error");
+        };
+        Shell.prototype.shellLoad = function (args) {
         };
         return Shell;
     })();

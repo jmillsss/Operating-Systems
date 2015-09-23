@@ -104,6 +104,12 @@ module TSOS {
                 " - displays an error");
             this.commandList[this.commandList.length]=sc;
 
+            //load
+            sc= new ShellCommand(this.shellLoad,
+                "load",
+                " - Loads from the user program input section");
+            this.commandList[this.commandList.length]=sc;
+
 
 
             // ps  - list the running processes and their IDs
@@ -374,7 +380,10 @@ module TSOS {
         }
 
 
+        public shellLoad(args){
 
+
+        }
 
     }
 }
