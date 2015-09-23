@@ -291,7 +291,17 @@ module TSOS {
                     case "whereami":
                         _StdOut.putText("whereami shows where u at dawg");
                         break;
-                    // TODO: Make descriptive MANual page entries for the the rest of the shell commands here.
+                    case "triberaps":
+                        _StdOut.putText("triberaps show song lyrics for some songs");
+                        break;
+                    case "error":
+                        _StdOut.putText("error throws an error and shutsdown the OS");
+                        break;
+                    case "load":
+                        _StdOut.putText("load validates user code in the textbox. Only hex digits and spaces");
+                        break;
+                    // TODO: Make descriptive
+                    // MANual page entries for the the rest of the shell commands here.
                     default:
                         _StdOut.putText("No manual entry for " + args[0] + ".");
                 }
