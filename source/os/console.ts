@@ -108,10 +108,16 @@ module TSOS {
 
           public scroll(){
 
-            var myImageData = _DrawingContext.getImageData(0, 0, _Canvas.width, _Canvas.height);
-              _Canvas.height += 500;
-              _Canvas.width += 500;
-              _DrawingContext.putImageData(myImageData, 0, 0)
+          //take the image of the current canvas
+                var myImageData = _DrawingContext.getImageData(0, this.currentFontSize + 10, _Canvas.width, _Canvas.height);
+
+          //reset the screen of the canvas
+                this.clearScreen();
+                this.currentYPosition -= _DefaultFontSize + _DrawingContext.fontDescent(this.currentFont, this.currentFontSize) + _FontHeightMargin;
+            //extend the height
+            // just kidding we dont want to do this -- _Canvas.height += 15;
+            // replace original canvas text
+                 _DrawingContext.putImageData(myImageData, 0, 0);
 
     }
 
@@ -127,14 +133,13 @@ module TSOS {
                 + _FontHeightMargin;
 
             if(this.currentYPosition > _Canvas.height){
-                _Kernel.krnTrace("End height of canvas");
+                _Kernel.krnTrace("End canvas, Scrolling...");
                 this.scroll();
             }
             else if (this.currentXPosition > _Canvas.width) {
-                _Kernel.krnTrace("End of width of canvas");
+                _Kernel.krnTrace("");
                 this.scroll();
             }
-             //TODO: Handle scrolling. (iProject 1)
         }
     }
  }
