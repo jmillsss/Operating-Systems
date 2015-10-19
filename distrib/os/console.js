@@ -56,28 +56,14 @@ var TSOS;
         };
         //handle backspace
         Console.prototype.backspace = function () {
-            var stringBuffer = _Console.buffer;
-            var lastchar = "";
-            var newBuffer = "";
-            console.log(stringBuffer);
-            for (var i = 0; i < stringBuffer.length; i++) {
-                if (i = (stringBuffer.length - 1)) {
-                    lastchar = stringBuffer.charAt(i);
-                }
-                else {
-                    newBuffer += stringBuffer.charAt(i);
-                }
-                console.log(lastchar);
-            }
-            _Console.buffer = newBuffer;
-            var charWidth = TSOS.CanvasTextFunctions.measure(_DefaultFontFamily, _DefaultFontSize, lastchar);
-            console.log(charWidth);
-            var cursorPosition = (_Console.currentXPosition - charWidth);
-            _Console.currentXPosition = cursorPosition;
-            _DrawingContext.fillStyle = ("#DFDBC3");
-            _DrawingContext.fillRect(this.currentXPosition, (this.currentYPosition - _DefaultFontSize), charWidth, _DefaultFontSize + _FontHeightMargin + 1);
-            cursorPosition = (_Console.currentXPosition - charWidth);
-            _Console.currentXPosition = cursorPosition;
+            var stringBufferLength = this.buffer.length;
+            var lastChar = stringBufferLength - 1;
+            this.buffer = this.buffer.substring(0, lastChar);
+            //clear current line of text
+            _DrawingContext.clearRect(0, this.currentYPosition - this.currentFontSize, _Canvas.width, this.currentFontSize + 10);
+            this.currentXPosition = 0;
+            //replace remaining text
+            this.putText(">" + this.buffer);
         };
         Console.prototype.putText = function (text) {
             // My first inclination here was to write two functions: putChar() and putString().

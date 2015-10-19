@@ -15,29 +15,83 @@
    <script type="text/javascript" src="distrib/host/control.js"></script>
    <script type="text/javascript" src="distrib/host/devices.js"></script>
    <script type="text/javascript" src="distrib/host/cpu.js"></script>
+    <script type="text/javascript" src="distrib/host/Memory.js"></script>
 
-   <!-- Virtual OS Routines: Make sure Kernel code is last, since it needs those above it. -->
-   <script type="text/javascript" src="distrib/os/interrupt.js"></script>
-   <script type="text/javascript" src="distrib/os/canvastext.js"></script>
-   <script type="text/javascript" src="distrib/os/console.js"></script>
-   <script type="text/javascript" src="distrib/os/deviceDriver.js"></script>
-   <script type="text/javascript" src="distrib/os/deviceDriverKeyboard.js"></script>
-   <script type="text/javascript" src="distrib/os/queue.js"></script>
-   <script type="text/javascript" src="distrib/os/shell.js"></script>
-   <script type="text/javascript" src="distrib/os/shellCommand.js"></script>
-   <script type="text/javascript" src="distrib/os/userCommand.js"></script>
-   <script type="text/javascript" src="distrib/os/kernel.js"></script>
 
-   <!-- Other Routines -->
+    <!-- Virtual OS Routines: Make sure Kernel code is last, since it needs those above it. -->
+    <script type="text/javascript" src="distrib/os/interrupt.js"></script>
+    <script type="text/javascript" src="distrib/os/canvastext.js"></script>
+    <script type="text/javascript" src="distrib/os/console.js"></script>
+    <script type="text/javascript" src="distrib/os/deviceDriver.js"></script>
+    <script type="text/javascript" src="distrib/os/deviceDriverKeyboard.js"></script>
+    <script type="text/javascript" src="distrib/os/queue.js"></script>
+    <script type="text/javascript" src="distrib/os/shell.js"></script>
+    <script type="text/javascript" src="distrib/os/shellCommand.js"></script>
+    <script type="text/javascript" src="distrib/os/userCommand.js"></script>
+    <script type="text/javascript" src="distrib/os/kernel.js"></script>
+    <script type="text/javascript" src="distrib/os/MemManager.js"></script>
+    <script type="text/javascript" src="distrib/os/PCB.js"></script>
+
+
+    <!-- Other Routines -->
    <script type="text/javascript" src="distrib/utils.js"></script>
    <!-- Uncomment this line below to enable GLaDOS testing -->
-   <script type="text/javascript" src="http://www.labouseur.com/courses/os/projects/glados.js"></script>
+   <!-- <script type="text/javascript" src="http://www.labouseur.com/courses/os/projects/glados.js"></script> -->
 </head>
 
 <body onload="onDocumentLoad()">
 
 <div id="divMain" style="width:100%;">
+    
+ 
+    <div id = "divLeft" style="width:25%;">
+    <div id="taskBar" style="margin-left:15px;">
+        <label>
+            Task Bar:
+            <br>
+         <textarea autofocus
+                   name="taskBar"
+                   id  ="taskBarDisplay"
+                   rows="5"
+                   cols="48"
+                 ></textarea>
+        </label>
+    </div>
+        <div id="CPU" style="margin-left:15px;">
+            <table id="cpuTbl" class="table table-condensed table-bordered">
+                CPU:
+                <tr>
+                    <th>PC</th>
+                    <th>ACC</th>
+                    <th>XReg</th>
+                    <th>YReg</th>
+                    <th>ZReg</th>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+        <div id="Memory" style="margin-left:15px;">
+            <label>
+                Memory:
+                <br>
+         <textarea autofocus
+                   name="memoryTable"
+                   id  ="memoryTable"
+                   rows="5"
+                   cols="48"
+                 ></textarea>
+            </label>
+        </div>
+    </div>
 
+
+   <div id = "divRight" style="width:70%;" >
    <div id="divButtonBar" style="margin:15px;">
       <input type="button"
              id = "btnStartOS"
@@ -101,19 +155,8 @@
          ></textarea>
       </label>
    </div>
+   </div>
 
-    <div id="taskBar" style="margin-left:520px;">
-        <label>
-            Task Bar
-            <br>
-         <textarea autofocus
-                   name="taskBar"
-                   id  ="taskBarDisplay"
-                   rows="5"
-                   cols="48"
-                 ></textarea>
-        </label>
-    </div>
 
 </div>
 

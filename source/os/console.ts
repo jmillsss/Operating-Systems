@@ -59,31 +59,19 @@ module TSOS {
         //handle backspace
         public backspace(): void{
 
-            var stringBuffer = _Console.buffer;
-            var lastchar = "";
-            var newBuffer = "";
-            console.log(stringBuffer);
+            var stringBufferLength = this.buffer.length;
+            var lastChar = stringBufferLength - 1;
 
-            for (var i=0; i < stringBuffer.length; i++ ){
-                if (i = (stringBuffer.length - 1)){
-                    lastchar = stringBuffer.charAt(i);
-                }else {
-                    newBuffer += stringBuffer.charAt(i);
-                }
-                console.log(lastchar);
-            }
-            _Console.buffer = newBuffer;
+            this.buffer = this.buffer.substring(0,lastChar);
 
-            var charWidth = CanvasTextFunctions.measure(_DefaultFontFamily, _DefaultFontSize, lastchar);
-            console.log(charWidth);
-            var cursorPosition=(_Console.currentXPosition - charWidth);
-            _Console.currentXPosition = cursorPosition;
+            //clear current line of text
+            _DrawingContext.clearRect(0, this.currentYPosition-this.currentFontSize, _Canvas.width,this.currentFontSize + 10);
+            this.currentXPosition=0;
 
-            _DrawingContext.fillStyle = ("#DFDBC3");
-            _DrawingContext.fillRect(this.currentXPosition, (this.currentYPosition - _DefaultFontSize), charWidth, _DefaultFontSize + _FontHeightMargin + 1);
+            //replace remaining text
+            this.putText(">" + this.buffer);
 
-            cursorPosition=(_Console.currentXPosition - charWidth);
-            _Console.currentXPosition = cursorPosition;
+
 
         }
 

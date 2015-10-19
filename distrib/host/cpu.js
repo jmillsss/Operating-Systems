@@ -47,3 +47,36 @@ var TSOS;
     })();
     TSOS.Cpu = Cpu;
 })(TSOS || (TSOS = {}));
+/*lab 3 Questions
+
+1. Explain the difference between internal and external fragmentation.
+
+
+2. Given five(5) memory partitions of 100KB, 500KB, 200KB, 300KB, and 600KB (in that order),how would
+optimal, first-fit, best-fit, and worst-fit algorithms place processes of 212KB, 417KB, 112KB, and
+426KB (in that order)?
+
+first-fit: 212KB  -- 500KB partition
+           112KB  -- 200KB partition
+           417KB  -- 600KB Partition
+           426KB  -- Cannot be allocated in this example
+
+Best-fit:  212KB  -- 300KB Partition
+           112KB  -- 200KB partition
+           417KB  -- 500KB Partition
+           426KB  -- 600KB Partition
+
+Worst-fit: 212KB  -- 600KB partition
+           112KB  -- 300KB partition
+           417KB  -- 500KB Partition
+           426KB  -- Cannot be allocated in this example
+
+ lab 4 Questions
+
+1. What is the relationship between a guest operating system and a host operating system
+  in a system like VMware? What factors need to be considered in choosing the host operating system?
+
+
+
+
+ */ 
