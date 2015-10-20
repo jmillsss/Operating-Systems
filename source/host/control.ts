@@ -48,7 +48,8 @@ module TSOS {
             _PCBTbl= <HTMLElement>document.getElementById('pcbTbl');
             //call initialize for mem table
            this.initMemoryTbl();
-
+            _Memory = new Memory();
+            _Memory.init();
 
             // Get a global reference to the drawing context.
             _DrawingContext = _Canvas.getContext("2d");
@@ -72,13 +73,9 @@ module TSOS {
                 _GLaDOS = new Glados();
                 _GLaDOS.init();
             }
-
-
-
-
         }
 
-
+        //set default values in memory table
         public static initMemoryTbl():void{
             for(var i = 0; i < 256/8; ++i) {
                 var row = _MemoryTbl.insertRow(i);
@@ -90,14 +87,25 @@ module TSOS {
                     } else {
                         cell.innerHTML = "00";
                     }
-
                 }
             }
-
         }
-
+        //edit the table to update program input when new programs are loaded
+        //still need to handle loading op codes and running them (shell)
         public static editMemoryTbl():void{
-
+            var memSlot = 0;
+            for(var i=0; i<256/8; ++i){
+                var rowI = i;
+                for(var x=0; x<9; ++x){
+                    var columnI = x;
+                    if (columnI==0){
+                        var def = (i*8).toString(16).toLocaleUpperCase();
+                        _MemoryTbl.rows[rowI].cells[columnI].innerHTML = "0x0" + def;
+                    }else{
+                        _MemoryTbl.rows[rowI].cells[columnI].innerHTML=_Memory.mem[memSlot]; memSlot++;
+                    }
+                }
+            }
 
         }
 
@@ -163,11 +171,10 @@ module TSOS {
             // ... Create and initialize the CPU (because it's part of the hardware)  ...
             _CPU = new Cpu();  // Note: We could simulate multi-core systems by instantiating more than one instance of the CPU here.
             _CPU.init();//       There's more to do, like dealing with scheduling and such, but this would be a start. Pretty cool
-            //_Memory = new Memory();
-            //_Memory.init();
-            //_MemoryManager = new MemManager();
             this.initCPUTbl();
 
+
+            _MemoryManager = new MemManager();
 
             // ... then set the host clock pulse ...
             _hardwareClockID = setInterval(Devices.hostClockPulse, CPU_CLOCK_INTERVAL);

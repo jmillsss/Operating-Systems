@@ -52,7 +52,7 @@ var TSOS;
                     case "A9":
                         this.Operation = "A9";
                         this.PC++;
-                        this.Acc = _Memory.mem[this.PC], 16;
+                        this.Acc = _Memory.mem[this.PC], 16; //***
                         this.PC++;
                         break;
                     case "AD":

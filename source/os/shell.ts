@@ -451,10 +451,28 @@ module TSOS {
                     accept += 1;
                 }
             }
+            var prog = _UserProgIn;
             if (accept > 0) {
                 _StdOut.putText("The entered code is invalid!")
+
             } else {
                 _StdOut.putText("The entered code is valid!")
+                //load the process in to memory
+                _StdOut.advanceLine();
+                prog = prog.replace(/\s+/g, '');
+                var insertToMem;
+                var memIndex=0;
+                for(var i =0; i<prog.length; i++){
+                    insertToMem=prog.slice(i, i+2);
+                    _Memory.mem[memIndex] = insertToMem;
+                    _Kernel.krnTrace("Memory index: " + memIndex + "Value: " + + _Memory.mem[memIndex].toString());
+                    i++;
+                    memIndex++;
+                }
+                _PCB = new PCB();
+                _PCB.init();
+                _StdOut.putText("Progam Loaded To memory, Pid = "  );
+                Control.editMemoryTbl();
             }
 
         }
