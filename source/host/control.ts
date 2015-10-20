@@ -42,6 +42,13 @@ module TSOS {
             _StatusBar.value = "Current Date & Time: " + date;
 
 
+            //get html tables
+            _MemoryTbl=<HTMLTableElement>document.getElementById('memoryTbl');
+            _CPUTbl= <HTMLTableElement>document.getElementById('cpuTbl');
+            //call initialize funcs
+            this.initMemoryTbl();
+            this.initCPUTbl();
+
 
             // Get a global reference to the drawing context.
             _DrawingContext = _Canvas.getContext("2d");
@@ -66,6 +73,21 @@ module TSOS {
                 _GLaDOS.init();
             }
         }
+
+
+        public static initMemoryTbl():void{
+
+
+
+
+        }
+
+        public static initCPUTbl():void{
+
+
+
+        }
+
 
         public static hostLog(msg: string, source: string = "?"): void {
             // Note the OS CLOCK.
@@ -109,6 +131,8 @@ module TSOS {
             _Kernel = new Kernel();
             _Kernel.krnBootstrap();  // _GLaDOS.afterStartup() will get called in there, if configured.
         }
+
+
 
         public static hostBtnHaltOS_click(btn): void {
             Control.hostLog("Emergency halt", "host");

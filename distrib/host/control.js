@@ -35,6 +35,12 @@ var TSOS;
             var month = theDate.getUTCMonth() + 1;
             var date = month + "/" + theDate.getUTCDate() + "/" + theDate.getUTCFullYear() + " " + theDate.getHours() + ":" + theDate.getMinutes() + ":" + theDate.getSeconds();
             _StatusBar.value = "Current Date & Time: " + date;
+            //get html tables
+            _MemoryTbl = document.getElementById('memoryTbl');
+            _CPUTbl = document.getElementById('cpuTbl');
+            //call initialize funcs
+            this.initMemoryTbl();
+            this.initCPUTbl();
             // Get a global reference to the drawing context.
             _DrawingContext = _Canvas.getContext("2d");
             // Enable the added-in canvas text functions (see canvastext.ts for provenance and details).
@@ -53,6 +59,10 @@ var TSOS;
                 _GLaDOS = new Glados();
                 _GLaDOS.init();
             }
+        };
+        Control.initMemoryTbl = function () {
+        };
+        Control.initCPUTbl = function () {
         };
         Control.hostLog = function (msg, source) {
             if (source === void 0) { source = "?"; }

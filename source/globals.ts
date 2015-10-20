@@ -39,7 +39,7 @@ var _UserProgIn;
 var _Canvas: HTMLCanvasElement;         // Initialized in Control.hostInit().
 var _DrawingContext: any; // = _Canvas.getContext("2d");  // Assigned here for type safety, but re-initialized in Control.hostInit() for OCD and logic.
 var _StatusBar;
-var CPUTbl: HTMLTableElement;
+var _CPUTbl: HTMLTableElement;
 var _MemoryTbl: HTMLTableElement;
 
 

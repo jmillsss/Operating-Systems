@@ -29,7 +29,7 @@ var _UserProgIn;
 var _Canvas; // Initialized in Control.hostInit().
 var _DrawingContext; // = _Canvas.getContext("2d");  // Assigned here for type safety, but re-initialized in Control.hostInit() for OCD and logic.
 var _StatusBar;
-var CPUTbl;
+var _CPUTbl;
 var _MemoryTbl;
 var _Console;
 var _DefaultFontFamily = "sans"; // Ignored, I think. The was just a place-holder in 2008, but the HTML canvas may have use for it.
