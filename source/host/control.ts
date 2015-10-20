@@ -43,11 +43,11 @@ module TSOS {
 
 
             //get html tables
-            _MemoryTbl = <HTMLTableElement>document.getElementById('memoryTbl');
+            _MemoryTbl = <HTMLTableElement>document.getElementById('memoryTable');
             _CPUTbl = <HTMLTableElement>document.getElementById('cpuTbl');
             _PCBTbl= <HTMLElement>document.getElementById('pcbTbl');
-            //call initialize funcs
-           // this.initMemoryTbl();
+            //call initialize for mem table
+           this.initMemoryTbl();
 
 
             // Get a global reference to the drawing context.
@@ -83,20 +83,26 @@ module TSOS {
             for(var i = 0; i < 256/8; ++i) {
                 var row = _MemoryTbl.insertRow(i);
                 for(var x = 0; x < 9; ++x) {
-                    var cell = _MemoryTbl.insertCell(x);
+                    var cell = row.insertCell(x);
                     if (x == 0) {
                         var def = (i * 8).toString(16).toLocaleUpperCase();
-                        cell.innerHTML = "0x" + def;
+                        cell.innerHTML = "0x0" + def;
                     } else {
                         cell.innerHTML = "00";
                     }
 
                 }
             }
+
+        }
+
+        public static editMemoryTbl():void{
+
+
         }
 
 
-
+           //populate the cpu table from values stored in the cpu
         public static initCPUTbl():void{
 
             _CPUTbl.rows[1].cells[0].innerHTML=_CPU.PC;
@@ -106,10 +112,20 @@ module TSOS {
             _CPUTbl.rows[1].cells[4].innerHTML=_CPU.Yreg;
             _CPUTbl.rows[1].cells[5].innerHTML=_CPU.Zflag;
 
+        }
+
+        //populate & edit the values in the pcb table while programs run
+        public static runPCBTbl():void{
+            _PCBTbl.rows[1].cells[0].innerHTML=_PCB.PiD;
+            _PCBTbl.rows[1].cells[1].innerHTML=_PCB.State;
+            _PCBTbl.rows[1].cells[2].innerHTML=_PCB.PC;
+            _PCBTbl.rows[1].cells[3].innerHTML=_PCB.Acc;
+            _PCBTbl.rows[1].cells[4].innerHTML=_PCB.Xreg;
+            _PCBTbl.rows[1].cells[5].innerHTML=_PCB.Yreg;
+            _PCBTbl.rows[1].cells[6].innerHTML=_PCB.Zflag;
 
 
         }
-
 
 
         public static hostLog(msg: string, source: string = "?"): void {
@@ -147,9 +163,9 @@ module TSOS {
             // ... Create and initialize the CPU (because it's part of the hardware)  ...
             _CPU = new Cpu();  // Note: We could simulate multi-core systems by instantiating more than one instance of the CPU here.
             _CPU.init();//       There's more to do, like dealing with scheduling and such, but this would be a start. Pretty cool
-           // _Memory = new Memory();
-           // _Memory.init();
-            _MemoryManager = new MemManager();
+            //_Memory = new Memory();
+            //_Memory.init();
+            //_MemoryManager = new MemManager();
             this.initCPUTbl();
 
 

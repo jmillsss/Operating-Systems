@@ -36,11 +36,11 @@ var TSOS;
             var date = month + "/" + theDate.getUTCDate() + "/" + theDate.getUTCFullYear() + " " + theDate.getHours() + ":" + theDate.getMinutes() + ":" + theDate.getSeconds();
             _StatusBar.value = "Current Date & Time: " + date;
             //get html tables
-            _MemoryTbl = document.getElementById('memoryTbl');
+            _MemoryTbl = document.getElementById('memoryTable');
             _CPUTbl = document.getElementById('cpuTbl');
             _PCBTbl = document.getElementById('pcbTbl');
-            //call initialize funcs
-            // this.initMemoryTbl();
+            //call initialize for mem table
+            this.initMemoryTbl();
             // Get a global reference to the drawing context.
             _DrawingContext = _Canvas.getContext("2d");
             // Enable the added-in canvas text functions (see canvastext.ts for provenance and details).
@@ -64,10 +64,10 @@ var TSOS;
             for (var i = 0; i < 256 / 8; ++i) {
                 var row = _MemoryTbl.insertRow(i);
                 for (var x = 0; x < 9; ++x) {
-                    var cell = _MemoryTbl.insertCell(x);
+                    var cell = row.insertCell(x);
                     if (x == 0) {
                         var def = (i * 8).toString(16).toLocaleUpperCase();
-                        cell.innerHTML = "0x" + def;
+                        cell.innerHTML = "0x0" + def;
                     }
                     else {
                         cell.innerHTML = "00";
@@ -75,6 +75,9 @@ var TSOS;
                 }
             }
         };
+        Control.editMemoryTbl = function () {
+        };
+        //populate the cpu table from values stored in the cpu
         Control.initCPUTbl = function () {
             _CPUTbl.rows[1].cells[0].innerHTML = _CPU.PC;
             _CPUTbl.rows[1].cells[1].innerHTML = _CPU.Acc;
@@ -82,6 +85,16 @@ var TSOS;
             _CPUTbl.rows[1].cells[3].innerHTML = _CPU.Xreg;
             _CPUTbl.rows[1].cells[4].innerHTML = _CPU.Yreg;
             _CPUTbl.rows[1].cells[5].innerHTML = _CPU.Zflag;
+        };
+        //populate & edit the values in the pcb table while programs run
+        Control.runPCBTbl = function () {
+            _PCBTbl.rows[1].cells[0].innerHTML = _PCB.PiD;
+            _PCBTbl.rows[1].cells[1].innerHTML = _PCB.State;
+            _PCBTbl.rows[1].cells[2].innerHTML = _PCB.PC;
+            _PCBTbl.rows[1].cells[3].innerHTML = _PCB.Acc;
+            _PCBTbl.rows[1].cells[4].innerHTML = _PCB.Xreg;
+            _PCBTbl.rows[1].cells[5].innerHTML = _PCB.Yreg;
+            _PCBTbl.rows[1].cells[6].innerHTML = _PCB.Zflag;
         };
         Control.hostLog = function (msg, source) {
             if (source === void 0) { source = "?"; }
@@ -110,9 +123,9 @@ var TSOS;
             // ... Create and initialize the CPU (because it's part of the hardware)  ...
             _CPU = new TSOS.Cpu(); // Note: We could simulate multi-core systems by instantiating more than one instance of the CPU here.
             _CPU.init(); //       There's more to do, like dealing with scheduling and such, but this would be a start. Pretty cool
-            // _Memory = new Memory();
-            // _Memory.init();
-            _MemoryManager = new TSOS.MemManager();
+            //_Memory = new Memory();
+            //_Memory.init();
+            //_MemoryManager = new MemManager();
             this.initCPUTbl();
             // ... then set the host clock pulse ...
             _hardwareClockID = setInterval(TSOS.Devices.hostClockPulse, CPU_CLOCK_INTERVAL);

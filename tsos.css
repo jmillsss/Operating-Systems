@@ -92,14 +92,24 @@ float: right;
      background-color: white;
  }
 
-#memoryTbl{
-    margin-top: 20px;
-    height: auto;
+#cpuTbl tr{
+    border: 2px;
+    border-color: black;
+}
+
+#memoryTable{
+    margin-top: 5px;
+    height: 200px;
     width:325px;
-    border: 2px solid black;
+    border: 2px;
+    border-color: black;
     background-color: white;
+    overflow-y: scroll;
+    overflow-x: hidden;
+
 }
 
 
-#PCB, #CPU{
+
+#PCB, #CPU, #Memory{
     margin-top: 20px;}
