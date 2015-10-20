@@ -45,6 +45,7 @@ module TSOS {
             //get html tables
             _MemoryTbl = <HTMLTableElement>document.getElementById('memoryTbl');
             _CPUTbl = <HTMLTableElement>document.getElementById('cpuTbl');
+            _PCBTbl= <HTMLElement>document.getElementById('pcbTbl');
             //call initialize funcs
            // this.initMemoryTbl();
 
@@ -72,38 +73,38 @@ module TSOS {
                 _GLaDOS.init();
             }
 
-            _Memory = new Memory();
-            _Memory.init();
+
 
 
         }
 
-/*
+
         public static initMemoryTbl():void{
-                    for(var i=0; i<256/8; ++i){
-                        var row = _MemoryTbl.insertRow(i);
-                        for(var x=0; x<9; ++x){
-                            var cell = row.insertCell(x);
-
-                            if(x==0) {
-                                var def = (i * 8).toString(16).toUpperCase();
-                                cell.innerHTML = "0x" + def;
-                            }else{
-                                cell.innerHTML ="00";
-                            }
-
-                        }
+            for(var i = 0; i < 256/8; ++i) {
+                var row = _MemoryTbl.insertRow(i);
+                for(var x = 0; x < 9; ++x) {
+                    var cell = _MemoryTbl.insertCell(x);
+                    if (x == 0) {
+                        var def = (i * 8).toString(16).toLocaleUpperCase();
+                        cell.innerHTML = "0x" + def;
+                    } else {
+                        cell.innerHTML = "00";
                     }
 
-        }*/
+                }
+            }
+        }
+
+
 
         public static initCPUTbl():void{
 
             _CPUTbl.rows[1].cells[0].innerHTML=_CPU.PC;
             _CPUTbl.rows[1].cells[1].innerHTML=_CPU.Acc;
-            _CPUTbl.rows[1].cells[2].innerHTML=_CPU.Xreg;
-            _CPUTbl.rows[1].cells[3].innerHTML=_CPU.Yreg;
-            _CPUTbl.rows[1].cells[4].innerHTML=_CPU.Zflag;
+            _CPUTbl.rows[1].cells[2].innerHTML=_CPU.Operation;
+            _CPUTbl.rows[1].cells[3].innerHTML=_CPU.Xreg;
+            _CPUTbl.rows[1].cells[4].innerHTML=_CPU.Yreg;
+            _CPUTbl.rows[1].cells[5].innerHTML=_CPU.Zflag;
 
 
 
@@ -145,8 +146,12 @@ module TSOS {
 
             // ... Create and initialize the CPU (because it's part of the hardware)  ...
             _CPU = new Cpu();  // Note: We could simulate multi-core systems by instantiating more than one instance of the CPU here.
-            _CPU.init();       //       There's more to do, like dealing with scheduling and such, but this would be a start. Pretty cool.
+            _CPU.init();//       There's more to do, like dealing with scheduling and such, but this would be a start. Pretty cool
+           // _Memory = new Memory();
+           // _Memory.init();
+            _MemoryManager = new MemManager();
             this.initCPUTbl();
+
 
             // ... then set the host clock pulse ...
             _hardwareClockID = setInterval(Devices.hostClockPulse, CPU_CLOCK_INTERVAL);

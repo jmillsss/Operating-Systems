@@ -33,6 +33,8 @@ var _Mode: number = 0;     // (currently unused)  0 = Kernel Mode, 1 = User Mode
 
 var _Memory:TSOS.Memory;
 var _PCB: TSOS.PCB;
+var _MemoryManager:TSOS.MemManager;
+
 
 
 var _UserProgIn;
@@ -41,7 +43,7 @@ var _DrawingContext: any; // = _Canvas.getContext("2d");  // Assigned here for t
 var _StatusBar;
 var _CPUTbl;
 var _MemoryTbl;
-
+var _PCBTbl;
 
 
 var _Console: any;
