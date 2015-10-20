@@ -162,12 +162,12 @@ module TSOS {
 
             for (var i = 0; i < len; i++) {
 
-                if(x>490){
+               /* if(x>490){
                     x= 0 + c.width*mag;
 
                     _StdOut.advanceLine();
 
-                }
+                }*/
 
                 var c = CanvasTextFunctions.letter(str.charAt(i));
                 if (!c) {

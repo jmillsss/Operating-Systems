@@ -10,4 +10,4 @@ var TSOS;
     })();
     TSOS.Memory = Memory;
 })(TSOS || (TSOS = {}));
-//# sourceMappingURL=Memory.js.map
+//# sourceMappingURL=memory.js.map

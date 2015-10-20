@@ -6,6 +6,9 @@
 module TSOS{
 
 
+    export class MemManager{
 
+
+}
 
 }

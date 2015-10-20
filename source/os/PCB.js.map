@@ -1,1 +1,1 @@
-{"version":3,"file":"PCB.js","sourceRoot":"","sources":["PCB.ts"],"names":[],"mappings":"AAQC"}
+{"version":3,"file":"pcb.js","sourceRoot":"","sources":["pcb.ts"],"names":["TSOS","TSOS.PCB","TSOS.PCB.constructor"],"mappings":"AAAA;;GAEG;AAEH,IAAO,IAAI,CASV;AATD,WAAO,IAAI,EAAA,CAAC;IAERA,IAAaA,GAAGA;QAAhBC,SAAaA,GAAGA;QAIhBC,CAACA;QAADD,UAACA;IAADA,CAACA,AAJDD,IAICA;IAJYA,QAAGA,GAAHA,GAIZA,CAAAA;AAGLA,CAACA,EATM,IAAI,KAAJ,IAAI,QASV"}

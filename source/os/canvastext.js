@@ -50,10 +50,12 @@ var TSOS;
             ctx.lineWidth = 2.0 * mag;
             ctx.strokeStyle = "black";
             for (var i = 0; i < len; i++) {
-                if (x > 490) {
-                    x = 0 + c.width * mag;
-                    _StdOut.advanceLine();
-                }
+                /* if(x>490){
+                     x= 0 + c.width*mag;
+ 
+                     _StdOut.advanceLine();
+ 
+                 }*/
                 var c = CanvasTextFunctions.letter(str.charAt(i));
                 if (!c) {
                     continue;

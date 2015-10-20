@@ -1,4 +1,13 @@
 /**
  * Created by jarettmiller on 10/19/15.
  */
-//# sourceMappingURL=MemManager.js.map
+var TSOS;
+(function (TSOS) {
+    var MemManager = (function () {
+        function MemManager() {
+        }
+        return MemManager;
+    })();
+    TSOS.MemManager = MemManager;
+})(TSOS || (TSOS = {}));
+//# sourceMappingURL=memManager.js.map
