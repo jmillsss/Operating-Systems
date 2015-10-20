@@ -44,6 +44,49 @@ var TSOS;
             _Kernel.krnTrace('CPU cycle');
             // TODO: Accumulate CPU usage and profiling statistics here.
             // Do the real work here. Be sure to set this.isExecuting appropriately.
+            var command;
+            var marker;
+            while (this.isExecuting) {
+                command = _Memory.mem[this.PC];
+                switch (command) {
+                    case "A9":
+                        this.Operation = "A9";
+                        this.PC++;
+                        this.Acc = _Memory.mem[this.PC], 16;
+                        this.PC++;
+                        break;
+                    case "AD":
+                        break;
+                    case "8D":
+                        break;
+                    case "6d":
+                        break;
+                    case "A2":
+                        break;
+                    case "AE":
+                        break;
+                    case "A0":
+                        break;
+                    case "AC":
+                        break;
+                    case "EA":
+                        break;
+                    case "00":
+                        break;
+                    case "EC":
+                        break;
+                    case "D0":
+                        break;
+                    case "EE":
+                        break;
+                    case "FF":
+                        break;
+                }
+            }
+        };
+        Cpu.prototype.accConst = function (num) {
+            var c = parseInt(num, 16);
+            return c;
         };
         return Cpu;
     })();
