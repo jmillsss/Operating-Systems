@@ -31,7 +31,7 @@ var _OSclock: number = 0;  // Page 23.
 
 var _Mode: number = 0;     // (currently unused)  0 = Kernel Mode, 1 = User Mode.  See page 21.
 
-var _Memory:TSOS.Memory
+var _Memory:TSOS.Memory;
 var _PCB: TSOS.PCB;
 
 
@@ -39,8 +39,8 @@ var _UserProgIn;
 var _Canvas: HTMLCanvasElement;         // Initialized in Control.hostInit().
 var _DrawingContext: any; // = _Canvas.getContext("2d");  // Assigned here for type safety, but re-initialized in Control.hostInit() for OCD and logic.
 var _StatusBar;
-var _CPUTbl: HTMLTableElement;
-var _MemoryTbl: HTMLTableElement;
+var _CPUTbl;
+var _MemoryTbl;
 
 
 

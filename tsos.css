@@ -86,7 +86,8 @@ float: right;
 #cpuTbl{
      height: auto;
      width:325px;
-     border: 2px solid black;
+     border: 2px;
+    border-color: black;
      background-color: white;
  }
 

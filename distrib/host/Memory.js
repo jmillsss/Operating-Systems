@@ -9,7 +9,7 @@ var TSOS;
             this.mem = mem;
         }
         Memory.prototype.init = function () {
-            this.mem = [356];
+            this.mem = [256];
         };
         return Memory;
     })();
