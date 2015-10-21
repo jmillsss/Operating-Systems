@@ -23,6 +23,7 @@ module TSOS{
             insertToMem=prog.slice(i, i+2);
 
             _Memory.mem[memIndex] = insertToMem;
+            _Kernel.krnTrace("Program: " + prog + "Inserted memory at: " + memIndex);
             i++;
             memIndex++;
         }
@@ -30,6 +31,7 @@ module TSOS{
          _PCB.init();
          _StdOut.putText("Progam Loaded To memory, Pid = " + _PCB.PiD );
          _OsShell.pid++;
+         Control.runPCBTbl();
          Control.editMemoryTbl();
 
      }}}

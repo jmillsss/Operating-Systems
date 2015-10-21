@@ -96,16 +96,22 @@ float: right;
     border: 2px;
     border-color: black;
 }
+#Memory{
+    height: 150px;
+    width: 325px;;
 
+    overflow: scroll;
+
+}
 #memoryTable{
     margin-top: 5px;
-    height: 200px;
+    height: 50px;
     width:325px;
     border: 2px;
     border-color: black;
     background-color: white;
-    overflow-y: scroll;
-    overflow-x: hidden;
+    overflow: scroll;
+    ;
 
 }
 

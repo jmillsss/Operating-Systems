@@ -40,26 +40,15 @@ module TSOS {
 
         public cycle(): void {
             _Kernel.krnTrace('CPU cycle');
-
-
             // TODO: Accumulate CPU usage and profiling statistics here.
             // Do the real work here. Be sure to set this.isExecuting appropriately.
-            if (this.isExecuting){
-            this.execCycle();
-            Control.initCPUTbl();
-            Control.editMemoryTbl();
-            }
-        }
-
-            public execCycle(){
+            if (this.isExecuting == true) {
                 var command;
-                var marker;
-                command = _UserProgIn.value;
-                switch (command){
+                command = _Memory.mem[this.PC] ;
+                switch (command) {
                     case "A9":
                         this.Operation = "A9";//load accumulator with a constant
                         this.PC++;
-                      //  this.Acc =_Memory.mem[this.PC], 16; //***
                         this.PC++;
                         break;
                     case "AD":
@@ -102,13 +91,13 @@ module TSOS {
                     case"FF":
                         this.Operation = "FF"
                         break;
+                }
+                Control.runPCBTbl();
+                Control.initCPUTbl();
+                Control.editMemoryTbl();
 
-
-
+            }
         }
-
-        }
-
         public accConst(num:string):number{
             var c = parseInt(num,16);
             return c;
@@ -116,6 +105,7 @@ module TSOS {
 
     }
 }
+
 /*lab 3 Questions
 
 1. Explain the difference between internal and external fragmentation.

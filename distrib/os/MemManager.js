@@ -14,6 +14,7 @@ var TSOS;
             for (var i = 0; i < prog.length; i++) {
                 insertToMem = prog.slice(i, i + 2);
                 _Memory.mem[memIndex] = insertToMem;
+                _Kernel.krnTrace("Program: " + prog + "Inserted memory at: " + memIndex);
                 i++;
                 memIndex++;
             }
@@ -21,6 +22,7 @@ var TSOS;
             _PCB.init();
             _StdOut.putText("Progam Loaded To memory, Pid = " + _PCB.PiD);
             _OsShell.pid++;
+            TSOS.Control.runPCBTbl();
             TSOS.Control.editMemoryTbl();
         };
         return MemManager;

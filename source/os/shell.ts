@@ -470,25 +470,6 @@ module TSOS {
 
             }
         }
-                /*var insertToMem;
-                var memIndex = 0;
-                for (var i = 0; i < _UserProgIn.length; i++) {
-
-                    insertToMem = prog.slice(i, i + 2);
-                    _Memory.init();
-                    _Memory.mem[memIndex] = insertToMem;
-                    _Kernel.krnTrace("Index: " + memIndex + " Value: " + _Memory.mem[memIndex].toString());
-                    //i++;
-                    memIndex++;
-                }
-                _PCB = new PCB();
-                _PCB.init();
-                _StdOut.putText("Progam Loaded To memory, Pid = " + _PCB.PiD );
-                _StdOut.advanceLine();
-                _OsShell.pid++;
-                Control.editMemoryTbl();*/
-
-
 
 
             //status
@@ -506,7 +487,12 @@ module TSOS {
 
 
         public shellRun(args){
-
+                if (args==_PCB.PiD){
+                _CPU.isExecuting=true;
+                    _CPU.PC = 0;
+        }else{
+                    _StdOut.putText("Please enter an existing P-id!")
+                }
             }
 
 

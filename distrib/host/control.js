@@ -81,7 +81,7 @@ var TSOS;
             }
         };
         //edit the table to update program input when new programs are loaded
-        //still need to handle loading op codes and running them (shell)
+        //still need to handle running the op codes from memory
         Control.editMemoryTbl = function () {
             var memSlot = 0;
             var rowI;
@@ -153,8 +153,6 @@ var TSOS;
             // ... Create and initialize the CPU (because it's part of the hardware)  ...
             _CPU = new TSOS.Cpu(); // Note: We could simulate multi-core systems by instantiating more than one instance of the CPU here.
             _CPU.init(); ////      There's more to do, like dealing with scheduling and such, but this would be a start. Pretty cool
-            //_Memory = new mem;
-            //_Memory.init();
             this.initCPUTbl();
             // ... then set the host clock pulse ...
             _hardwareClockID = setInterval(TSOS.Devices.hostClockPulse, CPU_CLOCK_INTERVAL);

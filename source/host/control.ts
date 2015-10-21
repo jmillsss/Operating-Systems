@@ -50,8 +50,7 @@ module TSOS {
             _PCBTbl= <HTMLTableElement>document.getElementById('pcbTbl');
             //call initialize for mem table
 
-           this.initMemoryTbl();
-
+            this.initMemoryTbl();
             // Get a global reference to the drawing context.
             _DrawingContext = _Canvas.getContext("2d");
 
@@ -183,8 +182,6 @@ module TSOS {
             // ... Create and initialize the CPU (because it's part of the hardware)  ...
             _CPU = new Cpu();  // Note: We could simulate multi-core systems by instantiating more than one instance of the CPU here.
             _CPU.init();////      There's more to do, like dealing with scheduling and such, but this would be a start. Pretty cool
-            //_Memory = new mem;
-            //_Memory.init();
             this.initCPUTbl();
 
 

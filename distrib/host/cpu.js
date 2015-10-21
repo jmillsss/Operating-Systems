@@ -44,62 +44,58 @@ var TSOS;
             _Kernel.krnTrace('CPU cycle');
             // TODO: Accumulate CPU usage and profiling statistics here.
             // Do the real work here. Be sure to set this.isExecuting appropriately.
-            if (this.isExecuting) {
-                this.execCycle();
+            if (this.isExecuting == true) {
+                var command;
+                command = _Memory.mem[this.PC];
+                switch (command) {
+                    case "A9":
+                        this.Operation = "A9"; //load accumulator with a constant
+                        this.PC++;
+                        this.PC++;
+                        break;
+                    case "AD":
+                        this.Operation = "AD"; //load the accuulator from memory
+                        break;
+                    case "8D":
+                        this.Operation = "8D"; //store the acc in memory
+                        break;
+                    case "6d":
+                        this.Operation = "6D"; //
+                        break;
+                    case "A2":
+                        this.Operation = "A2"; //
+                        break;
+                    case "AE":
+                        this.Operation = "AE";
+                        break;
+                    case "A0":
+                        this.Operation = "A0";
+                        break;
+                    case "AC":
+                        this.Operation = "AC";
+                        break;
+                    case "EA":
+                        this.Operation = "EA";
+                        break;
+                    case "00":
+                        this.Operation = "00";
+                        break;
+                    case "EC":
+                        this.Operation = "EC";
+                        break;
+                    case "D0":
+                        this.Operation = "D0";
+                        break;
+                    case "EE":
+                        this.Operation = "EE";
+                        break;
+                    case "FF":
+                        this.Operation = "FF";
+                        break;
+                }
+                TSOS.Control.runPCBTbl();
                 TSOS.Control.initCPUTbl();
                 TSOS.Control.editMemoryTbl();
-            }
-        };
-        Cpu.prototype.execCycle = function () {
-            var command;
-            var marker;
-            command = _UserProgIn.value;
-            switch (command) {
-                case "A9":
-                    this.Operation = "A9"; //load accumulator with a constant
-                    this.PC++;
-                    //  this.Acc =_Memory.mem[this.PC], 16; //***
-                    this.PC++;
-                    break;
-                case "AD":
-                    this.Operation = "AD"; //load the accuulator from memory
-                    break;
-                case "8D":
-                    this.Operation = "8D"; //store the acc in memory
-                    break;
-                case "6d":
-                    this.Operation = "6D"; //
-                    break;
-                case "A2":
-                    this.Operation = "A2"; //
-                    break;
-                case "AE":
-                    this.Operation = "AE";
-                    break;
-                case "A0":
-                    this.Operation = "A0";
-                    break;
-                case "AC":
-                    this.Operation = "AC";
-                    break;
-                case "EA":
-                    this.Operation = "EA";
-                    break;
-                case "00":
-                    this.Operation = "00";
-                    break;
-                case "EC":
-                    this.Operation = "EC";
-                    break;
-                case "D0":
-                    this.Operation = "D0";
-                    break;
-                case "EE":
-                    this.Operation = "EE";
-                    break;
-                case "FF":
-                    this.Operation = "FF";
-                    break;
             }
         };
         Cpu.prototype.accConst = function (num) {
