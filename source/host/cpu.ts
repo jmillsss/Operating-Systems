@@ -21,7 +21,7 @@ module TSOS {
 
         constructor(public PC: number = 0,
                     public Acc: number = 0,
-                    public Operation: string = "op",
+                    public Operation: string = "",
                     public Xreg: number = 0,
                     public Yreg: number = 0,
                     public Zflag: number = 0,
@@ -41,48 +41,66 @@ module TSOS {
         public cycle(): void {
             _Kernel.krnTrace('CPU cycle');
 
+
             // TODO: Accumulate CPU usage and profiling statistics here.
             // Do the real work here. Be sure to set this.isExecuting appropriately.
-            var command;
-            var marker;
+            this.execCycle();
+            Control.initCPUTbl();
+        }
 
-            while(this.isExecuting){
-            command = _Memory.mem[this.PC];
+            public execCycle(){
+                var command;
+                var marker;
+                command = _UserProgIn.value;
                 switch (command){
                     case "A9":
-                        this.Operation = "A9";
+                        this.Operation = "A9";//load accumulator with a constant
                         this.PC++;
-                        this.Acc =_Memory.mem[this.PC], 16; //***
+                      //  this.Acc =_Memory.mem[this.PC], 16; //***
                         this.PC++;
                         break;
                     case "AD":
+                        this.Operation = "AD";//load the accuulator from memory
+
                         break;
                     case "8D":
+                        this.Operation = "8D";//store the acc in memory
                         break;
                     case "6d":
+                        this.Operation = "6D"; //
                         break;
                     case "A2":
+                        this.Operation = "A2"; //
                         break;
                     case "AE":
+                        this.Operation = "AE";
                         break;
                     case "A0":
+                        this.Operation = "A0";
                         break;
                     case "AC":
+                        this.Operation = "AC";
                         break;
                     case "EA":
+                        this.Operation = "EA";
                         break;
                     case "00":
+                        this.Operation = "00";
                         break;
                     case "EC":
+                        this.Operation = "EC";
                         break;
                     case"D0":
+                        this.Operation = "D0";
                         break;
                     case"EE":
+                        this.Operation = "EE";
                         break;
                     case"FF":
+                        this.Operation = "FF"
                         break;
 
-                }
+
 
         }
 

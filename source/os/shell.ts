@@ -116,6 +116,9 @@ module TSOS {
                 " <string> - Allows user input for current status in Status Bar");
             this.commandList[this.commandList.length] = sc;
 
+            //run
+            sc= new ShellCommand(this.shellRun, "run", "<string> Allows user to run a program saved in memory");
+            this.commandList[this.commandList.length]= sc;
 
             // ps  - list the running processes and their IDs
             // kill <id> - kills the specified process id.
@@ -406,77 +409,88 @@ module TSOS {
         public shellLoad(args) {
 
 
-            _UserProgIn = (<HTMLTextAreaElement>document.getElementById('taProgramInput')).value;
+           var prog = (<HTMLTextAreaElement>document.getElementById('taProgramInput')).value;
 
             var accept = 0;
 
 
-            for (var i = 0; i < _UserProgIn.length; i++) {
 
-                if (_UserProgIn.charAt(i) == "0") {
+            for (var i = 0; i < prog.length; i++) {
+
+                if (prog.charAt(i) == "0") {
                 }
-                else if (_UserProgIn.charAt(i) == "1") {
+                else if (prog.charAt(i) == "1") {
                 }
-                else if (_UserProgIn.charAt(i) == "2") {
+                else if (prog.charAt(i) == "2") {
                 }
-                else if (_UserProgIn.charAt(i) == "3") {
+                else if (prog.charAt(i) == "3") {
                 }
-                else if (_UserProgIn.charAt(i) == "4") {
+                else if (prog.charAt(i) == "4") {
                 }
-                else if (_UserProgIn.charAt(i) == "5") {
+                else if (prog.charAt(i) == "5") {
                 }
-                else if (_UserProgIn.charAt(i) == "6") {
+                else if (prog.charAt(i) == "6") {
                 }
-                else if (_UserProgIn.charAt(i) == "7") {
+                else if (prog.charAt(i) == "7") {
                 }
-                else if (_UserProgIn.charAt(i) == "8") {
+                else if (prog.charAt(i) == "8") {
                 }
-                else if (_UserProgIn.charAt(i) == "9") {
+                else if (prog.charAt(i) == "9") {
                 }
-                else if (_UserProgIn.charAt(i).toLocaleLowerCase() == "a") {
+                else if (prog.charAt(i).toLocaleLowerCase() == "a") {
                 }
-                else if (_UserProgIn.charAt(i).toLocaleLowerCase() == "b") {
+                else if (prog.charAt(i).toLocaleLowerCase() == "b") {
                 }
-                else if (_UserProgIn.charAt(i).toLocaleLowerCase() == "c") {
+                else if (prog.charAt(i).toLocaleLowerCase() == "c") {
                 }
-                else if (_UserProgIn.charAt(i).toLocaleLowerCase() == "d") {
+                else if (prog.charAt(i).toLocaleLowerCase() == "d") {
                 }
-                else if (_UserProgIn.charAt(i).toLocaleLowerCase() == "e") {
+                else if (prog.charAt(i).toLocaleLowerCase() == "e") {
                 }
-                else if (_UserProgIn.charAt(i).toLocaleLowerCase() == "f") {
+                else if (prog.charAt(i).toLocaleLowerCase() == "f") {
                 }
-                else if (_UserProgIn.charAt(i) == " ") {
+                else if (prog.charAt(i) == " ") {
                 }
                 else {
                     accept += 1;
                 }
             }
-            var prog = _UserProgIn;
             if (accept > 0) {
-                _StdOut.putText("The entered code is invalid!")
+                _StdOut.putText("The entered code is invalid!");
 
-            } else {
-                _StdOut.putText("The entered code is valid!")
-                //load the process in to memory
+            } else if (accept == 0){
+                _StdOut.putText("The entered code is valid!");
                 _StdOut.advanceLine();
+                //load the process in to memory
                 prog = prog.replace(/\s+/g, '');
+                _Kernel.krnTrace("Program: " + prog);
                 var insertToMem;
-                var memIndex=0;
-                for(var i =0; i<prog.length; i++){
-                    insertToMem=prog.slice(i, i+2);
+                var memIndex = 0;
+                for (var i = 0; i < _UserProgIn.length; i++) {
+
+                    insertToMem = prog.slice(i, i + 2);
+                    _Memory.init();
                     _Memory.mem[memIndex] = insertToMem;
-                    _Kernel.krnTrace("Memory index: " + memIndex + "Value: " + + _Memory.mem[memIndex].toString());
-                    i++;
+                    _Kernel.krnTrace("Index: " + memIndex + " Value: " + _Memory.mem[memIndex].toString());
+                    //i++;
                     memIndex++;
                 }
                 _PCB = new PCB();
                 _PCB.init();
-                _StdOut.putText("Progam Loaded To memory, Pid = "  );
+                _StdOut.putText("Progam Loaded To memory, Pid = " + _PCB.PiD );
+                _StdOut.advanceLine();
+                _OsShell.pid++;
                 Control.editMemoryTbl();
             }
 
+            }
+        public loadInputProg(prog:string):void {
+
+
         }
-        //status
+
+
+            //status
         public shellStatus(args) {
             var status = "";
 
@@ -486,6 +500,11 @@ module TSOS {
 
                 }
             _StatusBar.value += "\n" + "Status: " + status;
+
+        }
+
+
+        public shellRun(args){
 
         }
         }

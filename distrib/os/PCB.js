@@ -21,8 +21,8 @@ var TSOS;
             this.Zflag = Zflag;
         }
         PCB.prototype.init = function () {
-            this.PiD = 0;
-            this.State = "";
+            this.PiD = _OsShell.pid;
+            this.State = "new";
             this.PC = 0;
             this.Acc = 0;
             this.Xreg = 0;

@@ -19,7 +19,7 @@ var TSOS;
         function Cpu(PC, Acc, Operation, Xreg, Yreg, Zflag, isExecuting) {
             if (PC === void 0) { PC = 0; }
             if (Acc === void 0) { Acc = 0; }
-            if (Operation === void 0) { Operation = "op"; }
+            if (Operation === void 0) { Operation = ""; }
             if (Xreg === void 0) { Xreg = 0; }
             if (Yreg === void 0) { Yreg = 0; }
             if (Zflag === void 0) { Zflag = 0; }
@@ -44,44 +44,59 @@ var TSOS;
             _Kernel.krnTrace('CPU cycle');
             // TODO: Accumulate CPU usage and profiling statistics here.
             // Do the real work here. Be sure to set this.isExecuting appropriately.
+            this.execCycle();
+            TSOS.Control.initCPUTbl();
+        };
+        Cpu.prototype.execCycle = function () {
             var command;
             var marker;
-            while (this.isExecuting) {
-                command = _Memory.mem[this.PC];
-                switch (command) {
-                    case "A9":
-                        this.Operation = "A9";
-                        this.PC++;
-                        this.Acc = _Memory.mem[this.PC], 16; //***
-                        this.PC++;
-                        break;
-                    case "AD":
-                        break;
-                    case "8D":
-                        break;
-                    case "6d":
-                        break;
-                    case "A2":
-                        break;
-                    case "AE":
-                        break;
-                    case "A0":
-                        break;
-                    case "AC":
-                        break;
-                    case "EA":
-                        break;
-                    case "00":
-                        break;
-                    case "EC":
-                        break;
-                    case "D0":
-                        break;
-                    case "EE":
-                        break;
-                    case "FF":
-                        break;
-                }
+            command = _UserProgIn.value;
+            switch (command) {
+                case "A9":
+                    this.Operation = "A9"; //load accumulator with a constant
+                    this.PC++;
+                    //  this.Acc =_Memory.mem[this.PC], 16; //***
+                    this.PC++;
+                    break;
+                case "AD":
+                    this.Operation = "AD"; //load the accuulator from memory
+                    break;
+                case "8D":
+                    this.Operation = "8D"; //store the acc in memory
+                    break;
+                case "6d":
+                    this.Operation = "6D"; //
+                    break;
+                case "A2":
+                    this.Operation = "A2"; //
+                    break;
+                case "AE":
+                    this.Operation = "AE";
+                    break;
+                case "A0":
+                    this.Operation = "A0";
+                    break;
+                case "AC":
+                    this.Operation = "AC";
+                    break;
+                case "EA":
+                    this.Operation = "EA";
+                    break;
+                case "00":
+                    this.Operation = "00";
+                    break;
+                case "EC":
+                    this.Operation = "EC";
+                    break;
+                case "D0":
+                    this.Operation = "D0";
+                    break;
+                case "EE":
+                    this.Operation = "EE";
+                    break;
+                case "FF":
+                    this.Operation = "FF";
+                    break;
             }
         };
         Cpu.prototype.accConst = function (num) {

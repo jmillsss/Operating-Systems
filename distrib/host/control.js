@@ -36,13 +36,12 @@ var TSOS;
             var date = month + "/" + theDate.getUTCDate() + "/" + theDate.getUTCFullYear() + " " + theDate.getHours() + ":" + theDate.getMinutes() + ":" + theDate.getSeconds();
             _StatusBar.value = "Current Date & Time: " + date;
             //get html tables
+            _UserProgIn = document.getElementById('taProgramInput');
             _MemoryTbl = document.getElementById('memoryTable');
             _CPUTbl = document.getElementById('cpuTbl');
             _PCBTbl = document.getElementById('pcbTbl');
             //call initialize for mem table
             this.initMemoryTbl();
-            _Memory = new TSOS.Memory();
-            _Memory.init();
             // Get a global reference to the drawing context.
             _DrawingContext = _Canvas.getContext("2d");
             // Enable the added-in canvas text functions (see canvastext.ts for provenance and details).
@@ -82,17 +81,25 @@ var TSOS;
         //still need to handle loading op codes and running them (shell)
         Control.editMemoryTbl = function () {
             var memSlot = 0;
+            var rowI;
+            var columnI;
             for (var i = 0; i < 256 / 8; ++i) {
-                var rowI = i;
+                rowI = i;
                 for (var x = 0; x < 9; ++x) {
-                    var columnI = x;
+                    columnI = x;
                     if (columnI == 0) {
                         var def = (i * 8).toString(16).toLocaleUpperCase();
                         _MemoryTbl.rows[rowI].cells[columnI].innerHTML = "0x0" + def;
                     }
                     else {
-                        _MemoryTbl.rows[rowI].cells[columnI].innerHTML = _Memory.mem[memSlot];
-                        memSlot++;
+                        if (_Memory.mem[memSlot] == null) {
+                            _MemoryTbl.rows[rowI].cells[columnI].innerHTML = "00";
+                            memSlot++;
+                        }
+                        else {
+                            _MemoryTbl.rows[rowI].cells[columnI].innerHTML = _Memory.mem[memSlot];
+                            memSlot++;
+                        }
                     }
                 }
             }
@@ -144,6 +151,8 @@ var TSOS;
             _CPU = new TSOS.Cpu(); // Note: We could simulate multi-core systems by instantiating more than one instance of the CPU here.
             _CPU.init(); //       There's more to do, like dealing with scheduling and such, but this would be a start. Pretty cool
             this.initCPUTbl();
+            //_Memory = new Memory();
+            //_Memory.init()
             _MemoryManager = new TSOS.MemManager();
             // ... then set the host clock pulse ...
             _hardwareClockID = setInterval(TSOS.Devices.hostClockPulse, CPU_CLOCK_INTERVAL);

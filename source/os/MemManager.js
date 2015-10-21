@@ -9,19 +9,19 @@ var TSOS;
         MemManager.prototype.loadInputProg = function (prog) {
             /* var insertToMem;
              var memIndex=0;
-            for(var i =0; 1<prog.length; i++){
+            for(var i =0; i<prog.length; i++){
     
                 insertToMem=prog.slice(i, i+2);
     
                 _Memory.mem[memIndex] = insertToMem;
-                i++;
+               // i++;
                 memIndex++;
             }
              _PCB = new PCB();
              _PCB.init();
-             _StdOut.putText("Progam Loaded To memory, Pid = "  );
+             _StdOut.putText("Progam Loaded To memory, Pid = " + _OsShell.pid );
+             _OsShell.pid++;
              Control.editMemoryTbl();
-    
     */
         };
         return MemManager;
