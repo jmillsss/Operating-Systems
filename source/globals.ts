@@ -31,10 +31,10 @@ var _OSclock: number = 0;  // Page 23.
 
 var _Mode: number = 0;     // (currently unused)  0 = Kernel Mode, 1 = User Mode.  See page 21.
 
-var _Memory:TSOS.Memory;
+var _Memory:any = null;
 var _PCB: TSOS.PCB;
 var _MemoryManager:TSOS.MemManager;
-
+var _CPU: TSOS.Cpu;
 
 
 var _UserProgIn;

@@ -1,6 +1,8 @@
 ///<reference path="../globals.ts" />
 ///<reference path="../os/canvastext.ts" />
-
+///<reference path="../os/memManager.ts"/>
+///<referece path="../host/memory.ts"/>
+///<reference path="../os/pcb.ts"/>
 /* ------------
      Control.ts
 
@@ -46,7 +48,6 @@ module TSOS {
             _MemoryTbl = <HTMLTableElement>document.getElementById('memoryTable');
             _CPUTbl = <HTMLTableElement>document.getElementById('cpuTbl');
             _PCBTbl= <HTMLTableElement>document.getElementById('pcbTbl');
-
             //call initialize for mem table
 
            this.initMemoryTbl();
@@ -91,7 +92,7 @@ module TSOS {
             }
         }
         //edit the table to update program input when new programs are loaded
-        //still need to handle loading op codes and running them (shell)
+        //still need to handle running the op codes from memory
         public static editMemoryTbl():void{
             var memSlot = 0;
             var rowI;
@@ -167,6 +168,8 @@ module TSOS {
         // Host Events
         //
         public static hostBtnStartOS_click(btn): void {
+
+
             // Disable the (passed-in) start button...
             btn.disabled = true;
 
@@ -179,12 +182,11 @@ module TSOS {
 
             // ... Create and initialize the CPU (because it's part of the hardware)  ...
             _CPU = new Cpu();  // Note: We could simulate multi-core systems by instantiating more than one instance of the CPU here.
-            _CPU.init();//       There's more to do, like dealing with scheduling and such, but this would be a start. Pretty cool
+            _CPU.init();////      There's more to do, like dealing with scheduling and such, but this would be a start. Pretty cool
+            //_Memory = new mem;
+            //_Memory.init();
             this.initCPUTbl();
-            //_Memory = new Memory();
-            //_Memory.init()
 
-            _MemoryManager = new MemManager();
 
             // ... then set the host clock pulse ...
             _hardwareClockID = setInterval(Devices.hostClockPulse, CPU_CLOCK_INTERVAL);
@@ -194,7 +196,9 @@ module TSOS {
 
 
 
-
+            _Memory = new Memory();
+            _Memory.init;
+            _MemoryManager = new MemManager();
         }
 
 

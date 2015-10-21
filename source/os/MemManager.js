@@ -7,22 +7,19 @@ var TSOS;
         function MemManager() {
         }
         MemManager.prototype.loadInputProg = function (prog) {
-            /* var insertToMem;
-             var memIndex=0;
-            for(var i =0; i<prog.length; i++){
-    
-                insertToMem=prog.slice(i, i+2);
-    
+            var insertToMem;
+            var memIndex = 0;
+            for (var i = 0; i < prog.length; i++) {
+                insertToMem = prog.slice(i, i + 2);
                 _Memory.mem[memIndex] = insertToMem;
-               // i++;
+                i++;
                 memIndex++;
             }
-             _PCB = new PCB();
-             _PCB.init();
-             _StdOut.putText("Progam Loaded To memory, Pid = " + _OsShell.pid );
-             _OsShell.pid++;
-             Control.editMemoryTbl();
-    */
+            _PCB = new PCB();
+            _PCB.init();
+            _StdOut.putText("Progam Loaded To memory, Pid = " + _PCB.PiD);
+            _OsShell.pid++;
+            Control.editMemoryTbl();
         };
         return MemManager;
     })();

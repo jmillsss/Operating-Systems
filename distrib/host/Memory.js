@@ -1,3 +1,4 @@
+///<reference path="../globals.ts" />
 /**
  * Created by jarettmiller on 10/19/15.
  */
@@ -9,7 +10,7 @@ var TSOS;
             this.mem = mem;
         }
         Memory.prototype.init = function () {
-            this.mem = [256];
+            this.mem[256];
         };
         return Memory;
     })();

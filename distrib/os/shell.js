@@ -2,6 +2,10 @@
 ///<reference path="../utils.ts" />
 ///<reference path="shellCommand.ts" />
 ///<reference path="userCommand.ts" />
+///<reference path="../host/memory.ts"/>
+///<reference path="../os/memManager.ts" />
+///<reference path="../os/pcb.ts" />
+///<reference path="../host/control.ts"/>
 /* ------------
    Shell.ts
 
@@ -342,7 +346,7 @@ var TSOS;
         };
         //load
         Shell.prototype.shellLoad = function (args) {
-            var prog = document.getElementById('taProgramInput').value;
+            var prog = _UserProgIn.value;
             var accept = 0;
             for (var i = 0; i < prog.length; i++) {
                 if (prog.charAt(i) == "0") {
@@ -383,35 +387,35 @@ var TSOS;
                     accept += 1;
                 }
             }
-            if (accept > 0) {
+            if (accept > 0 || prog == "") {
                 _StdOut.putText("The entered code is invalid!");
             }
-            else if (accept == 0) {
+            else {
                 _StdOut.putText("The entered code is valid!");
                 _StdOut.advanceLine();
                 //load the process in to memory
-                prog = prog.replace(/\s+/g, '');
+                prog = prog.replace(/\s+/g, '').toUpperCase();
                 _Kernel.krnTrace("Program: " + prog);
-                var insertToMem;
-                var memIndex = 0;
-                for (var i = 0; i < _UserProgIn.length; i++) {
-                    insertToMem = prog.slice(i, i + 2);
-                    _Memory.init();
-                    _Memory.mem[memIndex] = insertToMem;
-                    _Kernel.krnTrace("Index: " + memIndex + " Value: " + _Memory.mem[memIndex].toString());
-                    //i++;
-                    memIndex++;
-                }
-                _PCB = new TSOS.PCB();
-                _PCB.init();
-                _StdOut.putText("Progam Loaded To memory, Pid = " + _PCB.PiD);
-                _StdOut.advanceLine();
-                _OsShell.pid++;
-                TSOS.Control.editMemoryTbl();
+                _MemoryManager.loadInputProg(prog);
             }
         };
-        Shell.prototype.loadInputProg = function (prog) {
-        };
+        /*var insertToMem;
+        var memIndex = 0;
+        for (var i = 0; i < _UserProgIn.length; i++) {
+
+            insertToMem = prog.slice(i, i + 2);
+            _Memory.init();
+            _Memory.mem[memIndex] = insertToMem;
+            _Kernel.krnTrace("Index: " + memIndex + " Value: " + _Memory.mem[memIndex].toString());
+            //i++;
+            memIndex++;
+        }
+        _PCB = new PCB();
+        _PCB.init();
+        _StdOut.putText("Progam Loaded To memory, Pid = " + _PCB.PiD );
+        _StdOut.advanceLine();
+        _OsShell.pid++;
+        Control.editMemoryTbl();*/
         //status
         Shell.prototype.shellStatus = function (args) {
             var status = "";
