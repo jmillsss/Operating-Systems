@@ -30,6 +30,15 @@ var TSOS;
             this.Yreg = 0;
             this.Zflag = 0;
         };
+        PCB.prototype.updatePCB = function () {
+            this.State = "Complete";
+            this.PC = _CPU.PC;
+            this.Acc = _CPU.Acc;
+            this.Xreg = _CPU.Xreg;
+            this.Yreg = _CPU.Yreg;
+            this.Zflag = _CPU.Zflag;
+            TSOS.Control.runPCBTbl();
+        };
         return PCB;
     })();
     TSOS.PCB = PCB;

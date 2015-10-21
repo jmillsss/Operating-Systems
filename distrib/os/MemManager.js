@@ -22,7 +22,6 @@ var TSOS;
             _PCB.init();
             _StdOut.putText("Progam Loaded To memory, Pid = " + _PCB.PiD);
             _OsShell.pid++;
-            TSOS.Control.runPCBTbl();
             TSOS.Control.editMemoryTbl();
         };
         return MemManager;

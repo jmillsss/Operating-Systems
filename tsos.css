@@ -37,7 +37,7 @@ h3 {
   background-color:#DFDBC3;
   border: 3px solid red;
   cursor: default;
-    overflow: scroll;
+
 }
 
 
@@ -98,10 +98,8 @@ float: right;
 }
 #Memory{
     height: 150px;
-    width: 325px;;
-
-    overflow: scroll;
-
+    width: 330px;
+    
 }
 #memoryTable{
     margin-top: 5px;
@@ -112,6 +110,8 @@ float: right;
     background-color: white;
     overflow: scroll;
     ;
+
+;
 
 }
 

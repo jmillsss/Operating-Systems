@@ -31,7 +31,6 @@ module TSOS{
          _PCB.init();
          _StdOut.putText("Progam Loaded To memory, Pid = " + _PCB.PiD );
          _OsShell.pid++;
-         Control.runPCBTbl();
          Control.editMemoryTbl();
 
      }}}

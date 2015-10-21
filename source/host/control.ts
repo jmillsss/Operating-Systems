@@ -141,8 +141,8 @@ module TSOS {
             _PCBTbl.rows[1].cells[5].innerHTML=_PCB.Yreg;
             _PCBTbl.rows[1].cells[6].innerHTML=_PCB.Zflag;
 
-
         }
+
 
 
         public static hostLog(msg: string, source: string = "?"): void {

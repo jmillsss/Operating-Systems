@@ -46,9 +46,16 @@ module TSOS {
                 var command;
                 command = _Memory.mem[this.PC] ;
                 switch (command) {
+                    case "00":
+                        this.Operation = "00"; // Break or sys call
+                        //end running program
+                        this.isExecuting = false;
+                        _PCB.updatePCB();
+                        break;
                     case "A9":
                         this.Operation = "A9";//load accumulator with a constant
                         this.PC++;
+                        this.Acc = parseInt(_Memory.mem[this.PC],16);
                         this.PC++;
                         break;
                     case "AD":
@@ -57,6 +64,7 @@ module TSOS {
                         break;
                     case "8D":
                         this.Operation = "8D";//store the acc in memory
+
                         break;
                     case "6d":
                         this.Operation = "6D"; //Add with carry
@@ -66,18 +74,21 @@ module TSOS {
                         break;
                     case "AE":
                         this.Operation = "AE";//load X register from memory
+                        this.PC++;
+                        this.Xreg = parseInt(_Memory.mem[this.PC],16);
+                        this.PC++;
                         break;
                     case "A0":
                         this.Operation = "A0"; //Load Y register with constant
+                        this.PC++;
+                        this.Yreg=parseInt(_Memory.mem[this.PC],16);
+                        this.PC++;
                         break;
                     case "AC":
                         this.Operation = "AC"; //Load Y register from memory
                         break;
                     case "EA":
                         this.Operation = "EA"; //no operation
-                        break;
-                    case "00":
-                        this.Operation = "00"; // Break or sys call
                         break;
                     case "EC":
                         this.Operation = "EC"; //Compare a byte in memory to the x Register (if equal, sets ZFlag)
@@ -92,10 +103,9 @@ module TSOS {
                         this.Operation = "FF" //System call: print integer to X Register which is stored in the Y register OR print the 00 terminated string stored at the address to the Y Reg
                         break;
                 }
-                Control.runPCBTbl();
                 Control.initCPUTbl();
                 Control.editMemoryTbl();
-
+                //tets Program: A9 A2 A0 A9 A2 A0 A9 A2 A0 00
             }
         }
         public accConst(num:string):number{

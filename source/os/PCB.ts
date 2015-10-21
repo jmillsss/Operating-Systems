@@ -31,6 +31,17 @@ module TSOS{
         }
 
 
+        public updatePCB():void{
+            this.State="Complete";
+            this.PC=_CPU.PC;
+            this.Acc=_CPU.Acc;
+            this.Xreg=_CPU.Xreg;
+            this.Yreg=_CPU.Yreg;
+            this.Zflag=_CPU.Zflag;
+            Control.runPCBTbl();
+        }
+
+
     }
 
 
