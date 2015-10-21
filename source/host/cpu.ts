@@ -59,37 +59,37 @@ module TSOS {
                         this.Operation = "8D";//store the acc in memory
                         break;
                     case "6d":
-                        this.Operation = "6D"; //
+                        this.Operation = "6D"; //Add with carry
                         break;
                     case "A2":
-                        this.Operation = "A2"; //
+                        this.Operation = "A2"; //load X Register with constant
                         break;
                     case "AE":
-                        this.Operation = "AE";
+                        this.Operation = "AE";//load X register from memory
                         break;
                     case "A0":
-                        this.Operation = "A0";
+                        this.Operation = "A0"; //Load Y register with constant
                         break;
                     case "AC":
-                        this.Operation = "AC";
+                        this.Operation = "AC"; //Load Y register from memory
                         break;
                     case "EA":
-                        this.Operation = "EA";
+                        this.Operation = "EA"; //no operation
                         break;
                     case "00":
-                        this.Operation = "00";
+                        this.Operation = "00"; // Break or sys call
                         break;
                     case "EC":
-                        this.Operation = "EC";
+                        this.Operation = "EC"; //Compare a byte in memory to the x Register (if equal, sets ZFlag)
                         break;
                     case"D0":
-                        this.Operation = "D0";
+                        this.Operation = "D0"; // Branch n bytes if Z flag = 0
                         break;
                     case"EE":
-                        this.Operation = "EE";
+                        this.Operation = "EE"; // Increment value of a byte
                         break;
                     case"FF":
-                        this.Operation = "FF"
+                        this.Operation = "FF" //System call: print integer to X Register which is stored in the Y register OR print the 00 terminated string stored at the address to the Y Reg
                         break;
                 }
                 Control.runPCBTbl();
