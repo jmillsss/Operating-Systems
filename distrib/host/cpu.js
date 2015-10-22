@@ -72,7 +72,10 @@ var TSOS;
                     this.PC++;
                     break;
                 case "AD":
-                    this.Operation = "AD"; //load the accuulator from memory
+                    this.Operation = "AD"; //load the accumulator from memory
+                    var i = this.atMemory();
+                    this.Acc = parseInt(_Memory.mem[i], 16);
+                    this.PC++;
                     break;
                 case "8D":
                     this.Operation = "8D"; //store the acc in memory
@@ -113,12 +116,20 @@ var TSOS;
                 case "FF":
                     this.Operation = "FF"; //System call: print integer to X Register which is stored in the Y register OR print the 00 terminated string stored at the address to the Y Reg
                     break;
+                default:
+                    this.isExecuting = false;
+                    _StdOut.putText("Invalid operation:" + _Memory.mem[this.PC]);
             }
         };
-        //tets Program: A9 A2 A0 A9 A2 A0 A9 A2 A0 00
-        Cpu.prototype.accConst = function (num) {
-            var c = parseInt(num, 16);
-            return c;
+        Cpu.prototype.atMemory = function () {
+            var memSlot;
+            this.PC++;
+            var m1 = _Memory.mem[this.PC];
+            this.PC++;
+            var m2 = _Memory.mem[this.PC];
+            var memAdd = m2.concat(m1);
+            memSlot = parseInt(memAdd, 16);
+            return memSlot;
         };
         return Cpu;
     })();

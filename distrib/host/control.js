@@ -155,14 +155,14 @@ var TSOS;
             _CPU.init(); ////      There's more to do, like dealing with scheduling and such, but this would be a start. Pretty cool
             //initiate the CPU visually on OS start
             this.initCPUTbl();
+            _Memory = new TSOS.Memory();
+            _Memory.init();
+            _MemoryManager = new TSOS.MemManager();
             // ... then set the host clock pulse ...
             _hardwareClockID = setInterval(TSOS.Devices.hostClockPulse, CPU_CLOCK_INTERVAL);
             // .. and call the OS Kernel Bootstrap routine.
             _Kernel = new TSOS.Kernel();
             _Kernel.krnBootstrap(); // _GLaDOS.afterStartup() will get called in there, if configured.
-            _Memory = new TSOS.Memory();
-            _Memory.init();
-            _MemoryManager = new TSOS.MemManager();
         };
         Control.hostBtnHaltOS_click = function (btn) {
             Control.hostLog("Emergency halt", "host");

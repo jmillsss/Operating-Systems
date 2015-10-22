@@ -176,6 +176,9 @@ module TSOS {
             _CPU.init();////      There's more to do, like dealing with scheduling and such, but this would be a start. Pretty cool
            //initiate the CPU visually on OS start
             this.initCPUTbl();
+            _Memory = new Memory();
+            _Memory.init();
+            _MemoryManager = new MemManager();
             // ... then set the host clock pulse ...
             _hardwareClockID = setInterval(Devices.hostClockPulse, CPU_CLOCK_INTERVAL);
             // .. and call the OS Kernel Bootstrap routine.
@@ -184,9 +187,7 @@ module TSOS {
 
 
 
-            _Memory = new Memory();
-            _Memory.init();
-            _MemoryManager = new MemManager();
+
         }
 
 

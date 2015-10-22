@@ -348,6 +348,7 @@ var TSOS;
         Shell.prototype.shellLoad = function (args) {
             var prog = _UserProgIn.value;
             var accept = 0;
+            //accept digits 1-9 & letters A-F
             for (var i = 0; i < prog.length; i++) {
                 if (prog.charAt(i) == "0") {
                 }
