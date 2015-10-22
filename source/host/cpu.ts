@@ -56,7 +56,7 @@ module TSOS {
             //switch case for each opcode
 
                 var command;
-
+                var i;
                 command = _Memory.mem[this.PC] ;
                 switch (command) {
                     case "00":
@@ -75,19 +75,19 @@ module TSOS {
                         break;
                     case "AD":
                         this.Operation = "AD";//load the accumulator from memory
-                        var i = this.atMemory();
+                        i = this.atMemory();
                         this.Acc=parseInt(_Memory.mem[i], 16);
                         this.PC++;
                         break;
                     case "8D":
                         this.Operation = "8D";//store the acc in memory   //test prog: A9 03 8D 41 00 A9 01 8D 40 00 AC 40 00 A2 01 FF EE 40 00 AE 40 00 EC 41 00 D0 EF A9 44 8D 42 00 A9 4F 8D 43 00 A9 4E 8D 44 00 A9 45 8D 45 00 A9 00 8D 46 00 A2 02 A0 42 FF 00
-                        var i = this.atMemory();
+                        i = this.atMemory();
                         _Memory.mem[i]=this.Acc.toString(16);
                         this.PC++;
                         break;
                     case "6D":
                         this.Operation = "6D"; //Add with carry
-                        var i = this.atMemory();
+                        i = this.atMemory();
                         var x = parseInt(_Memory.mem[i], 16);
                         var y = this.Acc;
                         var acc = x + y;
@@ -114,7 +114,7 @@ module TSOS {
                         break;
                     case "AC":
                         this.Operation = "AC"; //Load Y register from memory
-                        var i = _Memory.atMemory();
+                        i = this.atMemory();
                         this.Yreg=parseInt(_Memory.mem[i], 16);
                         this.PC++;
                         break;
@@ -124,7 +124,7 @@ module TSOS {
                         break;
                     case "EC":
                         this.Operation = "EC"; //Compare a byte in memory to the x Register (if equal, sets ZFlag)
-                        var i = _Memory.atMemory();
+                        i = this.atMemory();
                         var j = parseInt(_Memory.mem[i], 16);
                         var xReg = this.Xreg;
                         if(j==xReg){
@@ -136,12 +136,39 @@ module TSOS {
                         break;
                     case"D0":
                         this.Operation = "D0"; // Branch n bytes if Z flag = 0
+                        this.PC++;
+                        i = this.PC + parseInt(_Memory.mem[this.PC]);
+                        if(this.Zflag==0){
+                            this.PC=i+1;
+                            if(this.PC>255){
+                                this.PC = 256;}
+                        }else{
+                            this.PC++;  }
                         break;
                     case"EE":
                         this.Operation = "EE"; // Increment value of a byte
+                        i = this.atMemory();
+                        var x = parseInt(_Memory[i],16);
+                        x=x+1;
+                        _Memory.mem[i]=x.toString(16);
+                        this.PC++;
                         break;
                     case"FF":
                         this.Operation = "FF"; //System call: print integer to X Register which is stored in the Y register OR print the 00 terminated string stored at the address to the Y Reg
+                        if(this.Xreg==1){
+                            _StdOut.putText(this.Yreg.toString());
+                            this.PC++;
+                        }else if (this.Xreg==2){
+                            var yReg = this.Yreg;
+                            while (_Memory.mem[yReg]!= 0){
+                                var str = String.fromCharCode(parseInt(_Memory.mem[yReg],16));
+                                _StdOut.putText(str);
+                                yReg++;}
+
+                            this.PC++;
+                        }else{
+                            _StdOut.putText("invalid entry for xreg");
+                        }
                         break;
                     default:
                         this.isExecuting=false;
