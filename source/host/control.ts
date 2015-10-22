@@ -148,17 +148,13 @@ module TSOS {
         public static hostLog(msg: string, source: string = "?"): void {
             // Note the OS CLOCK.
             var clock: number = _OSclock;
-
             // Note the REAL clock in milliseconds since January 1, 1970.
             var now: number = new Date().getTime();
-
             // Build the log string.
             var str: string = "({ clock:" + clock + ", source:" + source + ", msg:" + msg + ", now:" + now  + " })"  + "\n";
-
             // Update the log console.
             var taLog = <HTMLInputElement> document.getElementById("taHostLog");
             taLog.value = str + taLog.value;
-
             // TODO in the future: Optionally update a log database or some streaming service.
         }
 
@@ -168,23 +164,18 @@ module TSOS {
         //
         public static hostBtnStartOS_click(btn): void {
 
-
             // Disable the (passed-in) start button...
             btn.disabled = true;
-
             // .. enable the Halt and Reset buttons ...
             (<HTMLButtonElement>document.getElementById("btnHaltOS")).disabled = false;
             (<HTMLButtonElement>document.getElementById("btnReset")).disabled = false;
-
             // .. set focus on the OS console display ...
             document.getElementById("display").focus();
-
             // ... Create and initialize the CPU (because it's part of the hardware)  ...
             _CPU = new Cpu();  // Note: We could simulate multi-core systems by instantiating more than one instance of the CPU here.
             _CPU.init();////      There's more to do, like dealing with scheduling and such, but this would be a start. Pretty cool
+           //initiate the CPU visually on OS start
             this.initCPUTbl();
-
-
             // ... then set the host clock pulse ...
             _hardwareClockID = setInterval(Devices.hostClockPulse, CPU_CLOCK_INTERVAL);
             // .. and call the OS Kernel Bootstrap routine.
@@ -194,7 +185,7 @@ module TSOS {
 
 
             _Memory = new Memory();
-            _Memory.init;
+            _Memory.init();
             _MemoryManager = new MemManager();
         }
 

@@ -30,7 +30,7 @@ module TSOS{
             this.Zflag=0;
         }
 
-
+//update function to visually display PCB info after program execution terminates
         public updatePCB():void{
             this.State="Complete";
             this.PC=_CPU.PC;

@@ -42,13 +42,26 @@ module TSOS {
             _Kernel.krnTrace('CPU cycle');
             // TODO: Accumulate CPU usage and profiling statistics here.
             // Do the real work here. Be sure to set this.isExecuting appropriately.
-            if (this.isExecuting == true) {
+            //call execute CPU cycle
+            if (this.isExecuting) {
+                this.execCpuCycle();
+                //update tables while program is executing
+                Control.initCPUTbl();
+                Control.editMemoryTbl();
+
+            }
+        }
+
+            public execCpuCycle():void{
+            //switch case for each opcode
                 var command;
                 command = _Memory.mem[this.PC] ;
                 switch (command) {
                     case "00":
+                        case "0":
                         this.Operation = "00"; // Break or sys call
                         //end running program
+                            _Kernel.krnTrace("Program Pid: " + _PCB.PiD + " has terminated");
                         this.isExecuting = false;
                         _PCB.updatePCB();
                         break;
@@ -59,10 +72,12 @@ module TSOS {
                         this.PC++;
                         break;
                     case "AD":
+
                         this.Operation = "AD";//load the accuulator from memory
 
                         break;
                     case "8D":
+
                         this.Operation = "8D";//store the acc in memory
 
                         break;
@@ -101,20 +116,26 @@ module TSOS {
                         break;
                     case"FF":
                         this.Operation = "FF" //System call: print integer to X Register which is stored in the Y register OR print the 00 terminated string stored at the address to the Y Reg
-                        break;
-                }
-                Control.initCPUTbl();
-                Control.editMemoryTbl();
-                //tets Program: A9 A2 A0 A9 A2 A0 A9 A2 A0 00
+                        break;}
             }
-        }
+
+
+
         public accConst(num:string):number{
             var c = parseInt(num,16);
             return c;
         }
-
     }
 }
+
+
+
+
+
+
+
+
+
 
 /*lab 3 Questions
 

@@ -153,6 +153,7 @@ var TSOS;
             // ... Create and initialize the CPU (because it's part of the hardware)  ...
             _CPU = new TSOS.Cpu(); // Note: We could simulate multi-core systems by instantiating more than one instance of the CPU here.
             _CPU.init(); ////      There's more to do, like dealing with scheduling and such, but this would be a start. Pretty cool
+            //initiate the CPU visually on OS start
             this.initCPUTbl();
             // ... then set the host clock pulse ...
             _hardwareClockID = setInterval(TSOS.Devices.hostClockPulse, CPU_CLOCK_INTERVAL);
@@ -160,7 +161,7 @@ var TSOS;
             _Kernel = new TSOS.Kernel();
             _Kernel.krnBootstrap(); // _GLaDOS.afterStartup() will get called in there, if configured.
             _Memory = new TSOS.Memory();
-            _Memory.init;
+            _Memory.init();
             _MemoryManager = new TSOS.MemManager();
         };
         Control.hostBtnHaltOS_click = function (btn) {

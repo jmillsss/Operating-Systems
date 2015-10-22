@@ -1,5 +1,6 @@
 ///<reference path="../globals.ts" />
 ///<reference path="../host/control.ts" />
+///<reference path="../os/shell.ts"/>
 
 /**
  * Created by jarettmiller on 10/19/15.

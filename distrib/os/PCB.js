@@ -30,6 +30,7 @@ var TSOS;
             this.Yreg = 0;
             this.Zflag = 0;
         };
+        //update function to visually display PCB info after program execution terminates
         PCB.prototype.updatePCB = function () {
             this.State = "Complete";
             this.PC = _CPU.PC;
