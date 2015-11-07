@@ -1,4 +1,4 @@
-///
+///<reference path="../globals.ts" />
 /**
  * Created by jarettmiller on 10/19/15.
  */
@@ -30,8 +30,18 @@ var TSOS;
             this.Yreg = 0;
             this.Zflag = 0;
         };
+        //update function to visually display PCB info after program execution terminates
+        PCB.prototype.updatePCB = function () {
+            this.State = "Complete";
+            this.PC = _CPU.PC;
+            this.Acc = _CPU.Acc;
+            this.Xreg = _CPU.Xreg;
+            this.Yreg = _CPU.Yreg;
+            this.Zflag = _CPU.Zflag;
+            Control.runPCBTbl();
+        };
         return PCB;
     })();
     TSOS.PCB = PCB;
 })(TSOS || (TSOS = {}));
-//# sourceMappingURL=pcb.js.map
+//# sourceMappingURL=PCB.js.map

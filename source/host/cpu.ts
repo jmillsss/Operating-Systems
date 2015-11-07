@@ -52,11 +52,15 @@ module TSOS {
             }
         }
 
-            public execCpuCycle():void{
+        public execCpuCycle():void{
             //switch case for each opcode
 
                 var command;
                 var i;
+                var str;
+                var x;
+                var y;
+                var z;
                 command = _Memory.mem[this.PC] ;
                 switch (command) {
                     case "00":
@@ -88,10 +92,10 @@ module TSOS {
                     case "6D":
                         this.Operation = "6D"; //Add with carry
                         i = this.atMemory();
-                        var x = parseInt(_Memory.mem[i], 16);
-                        var y = this.Acc;
-                        var acc = x + y;
-                        this.Acc=acc;
+                        x = this.parseConst(_Memory.mem[i]);
+                        y = this.Acc;
+                        z = x + y;
+                        this.Acc=z;
                         this.PC++;
                         break;
                     case "A2":
@@ -102,7 +106,7 @@ module TSOS {
                         break;
                     case "AE":
                         this.Operation = "AE";//load X register from memory
-                        this.PC++;
+                        i = this.atMemory();
                         this.Xreg = parseInt(_Memory.mem[this.PC],16);
                         this.PC++;
                         break;
@@ -125,9 +129,9 @@ module TSOS {
                     case "EC":
                         this.Operation = "EC"; //Compare a byte in memory to the x Register (if equal, sets ZFlag)
                         i = this.atMemory();
-                        var j = parseInt(_Memory.mem[i], 16);
-                        var xReg = this.Xreg;
-                        if(j==xReg){
+                        x = this.parseConst(_Memory.mem[i]);
+                        y= this.Xreg;
+                        if(x==y){
                             this.Zflag=1;
                         }else{
                             this.Zflag=0;
@@ -136,10 +140,10 @@ module TSOS {
                         break;
                     case"D0":
                         this.Operation = "D0"; // Branch n bytes if Z flag = 0
-                        this.PC++;
-                        i = this.PC + parseInt(_Memory.mem[this.PC]);
+                        ++this.PC;
+                        var branch = this.PC + this.parseConst(_Memory.mem[this.PC]);
                         if(this.Zflag==0){
-                            this.PC=i+1;
+                            this.PC=branch+1;
                             if(this.PC>255){
                                 this.PC = 256;}
                         }else{
@@ -148,7 +152,7 @@ module TSOS {
                     case"EE":
                         this.Operation = "EE"; // Increment value of a byte
                         i = this.atMemory();
-                        var x = parseInt(_Memory[i],16);
+                        x = parseInt(_Memory.mem[i],16);
                         x=x+1;
                         _Memory.mem[i]=x.toString(16);
                         this.PC++;
@@ -159,15 +163,20 @@ module TSOS {
                             _StdOut.putText(this.Yreg.toString());
                             this.PC++;
                         }else if (this.Xreg==2){
-                            var yReg = this.Yreg;
-                            while (_Memory.mem[yReg]!= 0){
-                                var str = String.fromCharCode(parseInt(_Memory.mem[yReg],16));
+                            i = this.Yreg;
+                            z = parseInt("00");
+                            while(_Memory.mem[i]!= z) {
+
+
+                                str = String.fromCharCode(parseInt(_Memory.mem[i],16));
+
                                 _StdOut.putText(str);
-                                yReg++;}
+                                i++;}
 
                             this.PC++;
                         }else{
                             _StdOut.putText("invalid entry for xreg");
+                            this.isExecuting=false;
                         }
                         break;
                     default:
@@ -186,7 +195,14 @@ module TSOS {
             var m2 = _Memory.mem[this.PC];
             var memAdd= m2.concat(m1);
             memSlot=parseInt(memAdd,16);
-            return memSlot;
+            return memSlot
+        }
+
+
+        public parseConst(num:string):number {
+            var x = parseInt(num, 16);
+            return x;
+
         }
     }
 }

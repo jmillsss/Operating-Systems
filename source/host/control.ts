@@ -77,7 +77,7 @@ module TSOS {
 
         //set default values in memory table
         public static initMemoryTbl():void{
-            for(var i = 0; i < 256/8; ++i) {
+            for(var i = 0; i < 768/8; ++i) {
                 var row = _MemoryTbl.insertRow(i);
                 for(var x = 0; x < 9; ++x) {
                     var cell = row.insertCell(x);
@@ -96,7 +96,7 @@ module TSOS {
             var memSlot = 0;
             var rowI;
             var columnI;
-            for(var i=0; i<256/8; ++i){
+            for(var i=0; i<768/8; ++i){
                  rowI = i;
                 for(var x=0; x<9; ++x){
                     columnI = x;

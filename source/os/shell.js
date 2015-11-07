@@ -2,6 +2,10 @@
 ///<reference path="../utils.ts" />
 ///<reference path="shellCommand.ts" />
 ///<reference path="userCommand.ts" />
+///<reference path="../host/memory.ts"/>
+///<reference path="../os/memManager.ts" />
+///<reference path="../os/pcb.ts" />
+///<reference path="../host/control.ts"/>
 /* ------------
    Shell.ts
 
@@ -20,6 +24,7 @@ var TSOS;
             this.commandList = [];
             this.curses = "[fuvg],[cvff],[shpx],[phag],[pbpxfhpxre],[zbgureshpxre],[gvgf]";
             this.apologies = "[sorry]";
+            this.pid = 0;
         }
         Shell.prototype.init = function () {
             var sc;
@@ -46,8 +51,32 @@ var TSOS;
             // rot13 <string>
             sc = new TSOS.ShellCommand(this.shellRot13, "rot13", "<string> - Does rot13 obfuscation on <string>.");
             this.commandList[this.commandList.length] = sc;
+            //  wherami
+            sc = new TSOS.ShellCommand(this.wherami, "whereami", " - Shows wher you are.");
+            this.commandList[this.commandList.length] = sc;
+            // date& time
+            sc = new TSOS.ShellCommand(this.date, "date", " - Shows the curent time and date.");
+            this.commandList[this.commandList.length] = sc;
+            // man <topic>
+            sc = new TSOS.ShellCommand(this.triberaps, "triberaps", "<song> - Shows some Tribe song lyrics <song>.");
+            this.commandList[this.commandList.length] = sc;
             // prompt <string>
             sc = new TSOS.ShellCommand(this.shellPrompt, "prompt", "<string> - Sets the prompt.");
+            this.commandList[this.commandList.length] = sc;
+            //bsod
+            sc = new TSOS.ShellCommand(this.shellError, "error", " - displays an error");
+            this.commandList[this.commandList.length] = sc;
+            //load
+            sc = new TSOS.ShellCommand(this.shellLoad, "load", " - Loads from the user program input section");
+            this.commandList[this.commandList.length] = sc;
+            //status
+            sc = new TSOS.ShellCommand(this.shellStatus, "status", " <string> - Allows user input for current status in Status Bar");
+            this.commandList[this.commandList.length] = sc;
+            //run
+            sc = new TSOS.ShellCommand(this.clearMemory, "clearmem", "<string> Clears all existing memory");
+            this.commandList[this.commandList.length] = sc;
+            //run
+            sc = new TSOS.ShellCommand(this.shellRun, "run", "<string> Allows user to run a program saved in memory");
             this.commandList[this.commandList.length] = sc;
             // ps  - list the running processes and their IDs
             // kill <id> - kills the specified process id.
@@ -127,6 +156,7 @@ var TSOS;
             cmd = TSOS.Utils.trim(cmd);
             // 4.2 Record it in the return value.
             retVal.command = cmd;
+            // 5. Now create the args array from what's left.
             for (var i in tempList) {
                 var arg = TSOS.Utils.trim(tempList[i]);
                 if (arg != "") {
@@ -195,20 +225,40 @@ var TSOS;
                         _StdOut.putText("Help displays a list of (hopefully) valid commands.");
                         break;
                     case "ver":
-                        _StdOut.putText("Ver command:");
+                        _StdOut.putText("Ver displays the current running version of TSOS");
                         break;
                     case "shutdown":
-                        _StdOut.putText("Shutdown command:");
+                        _StdOut.putText("Shutdown shuts down the virtual Operating System");
                         break;
                     case "cls":
-                        _StdOut.putText("cls command:");
+                        _StdOut.putText("cls is used to clear the host log screen and reset the cursor's position");
                         break;
-                    case "Rot13":
-                        _StdOut.putText("Rot13 command:");
+                    case "rot13":
+                        _StdOut.putText("Rot13 performs obfuscation on SPECIAL words");
                         break;
-                    case "Prompt":
-                        _StdOut.putText("Prompt command:");
+                    case "prompt":
+                        _StdOut.putText("Prompt allows you to change the prompt from the default which is: >");
                         break;
+                    case "date":
+                        _StdOut.putText("date displays the current time and date");
+                        break;
+                    case "whereami":
+                        _StdOut.putText("whereami shows where u at dawg");
+                        break;
+                    case "triberaps":
+                        _StdOut.putText("triberaps show song lyrics for some songs (try 'jazz')");
+                        break;
+                    case "error":
+                        _StdOut.putText("error throws an error, shuts down the OS, and shows ");
+                        break;
+                    case "load":
+                        _StdOut.putText("load validates user code in the textbox. Only hex digits and spaces");
+                        break;
+                    case "status":
+                        _StdOut.putText("status accepts a string and shows that string in the Status Bar under the Time & Date");
+                        break;
+                    // TODO: Make descriptive
+                    // MANual page entries for the the rest of the shell commands here.
                     default:
                         _StdOut.putText("No manual entry for " + args[0] + ".");
                 }
@@ -258,6 +308,123 @@ var TSOS;
             else {
                 _StdOut.putText("Usage: prompt <string>  Please supply a string.");
             }
+        };
+        Shell.prototype.wherami = function (args) {
+            _StdOut.putText("I am currently sitting in the library working on my Operating Systems Lab (also puling out my hair).");
+        };
+        Shell.prototype.date = function (agrs) {
+            var theDate = new Date();
+            var month = theDate.getUTCMonth() + 1;
+            var date = month + "/" + theDate.getUTCDate() + "/" + theDate.getUTCFullYear() + " " + theDate.getHours() + ":" + theDate.getMinutes() + ":" + theDate.getSeconds();
+            _StdOut.putText(date);
+        };
+        //tribe called quest lyrics func
+        Shell.prototype.triberaps = function (args) {
+            if (args.length > 0) {
+                var song = args[0];
+                switch (song) {
+                    case "kickit":
+                        _StdOut.putText("YES YOU CAN! Just as long as you wipe youre feet really good on the rythym rug");
+                        break;
+                    case "jazz":
+                        _StdOut.putText("We got the jazz we got the jazz");
+                        break;
+                    case "electric":
+                        _StdOut.putText("Honey, check it out, you got me mesmerized, with your black hair and fat-ass thighs");
+                        break;
+                    default:
+                        _StdOut.putText("No song lyrics for " + args[0] + ".");
+                }
+            }
+            else {
+                _StdOut.putText("Usage: man <song>  Please supply a song.");
+            }
+        };
+        //bsod
+        Shell.prototype.shellError = function (args) {
+            _DrawingContext.rect(0, 0, _Canvas.width, _Canvas.height);
+            _DrawingContext.fillStyle = "#3090C7";
+            _DrawingContext.fill();
+            _Kernel.krnTrapError("BSOD");
+        };
+        //load
+        Shell.prototype.shellLoad = function (args) {
+            var prog = _UserProgIn.value;
+            var accept = 0;
+            //accept digits 1-9 & letters A-F
+            for (var i = 0; i < prog.length; i++) {
+                if (prog.charAt(i) == "0") {
+                }
+                else if (prog.charAt(i) == "1") {
+                }
+                else if (prog.charAt(i) == "2") {
+                }
+                else if (prog.charAt(i) == "3") {
+                }
+                else if (prog.charAt(i) == "4") {
+                }
+                else if (prog.charAt(i) == "5") {
+                }
+                else if (prog.charAt(i) == "6") {
+                }
+                else if (prog.charAt(i) == "7") {
+                }
+                else if (prog.charAt(i) == "8") {
+                }
+                else if (prog.charAt(i) == "9") {
+                }
+                else if (prog.charAt(i).toLocaleLowerCase() == "a") {
+                }
+                else if (prog.charAt(i).toLocaleLowerCase() == "b") {
+                }
+                else if (prog.charAt(i).toLocaleLowerCase() == "c") {
+                }
+                else if (prog.charAt(i).toLocaleLowerCase() == "d") {
+                }
+                else if (prog.charAt(i).toLocaleLowerCase() == "e") {
+                }
+                else if (prog.charAt(i).toLocaleLowerCase() == "f") {
+                }
+                else if (prog.charAt(i) == " ") {
+                }
+                else {
+                    accept += 1;
+                }
+            }
+            if (accept > 0 || prog == "") {
+                _StdOut.putText("The entered code is invalid!");
+            }
+            else {
+                _StdOut.putText("The entered code is valid!");
+                _StdOut.advanceLine();
+                //load the process in to memory
+                prog = prog.replace(/\s+/g, '').toUpperCase();
+                _Kernel.krnTrace("Program: " + prog);
+                _MemoryManager.loadInputProg(prog);
+            }
+        };
+        //status
+        Shell.prototype.shellStatus = function (args) {
+            var status = "";
+            for (var i = 0; i < args.length; i++) {
+                status += args[i] + " ";
+            }
+            _StatusBar.value += "\n" + "Status: " + status;
+        };
+        Shell.prototype.shellRun = function (args) {
+            if (args == _PCB.PiD) {
+                _CPU.isExecuting = true;
+                _CPU.PC = 0;
+            }
+            else {
+                _StdOut.putText("Please enter an existing P-id!");
+            }
+        };
+        Shell.prototype.clearMemory = function (args) {
+            for (var i = 0; i < 768; i++) {
+                _Memory.mem[i] = "00";
+            }
+            TSOS.Control.editMemoryTbl();
         };
         return Shell;
     })();

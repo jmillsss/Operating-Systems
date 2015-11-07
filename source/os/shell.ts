@@ -121,8 +121,13 @@ module TSOS {
             this.commandList[this.commandList.length] = sc;
 
             //run
+            sc= new ShellCommand(this.clearMemory, "clearmem", "<string> Clears all existing memory");
+            this.commandList[this.commandList.length]= sc;
+
+            //run
             sc= new ShellCommand(this.shellRun, "run", "<string> Allows user to run a program saved in memory");
             this.commandList[this.commandList.length]= sc;
+
 
             // ps  - list the running processes and their IDs
             // kill <id> - kills the specified process id.
@@ -496,6 +501,16 @@ module TSOS {
                 }
             }
 
+
+        public clearMemory(args){
+
+
+            for(var i=0; i<768; i++){
+
+                _Memory.mem[i]="00";
+            }
+            Control.editMemoryTbl();
+        }
 
          }
     }

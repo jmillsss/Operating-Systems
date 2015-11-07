@@ -1,5 +1,8 @@
 ///<reference path="../globals.ts" />
 ///<reference path="../os/canvastext.ts" />
+///<reference path="../os/memManager.ts"/>
+///<referece path="../host/memory.ts"/>
+///<reference path="../os/pcb.ts"/>
 /* ------------
      Control.ts
 
@@ -30,6 +33,18 @@ var TSOS;
             // This is called from index.html's onLoad event via the onDocumentLoad function pointer.
             // Get a global reference to the canvas.  TODO: Should we move this stuff into a Display Device Driver?
             _Canvas = document.getElementById('display');
+            _StatusBar = document.getElementById('taskBarDisplay');
+            var theDate = new Date();
+            var month = theDate.getUTCMonth() + 1;
+            var date = month + "/" + theDate.getUTCDate() + "/" + theDate.getUTCFullYear() + " " + theDate.getHours() + ":" + theDate.getMinutes() + ":" + theDate.getSeconds();
+            _StatusBar.value = "Current Date & Time: " + date;
+            //get html tables
+            _UserProgIn = document.getElementById('taProgramInput');
+            _MemoryTbl = document.getElementById('memoryTable');
+            _CPUTbl = document.getElementById('cpuTbl');
+            _PCBTbl = document.getElementById('pcbTbl');
+            //call initialize for mem table
+            this.initMemoryTbl();
             // Get a global reference to the drawing context.
             _DrawingContext = _Canvas.getContext("2d");
             // Enable the added-in canvas text functions (see canvastext.ts for provenance and details).
@@ -48,6 +63,68 @@ var TSOS;
                 _GLaDOS = new Glados();
                 _GLaDOS.init();
             }
+        };
+        //set default values in memory table
+        Control.initMemoryTbl = function () {
+            for (var i = 0; i < 768 / 8; ++i) {
+                var row = _MemoryTbl.insertRow(i);
+                for (var x = 0; x < 9; ++x) {
+                    var cell = row.insertCell(x);
+                    if (x == 0) {
+                        var def = (i * 8).toString(16).toLocaleUpperCase();
+                        cell.innerHTML = "0x0" + def;
+                    }
+                    else {
+                        cell.innerHTML = "00";
+                    }
+                }
+            }
+        };
+        //edit the table to update program input when new programs are loaded
+        //still need to handle running the op codes from memory
+        Control.editMemoryTbl = function () {
+            var memSlot = 0;
+            var rowI;
+            var columnI;
+            for (var i = 0; i < 768 / 8; ++i) {
+                rowI = i;
+                for (var x = 0; x < 9; ++x) {
+                    columnI = x;
+                    if (columnI == 0) {
+                        var def = (i * 8).toString(16).toLocaleUpperCase();
+                        _MemoryTbl.rows[rowI].cells[columnI].innerHTML = "0x0" + def;
+                    }
+                    else {
+                        if (_Memory.mem[memSlot] == null) {
+                            _MemoryTbl.rows[rowI].cells[columnI].innerHTML = "00";
+                            memSlot++;
+                        }
+                        else {
+                            _MemoryTbl.rows[rowI].cells[columnI].innerHTML = _Memory.mem[memSlot];
+                            memSlot++;
+                        }
+                    }
+                }
+            }
+        };
+        //populate the cpu table from values stored in the cpu
+        Control.initCPUTbl = function () {
+            _CPUTbl.rows[1].cells[0].innerHTML = _CPU.PC;
+            _CPUTbl.rows[1].cells[1].innerHTML = _CPU.Acc;
+            _CPUTbl.rows[1].cells[2].innerHTML = _CPU.Operation;
+            _CPUTbl.rows[1].cells[3].innerHTML = _CPU.Xreg;
+            _CPUTbl.rows[1].cells[4].innerHTML = _CPU.Yreg;
+            _CPUTbl.rows[1].cells[5].innerHTML = _CPU.Zflag;
+        };
+        //populate & edit the values in the pcb table while programs run
+        Control.runPCBTbl = function () {
+            _PCBTbl.rows[1].cells[0].innerHTML = _PCB.PiD;
+            _PCBTbl.rows[1].cells[1].innerHTML = _PCB.State;
+            _PCBTbl.rows[1].cells[2].innerHTML = _PCB.PC;
+            _PCBTbl.rows[1].cells[3].innerHTML = _PCB.Acc;
+            _PCBTbl.rows[1].cells[4].innerHTML = _PCB.Xreg;
+            _PCBTbl.rows[1].cells[5].innerHTML = _PCB.Yreg;
+            _PCBTbl.rows[1].cells[6].innerHTML = _PCB.Zflag;
         };
         Control.hostLog = function (msg, source) {
             if (source === void 0) { source = "?"; }
@@ -75,7 +152,12 @@ var TSOS;
             document.getElementById("display").focus();
             // ... Create and initialize the CPU (because it's part of the hardware)  ...
             _CPU = new Cpu(); // Note: We could simulate multi-core systems by instantiating more than one instance of the CPU here.
-            _CPU.init(); //       There's more to do, like dealing with scheduling and such, but this would be a start. Pretty cool.
+            _CPU.init(); ////      There's more to do, like dealing with scheduling and such, but this would be a start. Pretty cool
+            //initiate the CPU visually on OS start
+            this.initCPUTbl();
+            _Memory = new TSOS.Memory();
+            _Memory.init();
+            _MemoryManager = new TSOS.MemManager();
             // ... then set the host clock pulse ...
             _hardwareClockID = setInterval(Devices.hostClockPulse, CPU_CLOCK_INTERVAL);
             // .. and call the OS Kernel Bootstrap routine.

@@ -9,12 +9,16 @@ module TSOS{
 
     export class Memory{
 
-        constructor(public mem=[256]){
+        constructor(public mem=[768],
+                    public memBase: number = 0,
+                    public memLimit: number = 768){
 
         }
 
         public init():void{
-            this.mem[256];
+            this.mem[786];
+            this.memBase=0;
+            this.memLimit=768;
         }
 
 
