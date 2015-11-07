@@ -5,18 +5,18 @@
 var TSOS;
 (function (TSOS) {
     var Memory = (function () {
-        function Memory(mem, base, limit) {
+        function Memory(mem, memBase, memLimit) {
             if (mem === void 0) { mem = [768]; }
-            if (base === void 0) { base = 0; }
-            if (limit === void 0) { limit = 768; }
+            if (memBase === void 0) { memBase = 0; }
+            if (memLimit === void 0) { memLimit = 768; }
             this.mem = mem;
-            this.base = base;
-            this.limit = limit;
+            this.memBase = memBase;
+            this.memLimit = memLimit;
         }
         Memory.prototype.init = function () {
             this.mem[786];
-            this.base = 0;
-            this.limit = 768;
+            this.memBase = 0;
+            this.memLimit = 768;
         };
         return Memory;
     })();

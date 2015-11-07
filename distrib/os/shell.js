@@ -72,6 +72,9 @@ var TSOS;
             //status
             sc = new TSOS.ShellCommand(this.shellStatus, "status", " <string> - Allows user input for current status in Status Bar");
             this.commandList[this.commandList.length] = sc;
+            //clear memory
+            sc = new TSOS.ShellCommand(this.clearMemory, "clearmem", "<string> Clears all existing memory");
+            this.commandList[this.commandList.length] = sc;
             //run
             sc = new TSOS.ShellCommand(this.shellRun, "run", "<string> Allows user to run a program saved in memory");
             this.commandList[this.commandList.length] = sc;
@@ -416,6 +419,12 @@ var TSOS;
             else {
                 _StdOut.putText("Please enter an existing P-id!");
             }
+        };
+        Shell.prototype.clearMemory = function (args) {
+            for (var i = 0; i < 768; i++) {
+                _Memory.mem[i] = "00";
+            }
+            TSOS.Control.editMemoryTbl();
         };
         return Shell;
     })();

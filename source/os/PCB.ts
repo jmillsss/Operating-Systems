@@ -1,4 +1,5 @@
 ///<reference path="../globals.ts" />
+///<reference path="../host/control.ts" />
 
 
 /**
@@ -15,7 +16,9 @@ module TSOS{
                     public Acc: number = 0,
                     public Xreg: number = 0,
                     public Yreg: number = 0,
-                    public Zflag: number = 0
+                    public Zflag: number = 0,
+                    public base: number=0,
+                    public limit: number=0
                     ) {
 
         }
@@ -28,6 +31,8 @@ module TSOS{
             this.Xreg=0;
             this.Yreg=0;
             this.Zflag=0;
+          //  this.base=base;
+            //this.limit=limit;
         }
 
 //update function to visually display PCB info after program execution terminates

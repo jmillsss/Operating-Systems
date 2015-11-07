@@ -1,4 +1,5 @@
 ///<reference path="../globals.ts" />
+///<reference path="../host/control.ts" />
 /* ------------
      CPU.ts
 
@@ -48,8 +49,8 @@ var TSOS;
             if (this.isExecuting) {
                 this.execCpuCycle();
                 //update tables while program is executing
-                Control.initCPUTbl();
-                Control.editMemoryTbl();
+                TSOS.Control.initCPUTbl();
+                TSOS.Control.editMemoryTbl();
             }
         };
         Cpu.prototype.execCpuCycle = function () {

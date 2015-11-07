@@ -7,7 +7,13 @@
 var TSOS;
 (function (TSOS) {
     var MemManager = (function () {
-        function MemManager() {
+        function MemManager(memBlock, blockBases, blockLimits) {
+            if (memBlock === void 0) { memBlock = 0; }
+            if (blockBases === void 0) { blockBases = [0, 256, 512]; }
+            if (blockLimits === void 0) { blockLimits = [256, 512.768]; }
+            this.memBlock = memBlock;
+            this.blockBases = blockBases;
+            this.blockLimits = blockLimits;
         }
         MemManager.prototype.loadInputProg = function (prog) {
             var insertToMem;

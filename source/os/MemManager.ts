@@ -13,7 +13,11 @@ module TSOS{
     export class MemManager{
 
 
-        constructor(){}
+        constructor(public memBlock: number=0,
+                    public blockBases=[0,256,512],
+                    public blockLimits=[256,512.768]
+
+        ){}
 
      public loadInputProg(prog:string):void{
 

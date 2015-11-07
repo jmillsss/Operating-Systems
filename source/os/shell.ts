@@ -120,7 +120,7 @@ module TSOS {
                 " <string> - Allows user input for current status in Status Bar");
             this.commandList[this.commandList.length] = sc;
 
-            //run
+            //clear memory
             sc= new ShellCommand(this.clearMemory, "clearmem", "<string> Clears all existing memory");
             this.commandList[this.commandList.length]= sc;
 

@@ -1,11 +1,12 @@
 ///<reference path="../globals.ts" />
+///<reference path="../host/control.ts" />
 /**
  * Created by jarettmiller on 10/19/15.
  */
 var TSOS;
 (function (TSOS) {
     var PCB = (function () {
-        function PCB(PiD, State, PC, Acc, Xreg, Yreg, Zflag) {
+        function PCB(PiD, State, PC, Acc, Xreg, Yreg, Zflag, base, limit) {
             if (PiD === void 0) { PiD = 0; }
             if (State === void 0) { State = ""; }
             if (PC === void 0) { PC = 0; }
@@ -13,6 +14,8 @@ var TSOS;
             if (Xreg === void 0) { Xreg = 0; }
             if (Yreg === void 0) { Yreg = 0; }
             if (Zflag === void 0) { Zflag = 0; }
+            if (base === void 0) { base = 0; }
+            if (limit === void 0) { limit = 0; }
             this.PiD = PiD;
             this.State = State;
             this.PC = PC;
@@ -20,6 +23,8 @@ var TSOS;
             this.Xreg = Xreg;
             this.Yreg = Yreg;
             this.Zflag = Zflag;
+            this.base = base;
+            this.limit = limit;
         }
         PCB.prototype.init = function () {
             this.PiD = _OsShell.pid;
@@ -29,6 +34,8 @@ var TSOS;
             this.Xreg = 0;
             this.Yreg = 0;
             this.Zflag = 0;
+            //  this.base=base;
+            //this.limit=limit;
         };
         //update function to visually display PCB info after program execution terminates
         PCB.prototype.updatePCB = function () {
@@ -38,10 +45,10 @@ var TSOS;
             this.Xreg = _CPU.Xreg;
             this.Yreg = _CPU.Yreg;
             this.Zflag = _CPU.Zflag;
-            Control.runPCBTbl();
+            TSOS.Control.runPCBTbl();
         };
         return PCB;
     })();
     TSOS.PCB = PCB;
 })(TSOS || (TSOS = {}));
-//# sourceMappingURL=PCB.js.map
+//# sourceMappingURL=pcb.js.map
