@@ -128,6 +128,10 @@ module TSOS {
             sc= new ShellCommand(this.shellRun, "run", "<string> Allows user to run a program saved in memory");
             this.commandList[this.commandList.length]= sc;
 
+            //kill
+            //run
+            sc= new ShellCommand(this.shellKill, "kill", "<string> Kills the running program");
+            this.commandList[this.commandList.length]= sc;
 
             // ps  - list the running processes and their IDs
             // kill <id> - kills the specified process id.
@@ -480,6 +484,11 @@ module TSOS {
                 _Memory.mem[i]="00";
             }
             Control.editMemoryTbl();
+        }
+
+        public shellKill(args){
+             _CPU.isExecuting==false;
+
         }
 
          }
