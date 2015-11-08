@@ -110,18 +110,21 @@ var TSOS;
                 }
             }
         };
-        Control.insertReadyQTbl = function () {
+        Control.editReadyQTbl = function () {
             var thisPCB;
-            for (var i = 0; i < _ReadyQ.getSize(); i++) {
-                thisPCB = _ReadyQ.getIndex(i);
+            for (var i = 1; i < _ReadyQ.getSize(); i++) {
+                thisPCB = _ReadyQ.getIndex(i - 1);
                 var tblrow = _ReadyQTbl.insertRow(i + 1);
                 var tblrownum = i + 1;
                 for (var x = 0; x < 5; x++) {
                     var cell = tblrow.insertCell(x);
                 }
+                _ReadyQTbl.rows[tblrownum].cells[0].innerHTML = thisPCB.PiD;
+                _ReadyQTbl.rows[tblrownum].cells[1].innerHTML = thisPCB.State;
+                _ReadyQTbl.rows[tblrownum].cells[2].innerHTML = thisPCB.base;
+                _ReadyQTbl.rows[tblrownum].cells[3].innerHTML = thisPCB.limit;
+                _ReadyQTbl.rows[tblrownum].cells[4].innerHTML = thisPCB.PC;
             }
-        };
-        Control.updateReadyQTbl = function () {
         };
         //populate the cpu table from values stored in the cpu
         Control.initCPUTbl = function () {
@@ -134,13 +137,13 @@ var TSOS;
         };
         //populate & edit the values in the pcb table while programs run
         Control.runPCBTbl = function () {
-            _PCBTbl.rows[1].cells[0].innerHTML = _PCB.PiD;
-            _PCBTbl.rows[1].cells[1].innerHTML = _PCB.State;
-            _PCBTbl.rows[1].cells[2].innerHTML = _PCB.PC;
-            _PCBTbl.rows[1].cells[3].innerHTML = _PCB.Acc;
-            _PCBTbl.rows[1].cells[4].innerHTML = _PCB.Xreg;
-            _PCBTbl.rows[1].cells[5].innerHTML = _PCB.Yreg;
-            _PCBTbl.rows[1].cells[6].innerHTML = _PCB.Zflag;
+            _PCBTbl.rows[1].cells[0].innerHTML = _CPU.thisPCB.PiD;
+            _PCBTbl.rows[1].cells[1].innerHTML = _CPU.thisPCB.State;
+            _PCBTbl.rows[1].cells[2].innerHTML = _CPU.thisPCB.PC;
+            _PCBTbl.rows[1].cells[3].innerHTML = _CPU.thisPCB.Acc;
+            _PCBTbl.rows[1].cells[4].innerHTML = _CPU.thisPCB.Xreg;
+            _PCBTbl.rows[1].cells[5].innerHTML = _CPU.thisPCB.Yreg;
+            _PCBTbl.rows[1].cells[6].innerHTML = _CPU.thisPCB.Zflag;
         };
         Control.hostLog = function (msg, source) {
             if (source === void 0) { source = "?"; }

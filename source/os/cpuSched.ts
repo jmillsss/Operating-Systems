@@ -11,7 +11,7 @@ module TSOS {
 
     export class cpuSched{
         constructor(
-            public quantum: number=4,
+            public quantum: number=6,
             public tab: number=0
         ){}
 

@@ -17,7 +17,7 @@
 var TSOS;
 (function (TSOS) {
     var Cpu = (function () {
-        function Cpu(PC, Acc, Operation, Xreg, Yreg, Zflag, isExecuting) {
+        function Cpu(PC, Acc, Operation, Xreg, Yreg, Zflag, isExecuting, thisPCB) {
             if (PC === void 0) { PC = 0; }
             if (Acc === void 0) { Acc = 0; }
             if (Operation === void 0) { Operation = ""; }
@@ -25,6 +25,7 @@ var TSOS;
             if (Yreg === void 0) { Yreg = 0; }
             if (Zflag === void 0) { Zflag = 0; }
             if (isExecuting === void 0) { isExecuting = false; }
+            if (thisPCB === void 0) { thisPCB = null; }
             this.PC = PC;
             this.Acc = Acc;
             this.Operation = Operation;
@@ -32,6 +33,7 @@ var TSOS;
             this.Yreg = Yreg;
             this.Zflag = Zflag;
             this.isExecuting = isExecuting;
+            this.thisPCB = thisPCB;
         }
         Cpu.prototype.init = function () {
             this.PC = 0;
@@ -40,6 +42,7 @@ var TSOS;
             this.Yreg = 0;
             this.Zflag = 0;
             this.isExecuting = false;
+            this.thisPCB = null;
         };
         Cpu.prototype.cycle = function () {
             _Kernel.krnTrace('CPU cycle');
@@ -47,6 +50,8 @@ var TSOS;
             // Do the real work here. Be sure to set this.isExecuting appropriately.
             //call execute CPU cycle
             if (this.isExecuting) {
+                if (this.thisPCB == null) {
+                }
                 this.execCpuCycle();
                 //update tables while program is executing
                 TSOS.Control.initCPUTbl();

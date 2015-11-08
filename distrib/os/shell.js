@@ -78,6 +78,12 @@ var TSOS;
             //run
             sc = new TSOS.ShellCommand(this.shellRun, "run", "<string> Allows user to run a program saved in memory");
             this.commandList[this.commandList.length] = sc;
+            //quantum
+            sc = new TSOS.ShellCommand(this.shellQuantum, "quantum", "<int> - Allows user to run a program saved in memory");
+            this.commandList[this.commandList.length] = sc;
+            //kill
+            sc = new TSOS.ShellCommand(this.shellKill, "kill", "<int> Kills the running program");
+            this.commandList[this.commandList.length] = sc;
             // ps  - list the running processes and their IDs
             // kill <id> - kills the specified process id.
             //
@@ -393,6 +399,21 @@ var TSOS;
                 _Memory.mem[i] = "00";
             }
             TSOS.Control.editMemoryTbl();
+        };
+        Shell.prototype.shellQuantum = function (args) {
+            var quantum;
+            if (isNaN(args) || (quantum = parseInt(args)) <= 0) {
+                _StdOut.putText("Quantum value must be an integer > 0");
+                _StdOut.advanceLine();
+            }
+            else {
+                _Scheduler.quantum = quantum;
+                _StdOut.putText("New quantum value: " + quantum);
+                _StdOut.advanceLine();
+            }
+        };
+        Shell.prototype.shellKill = function (args) {
+            _CPU.isExecuting == false;
         };
         return Shell;
     })();

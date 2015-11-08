@@ -50,6 +50,8 @@ var TSOS;
             // Do the real work here. Be sure to set this.isExecuting appropriately.
             //call execute CPU cycle
             if (this.isExecuting) {
+                if (this.thisPCB == null) {
+                }
                 this.execCpuCycle();
                 //update tables while program is executing
                 TSOS.Control.initCPUTbl();

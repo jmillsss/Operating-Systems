@@ -128,9 +128,12 @@ module TSOS {
             sc= new ShellCommand(this.shellRun, "run", "<string> Allows user to run a program saved in memory");
             this.commandList[this.commandList.length]= sc;
 
+            //quantum
+            sc= new ShellCommand(this.shellQuantum, "quantum", "<int> - Allows user to run a program saved in memory");
+            this.commandList[this.commandList.length]= sc;
+
             //kill
-            //run
-            sc= new ShellCommand(this.shellKill, "kill", "<string> Kills the running program");
+            sc= new ShellCommand(this.shellKill, "kill", "<int> Kills the running program");
             this.commandList[this.commandList.length]= sc;
 
             // ps  - list the running processes and their IDs
@@ -484,6 +487,19 @@ module TSOS {
                 _Memory.mem[i]="00";
             }
             Control.editMemoryTbl();
+        }
+
+        public shellQuantum(args){
+            var quantum;
+
+            if(isNaN(args) || (quantum=parseInt(args))<=0){
+                _StdOut.putText("Quantum value must be an integer > 0");
+                _StdOut.advanceLine();
+            }else{
+                _Scheduler.quantum=quantum;
+                _StdOut.putText("New quantum value: "+ quantum);
+                _StdOut.advanceLine();
+            }
         }
 
         public shellKill(args){
