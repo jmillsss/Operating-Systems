@@ -22,6 +22,8 @@ module TSOS {
         public krnBootstrap() {      // Page 8. {
             Control.hostLog("bootstrap", "host");  // Use hostLog because we ALWAYS want this, even if _Trace is off.
 
+
+
             // Initialize our global queues.
             _KernelInterruptQueue = new Queue();  // A (currently) non-priority queue for interrupt requests (IRQs).
             _KernelBuffers = new Array();         // Buffers... for the kernel.
@@ -31,6 +33,9 @@ module TSOS {
             _Console = new Console();          // The command line interface / console I/O device.
             _Console.init();
 
+            //init the ready queue
+            _ReadyQ=new Queue();
+            _Scheduler = new cpuSched();
             // Initialize standard input and output to the _Console.
             _StdIn  = _Console;
             _StdOut = _Console;

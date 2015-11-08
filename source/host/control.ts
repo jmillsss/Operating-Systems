@@ -2,7 +2,10 @@
 ///<reference path="../os/canvastext.ts" />
 ///<reference path="../os/memManager.ts"/>
 ///<referece path="../host/memory.ts"/>
-///<reference path="../os/pcb.ts"/>
+///<reference path="../host/cpu.ts"/>
+///<reference path="../host/devices.ts"/>
+///<reference path="../os/kernel.ts"/>
+
 /* ------------
      Control.ts
 
@@ -48,6 +51,7 @@ module TSOS {
             _MemoryTbl = <HTMLTableElement>document.getElementById('memoryTable');
             _CPUTbl = <HTMLTableElement>document.getElementById('cpuTbl');
             _PCBTbl= <HTMLTableElement>document.getElementById('pcbTbl');
+            _ReadyQTbl=<HTMLTableElement>document.getElementById('readyQueueTbl');
             //call initialize for mem table
 
             this.initMemoryTbl();
@@ -116,7 +120,33 @@ module TSOS {
                 }
             }
 
+        public static insertReadyQTbl(): void{
 
+            var thisPCB;
+
+            for (var i=0; i<_ReadyQ.getSize(); i++){
+                thisPCB=_ReadyQ.getIndex(i);
+                var tblrow = _ReadyQTbl.insertRow(i+1);
+                var tblrownum = i+1;
+                for(var x=0; x< 5; x++){
+
+                    var cell = tblrow.insertCell(x);
+
+                }
+
+                /*_ReadyQTbl.rows[tblrownum].cells[0].innerHTML;
+                _ReadyQTbl.rows[tblrownum].cells[1].innerHTML;
+                _ReadyQTbl.rows[tblrownum].cells[2].innerHTML=;
+                _ReadyQTbl.rows[tblrownum].cells[3].innerHTML;
+                _ReadyQTbl.rows[tblrownum].cells[4].innerHTML;
+*/
+            }
+        }
+
+        public static updateReadyQTbl():void{
+
+
+        }
 
 
            //populate the cpu table from values stored in the cpu
@@ -183,6 +213,7 @@ module TSOS {
             _hardwareClockID = setInterval(Devices.hostClockPulse, CPU_CLOCK_INTERVAL);
             // .. and call the OS Kernel Bootstrap routine.
             _Kernel = new Kernel();
+            _Mode=1;
             _Kernel.krnBootstrap();  // _GLaDOS.afterStartup() will get called in there, if configured.
 
 

@@ -26,7 +26,8 @@ module TSOS {
                     public Xreg: number = 0,
                     public Yreg: number = 0,
                     public Zflag: number = 0,
-                    public isExecuting: boolean = false) {
+                    public isExecuting: boolean = false,
+                    public thisPCB:any = null) {
 
         }
 
@@ -37,6 +38,7 @@ module TSOS {
             this.Yreg = 0;
             this.Zflag = 0;
             this.isExecuting = false;
+            this.thisPCB=null;
         }
 
         public cycle(): void {

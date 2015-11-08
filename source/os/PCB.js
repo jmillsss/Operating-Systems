@@ -29,7 +29,7 @@ var TSOS;
         PCB.prototype.init = function (base, limit) {
             this.PiD = _OsShell.pid;
             this.State = "new";
-            this.PC = 0;
+            this.PC = this.base;
             this.Acc = 0;
             this.Xreg = 0;
             this.Yreg = 0;

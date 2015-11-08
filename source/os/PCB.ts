@@ -26,13 +26,14 @@ module TSOS{
         public init(base,limit):void {
             this.PiD = _OsShell.pid;
             this.State="new";
-            this.PC=0;
+            this.PC=this.base;
             this.Acc=0
             this.Xreg=0;
             this.Yreg=0;
             this.Zflag=0;
             this.base=base;
-            this.limit=limit;
+            this.limit=limit
+
         }
 
 //update function to visually display PCB info after program execution terminates

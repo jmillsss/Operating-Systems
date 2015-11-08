@@ -2,7 +2,9 @@
 ///<reference path="../os/canvastext.ts" />
 ///<reference path="../os/memManager.ts"/>
 ///<referece path="../host/memory.ts"/>
-///<reference path="../os/pcb.ts"/>
+///<reference path="../host/cpu.ts"/>
+///<reference path="../host/devices.ts"/>
+///<reference path="../os/kernel.ts"/>
 /* ------------
      Control.ts
 
@@ -43,6 +45,7 @@ var TSOS;
             _MemoryTbl = document.getElementById('memoryTable');
             _CPUTbl = document.getElementById('cpuTbl');
             _PCBTbl = document.getElementById('pcbTbl');
+            _ReadyQTbl = document.getElementById('readyQueueTbl');
             //call initialize for mem table
             this.initMemoryTbl();
             // Get a global reference to the drawing context.
@@ -107,6 +110,19 @@ var TSOS;
                 }
             }
         };
+        Control.insertReadyQTbl = function () {
+            var thisPCB;
+            for (var i = 0; i < _ReadyQ.getSize(); i++) {
+                thisPCB = _ReadyQ.getIndex(i);
+                var tblrow = _ReadyQTbl.insertRow(i + 1);
+                var tblrownum = i + 1;
+                for (var x = 0; x < 5; x++) {
+                    var cell = tblrow.insertCell(x);
+                }
+            }
+        };
+        Control.updateReadyQTbl = function () {
+        };
         //populate the cpu table from values stored in the cpu
         Control.initCPUTbl = function () {
             _CPUTbl.rows[1].cells[0].innerHTML = _CPU.PC;
@@ -151,7 +167,7 @@ var TSOS;
             // .. set focus on the OS console display ...
             document.getElementById("display").focus();
             // ... Create and initialize the CPU (because it's part of the hardware)  ...
-            _CPU = new Cpu(); // Note: We could simulate multi-core systems by instantiating more than one instance of the CPU here.
+            _CPU = new TSOS.Cpu(); // Note: We could simulate multi-core systems by instantiating more than one instance of the CPU here.
             _CPU.init(); ////      There's more to do, like dealing with scheduling and such, but this would be a start. Pretty cool
             //initiate the CPU visually on OS start
             this.initCPUTbl();
@@ -159,9 +175,10 @@ var TSOS;
             _Memory.init();
             _MemoryManager = new TSOS.MemManager();
             // ... then set the host clock pulse ...
-            _hardwareClockID = setInterval(Devices.hostClockPulse, CPU_CLOCK_INTERVAL);
+            _hardwareClockID = setInterval(TSOS.Devices.hostClockPulse, CPU_CLOCK_INTERVAL);
             // .. and call the OS Kernel Bootstrap routine.
-            _Kernel = new Kernel();
+            _Kernel = new TSOS.Kernel();
+            _Mode = 1;
             _Kernel.krnBootstrap(); // _GLaDOS.afterStartup() will get called in there, if configured.
         };
         Control.hostBtnHaltOS_click = function (btn) {

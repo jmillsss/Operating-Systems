@@ -46,7 +46,7 @@ var ResList:any=[];
 var _Scheduler:TSOS.cpuSched ;
 var _MemoryTbl;
 var _PCBTbl;
-var _ReadyQTbl:HTMLTableElement;
+var _ReadyQTbl;
 var _ReadyQ: any=null;
 var totalPCB: number=0;
 
