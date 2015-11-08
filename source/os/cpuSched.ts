@@ -17,7 +17,7 @@ module TSOS {
         ){}
 
 
-        public int(): void{
+        public init(): void{
 
             var ready=_ReadyQ.dequeue();
             ready.State="Running";

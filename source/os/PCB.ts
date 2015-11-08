@@ -37,15 +37,15 @@ module TSOS{
         }
 
 //update function to visually display PCB info after program execution terminates
-        public updatePCB():void{
+       /* public updatePCB():void{
             _CPU.thisPCB.State="Queued";
             _CPU.thisPCB.PC=_CPU.PC;
             _CPU.thisPCB.Acc=_CPU.Acc;
             _CPU.thisPCB.Xreg=_CPU.Xreg;
             _CPU.thisPCB.Yreg=_CPU.Yreg;
             _CPU.thisPCB.Zflag=_CPU.Zflag;
-            Control.runPCBTbl();
-        }
+            _Scheduler.changeProcess();
+        }*/
 
 
     }

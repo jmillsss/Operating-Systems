@@ -12,7 +12,7 @@ var TSOS;
             this.quantum = quantum;
             this.tab = tab;
         }
-        cpuSched.prototype.int = function () {
+        cpuSched.prototype.init = function () {
             var ready = _ReadyQ.dequeue();
             ready.State = "Running";
             _CPU.thisPCB = ready;
