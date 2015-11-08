@@ -36,7 +36,7 @@
     <!-- Other Routines -->
    <script type="text/javascript" src="distrib/utils.js"></script>
    <!-- Uncomment this line below to enable GLaDOS testing -->
-  <script type="text/javascript" src="http://www.labouseur.com/courses/os/projects/glados.js"></script>
+ <!-- <script type="text/javascript" src="http://www.labouseur.com/courses/os/projects/glados.js"></script> -->
 </head>
 
 <body onload="onDocumentLoad()">
@@ -101,16 +101,32 @@
                 </tr>
             </table>
         </div>
+
+        <div id="ReadyQueue" style="margin-left: 15px";>
+             <table id="readyQueueTbl" border="1" class="table table-condensed table-bordered">
+                 Ready Queue:
+                 <br>
+                 <tr>
+                     <th>PID</th>
+                     <th>State</th>
+                     <th>Base</th>
+                     <th>Limit</th>
+                     <th>PC</th>
+                 </tr>
+             </table>
+
+             </div>
+
         <div id="Memory" style="margin-left:15px;">
-            <label>
-                Memory:
+            <label> Memory  </label>
+
                 <br>
          <table id = "memoryTable" border="1">
          <tbody>
 
          </tbody>
          </table>
-            </label>
+
         </div>
     </div>
 

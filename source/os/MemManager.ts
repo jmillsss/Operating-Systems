@@ -15,29 +15,37 @@ module TSOS{
 
         constructor(public memBlock: number=0,
                     public blockBases=[0,256,512],
-                    public blockLimits=[256,512.768]
-
-        ){}
+                    public blockLimits=[256,512,768]){}
 
      public loadInputProg(prog:string):void{
 
         var insertToMem;
-         var memIndex=0;
-        for(var i =0; i < prog.length; i++){
+         var memIndex=this.blockBases[this.memBlock];
 
-            insertToMem=prog.slice(i, i+2);
+         if (this.memBlock<3 && prog.length<768){
 
-            _Memory.mem[memIndex] = insertToMem;
-            _Kernel.krnTrace("Program: " + prog + "Inserted memory at: " + memIndex);
-            i++;
-            memIndex++;
-        }
-         _PCB = new PCB();
-         _PCB.init();
-         _StdOut.putText("Progam Loaded To memory, Pid = " + _PCB.PiD );
-         _OsShell.pid++;
-         Control.editMemoryTbl();
 
+             for (var i = 0; i < prog.length; i++) {
+
+                 insertToMem = prog.slice(i, i + 2);
+
+                 _Memory.mem[memIndex] = insertToMem;
+                 _Kernel.krnTrace("Program: " + prog + "Inserted memory at: " + memIndex);
+                 i++;
+                 memIndex++;
+             }
+             var base=this.blockBases[this.memBlock];
+             var limit=this.blockLimits[this.memBlock];
+
+             _PCB = new PCB();
+             _PCB.init(base,limit);
+             _StdOut.putText("Progam Loaded To memory, Pid = " + _PCB.PiD);
+             _OsShell.pid++;
+             Control.editMemoryTbl();
+             this.memBlock++;
+
+        }else{
+             _StdIn.putText("Program failed to load in to memory");}
      }}}
 
 

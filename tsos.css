@@ -83,13 +83,13 @@ float: right;
 }
 
 
-#cpuTbl, #pcbTbl{
+#cpuTbl, #pcbTbl, #readyQueueTbl{
 
-     height: auto;
-     width:325px;
-     border: 2px;
+    height: auto;
+    width:325px;
+    border: 2px;
     border-color: black;
-     background-color: white;
+    background-color: white;
  }
 
 #cpuTbl tr{
@@ -97,9 +97,9 @@ float: right;
     border-color: black;
 }
 #Memory{
-    height: 150px;
+    height: 200px;
     width: 330px;
-    
+    overflow:scroll;
 }
 #memoryTable{
     margin-top: 5px;
@@ -109,13 +109,10 @@ float: right;
     border-color: black;
     background-color: white;
     overflow: scroll;
-    ;
-
-;
 
 }
 
 
 
-#PCB, #CPU, #Memory{
+#PCB, #CPU, #Memory, #ReadyQueue{
     margin-top: 20px;}

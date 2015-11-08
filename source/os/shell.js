@@ -351,54 +351,22 @@ var TSOS;
         Shell.prototype.shellLoad = function (args) {
             var prog = _UserProgIn.value;
             var accept = 0;
+            if (prog != "") {
+                prog = prog.replace(/\s+/g, '').toUpperCase();
+            }
             //accept digits 1-9 & letters A-F
             for (var i = 0; i < prog.length; i++) {
-                if (prog.charAt(i) == "0") {
-                }
-                else if (prog.charAt(i) == "1") {
-                }
-                else if (prog.charAt(i) == "2") {
-                }
-                else if (prog.charAt(i) == "3") {
-                }
-                else if (prog.charAt(i) == "4") {
-                }
-                else if (prog.charAt(i) == "5") {
-                }
-                else if (prog.charAt(i) == "6") {
-                }
-                else if (prog.charAt(i) == "7") {
-                }
-                else if (prog.charAt(i) == "8") {
-                }
-                else if (prog.charAt(i) == "9") {
-                }
-                else if (prog.charAt(i).toLocaleLowerCase() == "a") {
-                }
-                else if (prog.charAt(i).toLocaleLowerCase() == "b") {
-                }
-                else if (prog.charAt(i).toLocaleLowerCase() == "c") {
-                }
-                else if (prog.charAt(i).toLocaleLowerCase() == "d") {
-                }
-                else if (prog.charAt(i).toLocaleLowerCase() == "e") {
-                }
-                else if (prog.charAt(i).toLocaleLowerCase() == "f") {
-                }
-                else if (prog.charAt(i) == " ") {
-                }
-                else {
+                if (prog.charAt(i).match(/[0-9A-F]/g) == null) {
                     accept += 1;
                 }
             }
-            if (accept > 0 || prog == "") {
+            if (accept > 0) {
                 _StdOut.putText("The entered code is invalid!");
             }
             else {
                 _StdOut.putText("The entered code is valid!");
                 _StdOut.advanceLine();
                 //load the process in to memory
-                prog = prog.replace(/\s+/g, '').toUpperCase();
                 _Kernel.krnTrace("Program: " + prog);
                 _MemoryManager.loadInputProg(prog);
             }
