@@ -22,7 +22,7 @@ module TSOS{
         var insertToMem;
          var memIndex=this.blockBases[this.memBlock];
 
-         if (this.memBlock<3 && prog.length<768){
+         if (this.memBlock<3){
 
 
              for (var i = 0; i < prog.length; i++) {
@@ -41,6 +41,7 @@ module TSOS{
              _PCB.init(base,limit);
              _StdOut.putText("Progam Loaded To memory, Pid = " + _PCB.PiD);
              _OsShell.pid++;
+             totalPCB++;
              Control.editMemoryTbl();
              this.memBlock++;
 

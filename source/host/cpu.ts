@@ -69,6 +69,7 @@ module TSOS {
                 var y;
                 var z;
                 command = _Memory.mem[this.PC] ;
+
                 switch (command) {
                     case "00":
                         case "0":
@@ -201,8 +202,14 @@ module TSOS {
             this.PC++;
             var m2 = _Memory.mem[this.PC];
             var memAdd= m2.concat(m1);
-            memSlot=parseInt(memAdd,16);
-            return memSlot
+            memSlot=_CPU.thisPCB.base + parseInt(memAdd,16);
+            if (memSlot >= _CPU.thisPCB && memSlot < _CPU.thisPCB.limit){
+                return memSlot
+            }else{
+                _StdOut.advanceLine();
+                _OsShell.shellKill(_CPU.thisPCB.PiD);
+
+            }
         }
 
 
