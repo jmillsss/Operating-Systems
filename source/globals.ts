@@ -43,7 +43,7 @@ var _DrawingContext: any; // = _Canvas.getContext("2d");  // Assigned here for t
 var _StatusBar;
 var _CPUTbl;
 var _ResList: any = [];
-var _Scheduler:TSOS.cpuSched ;
+var _Scheduler:TSOS.cpuSched;
 var _MemoryTbl;
 var _PCBTbl;
 var _ReadyQTbl;

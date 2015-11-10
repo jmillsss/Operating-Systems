@@ -94,8 +94,6 @@ var TSOS;
                 for (var x = 0; x < 9; ++x) {
                     columnI = x;
                     if (columnI == 0) {
-                        var def = (i * 8).toString(16).toLocaleUpperCase();
-                        _MemoryTbl.rows[rowI].cells[columnI].innerHTML = "0x0" + def;
                     }
                     else {
                         if (_Memory.mem[memSlot] == null) {
@@ -112,15 +110,15 @@ var TSOS;
         };
         Control.editReadyQTbl = function () {
             var thisPCB;
-            for (var i = 1; i < _ReadyQ.getSize(); i++) {
+            for (var i = 1; i <= _ReadyQ.getSize(); i++) {
                 thisPCB = _ReadyQ.getIndex(i - 1);
-                var tblrow = _ReadyQTbl.insertRow(i + 1);
+                var tblrow = _ReadyQTbl.insertRow(i);
                 var tblrownum = i + 1;
                 for (var x = 0; x < 5; x++) {
                     var cell = tblrow.insertCell(x);
                 }
-                _ReadyQTbl.rows[tblrownum].cells[0].innerHTML = thisPCB.PiD;
-                _ReadyQTbl.rows[tblrownum].cells[1].innerHTML = thisPCB.State;
+                _ReadyQTbl.rows[tblrownum].cells[0].innerHTML = thisPCB.pid;
+                _ReadyQTbl.rows[tblrownum].cells[1].innerHTML = thisPCB.state;
                 _ReadyQTbl.rows[tblrownum].cells[2].innerHTML = thisPCB.base;
                 _ReadyQTbl.rows[tblrownum].cells[3].innerHTML = thisPCB.limit;
                 _ReadyQTbl.rows[tblrownum].cells[4].innerHTML = thisPCB.PC;
@@ -137,8 +135,8 @@ var TSOS;
         };
         //populate & edit the values in the pcb table while programs run
         Control.runPCBTbl = function () {
-            _PCBTbl.rows[1].cells[0].innerHTML = _CPU.thisPCB.PiD;
-            _PCBTbl.rows[1].cells[1].innerHTML = _CPU.thisPCB.State;
+            _PCBTbl.rows[1].cells[0].innerHTML = _CPU.thisPCB.pid;
+            _PCBTbl.rows[1].cells[1].innerHTML = _CPU.thisPCB.state;
             _PCBTbl.rows[1].cells[2].innerHTML = _CPU.thisPCB.PC;
             _PCBTbl.rows[1].cells[3].innerHTML = _CPU.thisPCB.Acc;
             _PCBTbl.rows[1].cells[4].innerHTML = _CPU.thisPCB.Xreg;

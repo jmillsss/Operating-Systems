@@ -132,14 +132,14 @@ module TSOS {
             sc= new ShellCommand(this.shellQuantum, "quantum", "<int> - Allows user to run a program saved in memory");
             this.commandList[this.commandList.length]= sc;
 
-            //kill
-            sc= new ShellCommand(this.shellKill, "kill", "<int> Kills the running program");
+            // kill <id> - kills the specified process id.
+            sc= new ShellCommand(this.shellKill, "kill", "<int> - Kills the running program");
             this.commandList[this.commandList.length]= sc;
 
             // ps  - list the running processes and their IDs
-            // kill <id> - kills the specified process id.
+            sc= new ShellCommand(this.shellPS, "ps", "Lists the running processes");
+            this.commandList[this.commandList.length]= sc;
 
-            //
             // Display the initial prompt.
             this.putPrompt();
         }
@@ -472,11 +472,15 @@ module TSOS {
         public shellRun(args) {
 
             var exists = false;
-            for (var i = 0; i < ResList.length(); i++) {
-            if(args == ResList[i].pid){
+            for (var i = 0; i < _ResList.length; i++) {
+            if(args == _ResList[i].pid){
                 exists=true;
 
-                _ReadyQ.enqueue(ResList[i]);
+                _ResList[i].state="Ready";
+                _ResList[i].PC=_ResList[i].base;
+
+
+                _ReadyQ.enqueue(_ResList[i]);
                 _CPU.isExecuting=true;
             }
             }
@@ -512,6 +516,20 @@ module TSOS {
         public shellKill(args){
              _CPU.isExecuting==false;
 
+        }
+
+        public shellPS(args){
+            if(_CPU.isExecuting){
+                _StdOut.putText("Executing process: " + _CPU.thisPCB.pid);
+                _StdOut.advance();
+
+                for (var x=0; x< _ReadyQ.getSize(); x++){
+                    _StdOut.putText("Processes in queue: " + _ReadyQ.getIndex(x).pid);
+                    _StdOut.advanceLine();
+                }
+            }else{
+                _StdOut.putText("No processes are executing")
+            }
         }
 
          }
