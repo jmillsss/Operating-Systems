@@ -222,9 +222,10 @@ module TSOS {
             var m2 = _Memory.mem[this.PC];
             var memAdd= m2.concat(m1);
             memSlot=_CPU.thisPCB.base + parseInt(memAdd,16);
-            if (memSlot >= _CPU.thisPCB && memSlot < _CPU.thisPCB.limit){
+            if (memSlot >= _CPU.thisPCB.base && memSlot < _CPU.thisPCB.limit){
                 return memSlot
             }else{
+                _StdOut.putText("Memory index" + memSlot + "is out of bounds");
                 _StdOut.advanceLine();
                 _OsShell.shellKill(_CPU.thisPCB.PiD);
 

@@ -42,13 +42,13 @@ var _Canvas: HTMLCanvasElement;         // Initialized in Control.hostInit().
 var _DrawingContext: any; // = _Canvas.getContext("2d");  // Assigned here for type safety, but re-initialized in Control.hostInit() for OCD and logic.
 var _StatusBar;
 var _CPUTbl;
-var ResList:any=[];
+var _ResList: any = [];
 var _Scheduler:TSOS.cpuSched ;
 var _MemoryTbl;
 var _PCBTbl;
 var _ReadyQTbl;
 var _ReadyQ: any=null;
-var totalPCB: number=0;
+var _TotalPCBs: number=0;
 
 var _Console: any;
 var _DefaultFontFamily: string = "sans";        // Ignored, I think. The was just a place-holder in 2008, but the HTML canvas may have use for it.

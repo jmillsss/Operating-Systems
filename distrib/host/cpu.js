@@ -207,7 +207,7 @@ var TSOS;
                 _Scheduler.tab++;
             }
             else {
-                _PCB.updatePCB();
+                this.updatePCB();
             }
         };
         Cpu.prototype.atMemory = function () {
@@ -229,6 +229,15 @@ var TSOS;
         Cpu.prototype.parseConst = function (num) {
             var x = parseInt(num, 16);
             return x;
+        };
+        Cpu.prototype.updatePCB = function () {
+            this.thisPCB.state = "Queued";
+            _CPU.thisPCB.PC = this.PC;
+            _CPU.thisPCB.Acc = this.Acc;
+            _CPU.thisPCB.Xreg = this.Xreg;
+            _CPU.thisPCB.Yreg = this.Yreg;
+            _CPU.thisPCB.Zflag = this.Zflag;
+            _Scheduler.changeProcess();
         };
         return Cpu;
     })();

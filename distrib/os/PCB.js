@@ -37,16 +37,6 @@ var TSOS;
             this.base = base;
             this.limit = limit;
         };
-        //update function to visually display PCB info after program execution terminates
-        PCB.prototype.updatePCB = function () {
-            _CPU.thisPCB.State = "Queued";
-            _CPU.thisPCB.PC = _CPU.PC;
-            _CPU.thisPCB.Acc = _CPU.Acc;
-            _CPU.thisPCB.Xreg = _CPU.Xreg;
-            _CPU.thisPCB.Yreg = _CPU.Yreg;
-            _CPU.thisPCB.Zflag = _CPU.Zflag;
-            TSOS.Control.runPCBTbl();
-        };
         return PCB;
     })();
     TSOS.PCB = PCB;

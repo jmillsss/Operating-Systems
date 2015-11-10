@@ -386,12 +386,16 @@ var TSOS;
             _StatusBar.value += "\n" + "Status: " + status;
         };
         Shell.prototype.shellRun = function (args) {
-            if (args == _PCB.PiD) {
-                _CPU.isExecuting = true;
-                _CPU.PC = 0;
+            var exists = false;
+            for (var i = 0; i < ResList.length(); i++) {
+                if (args == ResList[i].pid) {
+                    exists = true;
+                    _ReadyQ.enqueue(ResList[i]);
+                    _CPU.isExecuting = true;
+                }
             }
-            else {
-                _StdOut.putText("Please enter an existing P-id!");
+            if (!exists) {
+                _StdOut.putText("Please enter an existing pID");
             }
         };
         Shell.prototype.clearMemory = function (args) {
@@ -399,6 +403,7 @@ var TSOS;
                 _Memory.mem[i] = "00";
             }
             TSOS.Control.editMemoryTbl();
+            _MemoryManager.memBlock = 0;
         };
         Shell.prototype.shellQuantum = function (args) {
             var quantum;

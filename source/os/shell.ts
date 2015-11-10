@@ -469,15 +469,21 @@ module TSOS {
         }
 
 
-        public shellRun(args){
-                if (args==_PCB.PiD){
-                _CPU.isExecuting=true;
-                    _CPU.PC = 0;
-        }else{
-                    _StdOut.putText("Please enter an existing P-id!")
-                }
-            }
+        public shellRun(args) {
 
+            var exists = false;
+            for (var i = 0; i < ResList.length(); i++) {
+            if(args == ResList[i].pid){
+                exists=true;
+
+                _ReadyQ.enqueue(ResList[i]);
+                _CPU.isExecuting=true;
+            }
+            }
+            if(!exists){
+                _StdOut.putText("Please enter an existing pID");
+            }
+        }
 
         public clearMemory(args){
 
@@ -487,6 +493,7 @@ module TSOS {
                 _Memory.mem[i]="00";
             }
             Control.editMemoryTbl();
+            _MemoryManager.memBlock=0;
         }
 
         public shellQuantum(args){

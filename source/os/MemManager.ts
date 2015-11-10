@@ -39,14 +39,18 @@ module TSOS{
 
              _PCB = new PCB();
              _PCB.init(base,limit);
-             _StdOut.putText("Progam Loaded To memory, Pid = " + _PCB.PiD);
+             _ResList[_ResList.length]=_PCB;
+             _StdOut.putText("Progam Loaded To memory, Pid = " +  _ResList[this.memBlock].pid + "Base: " + _ResList[this.memBlock].base + " Limit: " + _ResList[this.memBlock].limit);
              _OsShell.pid++;
-             totalPCB++;
+             _TotalPCBs++;
              Control.editMemoryTbl();
              this.memBlock++;
+             for(var i=0; i<_ResList.length; i++){
+                 _Kernel.krnTrace("Resident List: " + _ResList[i].pid)
+             }
 
         }else{
-             _StdIn.putText("Program failed to load in to memory");}
+             _StdOut.putText("Program failed to load in to memory");}
      }}}
 
 
