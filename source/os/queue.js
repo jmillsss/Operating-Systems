@@ -41,6 +41,19 @@ var TSOS;
             var i = this.q[index];
             return i;
         };
+        Queue.prototype.switchQueue = function (array, X, Y) {
+            var i = array[Y];
+            array[Y] = array[X];
+            array[X] = i;
+        };
+        Queue.prototype.removeQueue = function (pid) {
+            for (var x = 0; x < this.getSize(); x++) {
+                if (this.q[x].PiD = pid) {
+                    this.switchQueue(this.q, 0, x);
+                    this.dequeue();
+                }
+            }
+        };
         return Queue;
     })();
     TSOS.Queue = Queue;

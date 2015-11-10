@@ -34,7 +34,7 @@ module TSOS {
             _Console.init();
 
             //init the ready queue
-            _ReadyQ=new Queue();
+            _ReadyQ= new Queue();
             _Scheduler = new cpuSched();
             // Initialize standard input and output to the _Console.
             _StdIn  = _Console;
@@ -130,6 +130,28 @@ module TSOS {
                 case KEYBOARD_IRQ:
                     _krnKeyboardDriver.isr(params);   // Kernel mode device driver
                     _StdIn.handleInput();
+                    break;
+                case SCHEDULER_INIT_IRQ:
+                    _Mode=0;
+                    var primary = _ReadyQ.getIndex(0);
+                    this.krnTrace("Process " + primary.PiD + "dequeued");
+                    _Scheduler.init();
+                    _Mode=1;
+                    break;
+                case CPU_PROCESS_CHANGE_IRQ:
+                    _Mode=0;
+                    this.krnTrace("Enqueued process: " + _CPU.thisPCB.PiD);
+                    if (!_ReadyQ.isEmpty()){
+                        this.krnTrace("Dequeued process: " + _ReadyQ.getIndex(0).PiD);
+                    }
+                    _Scheduler.changeProcess();
+                    _Mode=1;
+                    break;
+                case CPU_REPLACE_IRQ:
+                    _Mode=0;
+                    this.krnTrace("Dequeued process " + _ReadyQ.getIndex(0).PiD);
+                    _Scheduler.swapProcess();
+                    _Mode=1;
                     break;
                 default:
                     this.krnTrapError("Invalid Interrupt Request. irq=" + irq + " params=[" + params + "]");

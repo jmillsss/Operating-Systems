@@ -114,6 +114,28 @@ var TSOS;
                     _krnKeyboardDriver.isr(params); // Kernel mode device driver
                     _StdIn.handleInput();
                     break;
+                case SCHEDULER_INIT_IRQ:
+                    _Mode = 0;
+                    var primary = _ReadyQ.getIndex(0);
+                    this.krnTrace("Process " + primary.PiD + "dequeued");
+                    _Scheduler.init();
+                    _Mode = 1;
+                    break;
+                case CPU_PROCESS_CHANGE_IRQ:
+                    _Mode = 0;
+                    this.krnTrace("Enqueued process: " + _CPU.thisPCB.PiD);
+                    if (!_ReadyQ.isEmpty()) {
+                        this.krnTrace("Dequeued process: " + _ReadyQ.getIndex(0).PiD);
+                    }
+                    _Scheduler.changeProcess();
+                    _Mode = 1;
+                    break;
+                case CPU_REPLACE_IRQ:
+                    _Mode = 0;
+                    this.krnTrace("Dequeued process " + _ReadyQ.getIndex(0).PiD);
+                    _Scheduler.swapProcess();
+                    _Mode = 1;
+                    break;
                 default:
                     this.krnTrapError("Invalid Interrupt Request. irq=" + irq + " params=[" + params + "]");
             }

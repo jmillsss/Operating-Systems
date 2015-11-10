@@ -20,6 +20,12 @@ const TIMER_IRQ: number = 0;  // Pages 23 (timer), 9 (interrupts), and 561 (inte
                               // NOTE: The timer is different from hardware/host clock pulses. Don't confuse these.
 const KEYBOARD_IRQ: number = 1;
 
+const SCHEDULER_INIT_IRQ: number = 2;
+
+const CPU_PROCESS_CHANGE_IRQ: number =3;
+
+const CPU_REPLACE_IRQ: number =4;
+
 
 //
 // Global Variables
@@ -31,7 +37,7 @@ var _OSclock: number = 0;  // Page 23.
 
 var _Mode: number = 0;     // (currently unused)  0 = Kernel Mode, 1 = User Mode.  See page 21.
 
-var _Memory:any = null;
+var _Memory: any = null;
 var _PCB: TSOS.PCB;
 var _MemoryManager:TSOS.MemManager;
 var _CPU: TSOS.Cpu;

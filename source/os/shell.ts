@@ -534,8 +534,19 @@ module TSOS {
                         _StdOut.putText("Process: " + id + " has been killed")
                         _StdOut.advanceLine();
                     }else{
+                        for(var x =0; x<_ReadyQ.getSize();x++){
+                            if(id==_ReadyQ.getIndex(x).PiD){
+                                _ReadyQ.remove(id);
+                                _StdOut.putText("Process: " + id + " has been killed");
+                                _StdOut.advanceLine();
+                                exists=true;
+                            }
+                        }
 
-
+                    }
+                    if(!exists){
+                        _StdOut.putText("Enter an existing PID");
+                        _StdOut.advanceLine();
                     }
                 }
                 }

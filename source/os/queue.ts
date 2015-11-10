@@ -44,5 +44,22 @@ module TSOS {
             var i = this.q[index];
             return i;
         }
+
+        public switchQueue(array, X, Y){
+            var i = array[Y];
+            array[Y]=array[X];
+            array[X]=i;
+
+        }
+        public removeQueue(pid){
+            for (var x=0; x<this.getSize(); x++){
+                if(this.q[x].PiD=pid){
+                    this.switchQueue(this.q,0,x)
+                    this.dequeue();
+                }
+            }
+
+        }
+
     }
 }

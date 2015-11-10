@@ -43,28 +43,29 @@ module TSOS {
 
         public cycle(): void {
             _Kernel.krnTrace('CPU cycle');
-            // TODO: Accumulate CPU usage and profiling statistics here.
-            // Do the real work here. Be sure to set this.isExecuting appropriately.
-            //call execute CPU cycle
+
             if (this.isExecuting) {
-                if(this.thisPCB==null){
-                    this.thisPCB=_Scheduler.init();
-                    this.PC=this.thisPCB.base;
-                    this.Acc=0;
-                    this.Xreg=0;
-                    this.Yreg=0;
-                    this.Zflag=0;
+                if (this.thisPCB == null) {
+                    _KernelInterruptQueue.enqueue(new Interrupt(SCHEDULER_INIT_IRQ, 0));
+
+                    if (this.thisPCB != null) {
+                        this.PC = this.thisPCB.base;
+                        this.Acc = 0;
+                        this.Xreg = 0;
+                        this.Yreg = 0;
+                        this.Zflag = 0;
+
+                        Control.runPCBTbl();
+                    }
                 }
 
                 this.execCpuCycle();
                 //update tables while program is executing
                 Control.initCPUTbl();
                 Control.editMemoryTbl();
-                Control.editReadyQTbl();
 
             }
         }
-
         public execCpuCycle():void{
             //switch case for each opcode
 
@@ -82,12 +83,18 @@ module TSOS {
                             this.Operation = "00"; // Break or sys call
                             //check ready queue
                             if(_ReadyQ.isEmpty()==false){
-                                _Scheduler.swapProcess();
+                            this.thisPCB.state="Complete"
+                            this.thisPCB.PC=this.PC;
+                            this.thisPCB.Acc=this.Acc;
+                            this.thisPCB.Xreg=this.Xreg;
+                            this.thisPCB.Yreg=this.Yreg;
+                            this.thisPCB.Zflag=this.Zflag;
+                            Control.runPCBTbl();
+                            _KernelInterruptQueue.enqueue(new Interrupt(CPU_REPLACE_IRQ, 0));
                             }
                             else{
                                 //end running program
-                                _Kernel.krnTrace("Program Pid: " + _PCB.PiD + " has terminated");
-                                this.isExecuting = false;
+                                this.killProcess();
                                 //_PCB.updatePCB();
                             }
                             break;
@@ -164,7 +171,7 @@ module TSOS {
                             var branch = this.PC + this.parseConst(_Memory.mem[this.PC]);
                             if (this.Zflag == 0) {
                                 this.PC = branch + 1;
-                                if (this.PC > 255) {
+                                if (this.PC > 255 + this.thisPCB.base) {
                                     this.PC -= 256;
                                 }
                             } else {
@@ -185,7 +192,7 @@ module TSOS {
                                 _StdOut.putText(this.Yreg.toString());
                                 this.PC++;
                             } else if (this.Xreg == 2) {
-                                i = this.Yreg;
+                                i = this.Yreg+this.thisPCB.base;
                                 z = parseInt("00");
                                 while (_Memory.mem[i] != z) {
 
@@ -251,7 +258,8 @@ module TSOS {
         }
 
         public killProcess():void{
-            this.thisPCB.state="Killed";
+            this.isExecuting=false;
+            this.thisPCB.state="Complete";
             this.thisPCB.PC=this.PC;
             this.thisPCB.Acc=this.Acc;
             this.thisPCB.Xreg=this.Xreg;
