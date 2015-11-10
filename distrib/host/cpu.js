@@ -243,11 +243,11 @@ var TSOS;
             this.thisPCB.Xreg = this.Xreg;
             this.thisPCB.Yreg = this.Yreg;
             this.thisPCB.Zflag = this.Zflag;
-            _Scheduler.changeProcess();
+            _KernelInterruptQueue.enqueue(new TSOS.Interrupt(CPU_PROCESS_CHANGE_IRQ, 0));
         };
         Cpu.prototype.killProcess = function () {
             this.isExecuting = false;
-            this.thisPCB.state = "Complete";
+            this.thisPCB.state = "Terminated";
             this.thisPCB.PC = this.PC;
             this.thisPCB.Acc = this.Acc;
             this.thisPCB.Xreg = this.Xreg;

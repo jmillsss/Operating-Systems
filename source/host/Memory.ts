@@ -16,7 +16,7 @@ module TSOS{
         }
 
         public init():void{
-            this.mem[786];
+            this.mem[768];
             this.memBase=0;
             this.memLimit=768;
         }

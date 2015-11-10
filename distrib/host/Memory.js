@@ -14,7 +14,7 @@ var TSOS;
             this.memLimit = memLimit;
         }
         Memory.prototype.init = function () {
-            this.mem[786];
+            this.mem[768];
             this.memBase = 0;
             this.memLimit = 768;
         };

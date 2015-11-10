@@ -428,12 +428,11 @@ var TSOS;
                     _StdOut.advanceLine();
                 }
                 else {
-                    if (id = _CPU.thisPCB.PiD) {
+                    if (id == _CPU.thisPCB.PiD) {
                         if (_ReadyQ.isEmpty() == false) {
                             _Scheduler.swapProcess();
                         }
                         else {
-                            _CPU.isExecuting = false;
                             _CPU.killProcess();
                         }
                         exists = true;
@@ -460,7 +459,7 @@ var TSOS;
         Shell.prototype.shellPS = function (args) {
             if (_CPU.isExecuting) {
                 _StdOut.putText("Executing process: " + _CPU.thisPCB.PiD);
-                _StdOut.advance();
+                _StdOut.advanceLine();
                 for (var x = 0; x < _ReadyQ.getSize(); x++) {
                     _StdOut.putText("Processes in queue: " + _ReadyQ.getIndex(x).PiD);
                     _StdOut.advanceLine();
@@ -468,6 +467,7 @@ var TSOS;
             }
             else {
                 _StdOut.putText("No processes are executing");
+                _StdOut.advanceLine();
             }
         };
         return Shell;
