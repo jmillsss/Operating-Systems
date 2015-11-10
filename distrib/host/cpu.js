@@ -233,12 +233,22 @@ var TSOS;
         };
         Cpu.prototype.updatePCB = function () {
             this.thisPCB.state = "Queued";
-            _CPU.thisPCB.PC = this.PC;
-            _CPU.thisPCB.Acc = this.Acc;
-            _CPU.thisPCB.Xreg = this.Xreg;
-            _CPU.thisPCB.Yreg = this.Yreg;
-            _CPU.thisPCB.Zflag = this.Zflag;
+            this.thisPCB.PC = this.PC;
+            this.thisPCB.Acc = this.Acc;
+            this.thisPCB.Xreg = this.Xreg;
+            this.thisPCB.Yreg = this.Yreg;
+            this.thisPCB.Zflag = this.Zflag;
             _Scheduler.changeProcess();
+        };
+        Cpu.prototype.killProcess = function () {
+            this.thisPCB.state = "Killed";
+            this.thisPCB.PC = this.PC;
+            this.thisPCB.Acc = this.Acc;
+            this.thisPCB.Xreg = this.Xreg;
+            this.thisPCB.Yreg = this.Yreg;
+            this.thisPCB.Zflag = this.Zflag;
+            TSOS.Control.runPCBTbl();
+            this.init();
         };
         return Cpu;
     })();

@@ -117,7 +117,7 @@ var TSOS;
                 for (var x = 0; x < 5; x++) {
                     var cell = tblrow.insertCell(x);
                 }
-                _ReadyQTbl.rows[tblrownum].cells[0].innerHTML = thisPCB.pid;
+                _ReadyQTbl.rows[tblrownum].cells[0].innerHTML = thisPCB.PiD;
                 _ReadyQTbl.rows[tblrownum].cells[1].innerHTML = thisPCB.state;
                 _ReadyQTbl.rows[tblrownum].cells[2].innerHTML = thisPCB.base;
                 _ReadyQTbl.rows[tblrownum].cells[3].innerHTML = thisPCB.limit;
@@ -135,7 +135,7 @@ var TSOS;
         };
         //populate & edit the values in the pcb table while programs run
         Control.runPCBTbl = function () {
-            _PCBTbl.rows[1].cells[0].innerHTML = _CPU.thisPCB.pid;
+            _PCBTbl.rows[1].cells[0].innerHTML = _CPU.thisPCB.PiD;
             _PCBTbl.rows[1].cells[1].innerHTML = _CPU.thisPCB.state;
             _PCBTbl.rows[1].cells[2].innerHTML = _CPU.thisPCB.PC;
             _PCBTbl.rows[1].cells[3].innerHTML = _CPU.thisPCB.Acc;

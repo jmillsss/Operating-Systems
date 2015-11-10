@@ -473,7 +473,7 @@ module TSOS {
 
             var exists = false;
             for (var i = 0; i < _ResList.length; i++) {
-            if(args == _ResList[i].pid){
+            if(args == _ResList[i].PiD){
                 exists=true;
 
                 _ResList[i].state="Ready";
@@ -514,17 +514,42 @@ module TSOS {
         }
 
         public shellKill(args){
-             _CPU.isExecuting==false;
+            var id;
+            var exists=false;
 
-        }
+            if(_CPU.isExecuting){
+                if(isNaN(args) || (id = parseInt(args))<0){
+                    _StdOut.putText("Enter an existing PID");
+                    _StdOut.advanceLine();
+                    }else{
+                    if(id=_CPU.thisPCB.PiD){
+                        if(_ReadyQ.isEmpty()==false){
+                            _Scheduler.swapProcess();
+                        }else{
+                            _CPU.isExecuting=false;
+                            _CPU.killProcess();
+                        }
+
+                        exists = true;
+                        _StdOut.putText("Process: " + id + " has been killed")
+                        _StdOut.advanceLine();
+                    }else{
+
+
+                    }
+                }
+                }
+            }
+
+
 
         public shellPS(args){
             if(_CPU.isExecuting){
-                _StdOut.putText("Executing process: " + _CPU.thisPCB.pid);
+                _StdOut.putText("Executing process: " + _CPU.thisPCB.PiD);
                 _StdOut.advance();
 
                 for (var x=0; x< _ReadyQ.getSize(); x++){
-                    _StdOut.putText("Processes in queue: " + _ReadyQ.getIndex(x).pid);
+                    _StdOut.putText("Processes in queue: " + _ReadyQ.getIndex(x).PiD);
                     _StdOut.advanceLine();
                 }
             }else{
