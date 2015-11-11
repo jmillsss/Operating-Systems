@@ -532,7 +532,7 @@ module TSOS {
             var exists=false;
 
             if(_CPU.isExecuting){
-                if(isNaN(args) || (id = parseInt(args))<0){
+                if(isNaN(parseInt(args)) || (id = parseInt(args))<0){
                     _StdOut.putText("Enter an existing PID");
                     _StdOut.advanceLine();
                     }else{
