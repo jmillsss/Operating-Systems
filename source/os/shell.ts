@@ -125,7 +125,7 @@ module TSOS {
             this.commandList[this.commandList.length]= sc;
 
             //run
-            sc= new ShellCommand(this.shellRun, "run", "<string> Allows user to run a program saved in memory");
+            sc= new ShellCommand(this.shellRun, "run", "<string> - Allows user to run a program saved in memory");
             this.commandList[this.commandList.length]= sc;
 
             //quantum
@@ -138,6 +138,10 @@ module TSOS {
 
             // ps  - list the running processes and their IDs
             sc= new ShellCommand(this.shellPS, "ps", "Lists the running processes");
+            this.commandList[this.commandList.length]= sc;
+
+            //RunAll
+            sc= new ShellCommand(this.shellRunAll, "runall", "Runs all programs stored in memory");
             this.commandList[this.commandList.length]= sc;
 
             // Display the initial prompt.
@@ -489,6 +493,17 @@ module TSOS {
             }
         }
 
+
+        public shellRunAll(args){
+
+            for(var j=0; j<_ResList.length; j++){
+                _Kernel.krnTrace("Process " + j + ", PID of: " + _ResList[j].PiD);
+                _ResList[j].state="Ready";
+                _ReadyQ.enqueue(_ResList[j]);
+            } _CPU.isExecuting=true;
+        }
+
+
         public clearMemory(args){
 
 
@@ -502,8 +517,7 @@ module TSOS {
 
         public shellQuantum(args){
             var quantum;
-
-            if(isNaN(args) || (quantum=parseInt(args))<=0){
+            if(isNaN(parseInt(args)) || (quantum=parseInt(args))<=0){
                 _StdOut.putText("Quantum value must be an integer > 0");
                 _StdOut.advanceLine();
             }else{

@@ -76,7 +76,7 @@ var TSOS;
             sc = new TSOS.ShellCommand(this.clearMemory, "clearmem", "<string> Clears all existing memory");
             this.commandList[this.commandList.length] = sc;
             //run
-            sc = new TSOS.ShellCommand(this.shellRun, "run", "<string> Allows user to run a program saved in memory");
+            sc = new TSOS.ShellCommand(this.shellRun, "run", "<string> - Allows user to run a program saved in memory");
             this.commandList[this.commandList.length] = sc;
             //quantum
             sc = new TSOS.ShellCommand(this.shellQuantum, "quantum", "<int> - Allows user to run a program saved in memory");
@@ -86,6 +86,9 @@ var TSOS;
             this.commandList[this.commandList.length] = sc;
             // ps  - list the running processes and their IDs
             sc = new TSOS.ShellCommand(this.shellPS, "ps", "Lists the running processes");
+            this.commandList[this.commandList.length] = sc;
+            //RunAll
+            sc = new TSOS.ShellCommand(this.shellRunAll, "runall", "Runs all programs stored in memory");
             this.commandList[this.commandList.length] = sc;
             // Display the initial prompt.
             this.putPrompt();
@@ -400,6 +403,14 @@ var TSOS;
                 _StdOut.putText("Please enter an existing pID");
             }
         };
+        Shell.prototype.shellRunAll = function (args) {
+            for (var j = 0; j < _ResList.length; j++) {
+                _Kernel.krnTrace("Process " + j + ", PID of: " + _ResList[j].PiD);
+                _ResList[j].state = "Ready";
+                _ReadyQ.enqueue(_ResList[j]);
+            }
+            _CPU.isExecuting = true;
+        };
         Shell.prototype.clearMemory = function (args) {
             for (var i = 0; i < 768; i++) {
                 _Memory.mem[i] = "00";
@@ -409,7 +420,7 @@ var TSOS;
         };
         Shell.prototype.shellQuantum = function (args) {
             var quantum;
-            if (isNaN(args) || (quantum = parseInt(args)) <= 0) {
+            if (isNaN(parseInt(args)) || (quantum = parseInt(args)) <= 0) {
                 _StdOut.putText("Quantum value must be an integer > 0");
                 _StdOut.advanceLine();
             }
