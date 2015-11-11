@@ -1,5 +1,6 @@
 ///<reference path="../globals.ts" />
 ///<reference path="../host/control.ts" />
+///<reference path="../os/interrupt.ts" />
 /* ------------
      CPU.ts
 
@@ -48,7 +49,7 @@ var TSOS;
             _Kernel.krnTrace('CPU cycle');
             if (this.isExecuting) {
                 if (this.thisPCB == null) {
-                    _KernelInterruptQueue.enqueue(new Interrupt(SCHEDULER_INIT_IRQ, 0));
+                    _KernelInterruptQueue.enqueue(new TSOS.Interrupt(SCHEDULER_INIT_IRQ, 0));
                     if (this.thisPCB != null) {
                         this.PC = this.thisPCB.base;
                         this.Acc = 0;
@@ -87,7 +88,7 @@ var TSOS;
                             this.thisPCB.Yreg = this.Yreg;
                             this.thisPCB.Zflag = this.Zflag;
                             TSOS.Control.runPCBTbl();
-                            _KernelInterruptQueue.enqueue(new Interrupt(CPU_REPLACE_IRQ, 0));
+                            _KernelInterruptQueue.enqueue(new TSOS.Interrupt(CPU_REPLACE_IRQ, 0));
                         }
                         else {
                             //end running program
@@ -237,13 +238,13 @@ var TSOS;
             return x;
         };
         Cpu.prototype.updatePCB = function () {
-            this.thisPCB.state = "Queued";
+            this.thisPCB.state = "waiting";
             this.thisPCB.PC = this.PC;
             this.thisPCB.Acc = this.Acc;
             this.thisPCB.Xreg = this.Xreg;
             this.thisPCB.Yreg = this.Yreg;
             this.thisPCB.Zflag = this.Zflag;
-            _KernelInterruptQueue.enqueue(new Interrupt(CPU_PROCESS_CHANGE_IRQ, 0));
+            _KernelInterruptQueue.enqueue(new TSOS.Interrupt(CPU_PROCESS_CHANGE_IRQ, 0));
         };
         Cpu.prototype.killProcess = function () {
             this.isExecuting = false;

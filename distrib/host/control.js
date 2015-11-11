@@ -110,18 +110,21 @@ var TSOS;
         };
         Control.editReadyQTbl = function () {
             var thisPCB;
-            for (var i = 1; i <= _ReadyQ.getSize(); i++) {
+            while (_ReadyQTbl.rows.length != 1) {
+                _ReadyQTbl.deleteRow(1);
+            }
+            for (var i = 1; i <= _ReadyQ.getSize(); ++i) {
                 thisPCB = _ReadyQ.getIndex(i - 1);
                 var tblrow = _ReadyQTbl.insertRow(i);
-                var tblrownum = i + 1;
-                for (var x = 0; x < 5; x++) {
+                //var tblrownum = i+1;
+                for (var x = 0; x < 5; ++x) {
                     var cell = tblrow.insertCell(x);
                 }
-                _ReadyQTbl.rows[tblrownum].cells[0].innerHTML = thisPCB.PiD;
-                _ReadyQTbl.rows[tblrownum].cells[1].innerHTML = thisPCB.state;
-                _ReadyQTbl.rows[tblrownum].cells[2].innerHTML = thisPCB.base;
-                _ReadyQTbl.rows[tblrownum].cells[3].innerHTML = thisPCB.limit;
-                _ReadyQTbl.rows[tblrownum].cells[4].innerHTML = thisPCB.PC;
+                _ReadyQTbl.rows[i].cells[0].innerHTML = thisPCB.PiD;
+                _ReadyQTbl.rows[i].cells[1].innerHTML = thisPCB.state;
+                _ReadyQTbl.rows[i].cells[2].innerHTML = thisPCB.base;
+                _ReadyQTbl.rows[i].cells[3].innerHTML = thisPCB.limit;
+                _ReadyQTbl.rows[i].cells[4].innerHTML = thisPCB.PC;
             }
         };
         //populate the cpu table from values stored in the cpu

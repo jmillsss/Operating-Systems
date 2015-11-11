@@ -20,7 +20,7 @@ var TSOS;
         cpuSched.prototype.changeProcess = function () {
             if (_ReadyQ.getSize() > 0) {
                 var enqueue = _CPU.thisPCB;
-                enqueue.state = "Enqueued";
+                enqueue.state = "Waiting";
                 var dequeue = _ReadyQ.dequeue();
                 dequeue.state = "Running";
                 _ReadyQ.enqueue(enqueue);

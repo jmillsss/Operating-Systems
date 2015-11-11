@@ -1,5 +1,6 @@
 ///<reference path="../globals.ts" />
 ///<reference path="../host/control.ts" />
+///<reference path="../os/interrupt.ts" />
 /* ------------
      CPU.ts
 
@@ -237,7 +238,7 @@ var TSOS;
             return x;
         };
         Cpu.prototype.updatePCB = function () {
-            this.thisPCB.state = "Queued";
+            this.thisPCB.state = "waiting";
             this.thisPCB.PC = this.PC;
             this.thisPCB.Acc = this.Acc;
             this.thisPCB.Xreg = this.Xreg;
