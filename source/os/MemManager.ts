@@ -40,7 +40,7 @@ module TSOS{
              _PCB = new PCB();
              _PCB.init(base,limit);
              _ResList[_ResList.length]=_PCB;
-             _StdOut.putText("Progam Loaded To memory, Pid = " +  _ResList[this.memBlock].PiD + "Base: " + _ResList[this.memBlock].base + " Limit: " + _ResList[this.memBlock].limit);
+             _StdOut.putText("Progam Loaded To memory, Pid = " +  _ResList[this.memBlock].PiD + ", Base: " + _ResList[this.memBlock].base + ", Limit: " + _ResList[this.memBlock].limit);
              _OsShell.pid++;
              _TotalPCBs++;
              Control.editMemoryTbl();

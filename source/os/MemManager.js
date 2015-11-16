@@ -31,7 +31,7 @@ var TSOS;
                 _PCB = new TSOS.PCB();
                 _PCB.init(base, limit);
                 _ResList[_ResList.length] = _PCB;
-                _StdOut.putText("Progam Loaded To memory, Pid = " + _ResList[this.memBlock].PiD + "Base: " + _ResList[this.memBlock].base + " Limit: " + _ResList[this.memBlock].limit);
+                _StdOut.putText("Progam Loaded To memory, Pid = " + _ResList[this.memBlock].PiD + ", Base: " + _ResList[this.memBlock].base + ", Limit: " + _ResList[this.memBlock].limit);
                 _OsShell.pid++;
                 _TotalPCBs++;
                 TSOS.Control.editMemoryTbl();
@@ -48,4 +48,4 @@ var TSOS;
     })();
     TSOS.MemManager = MemManager;
 })(TSOS || (TSOS = {}));
-//# sourceMappingURL=memManager.js.map
+//# sourceMappingURL=MemManager.js.map
