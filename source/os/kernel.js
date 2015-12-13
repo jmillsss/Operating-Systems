@@ -40,9 +40,10 @@ var TSOS;
             _krnKeyboardDriver = new DeviceDriverKeyboard(); // Construct it.
             _krnKeyboardDriver.driverEntry(); // Call the driverEntry() initialization routine.
             this.krnTrace(_krnKeyboardDriver.status);
-            //
-            // ... more?
-            //
+            this.krnTrace("Loading Disk Device Driver");
+            _krnFSDriver = new TSOS.FSDriver();
+            _krnFSDriver.driverEntry();
+            this.krnTrace(_krnFSDriver.status);
             // Enable the OS Interrupts.  (Not the CPU clock interrupt, as that is done in the hardware sim.)
             this.krnTrace("Enabling the interrupts.");
             this.krnEnableInterrupts();

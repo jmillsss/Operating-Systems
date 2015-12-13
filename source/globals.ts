@@ -26,6 +26,8 @@ const CPU_PROCESS_CHANGE_IRQ: number =3;
 
 const CPU_REPLACE_IRQ: number =4;
 
+const HDD_IRQ: number=5;
+
 
 //
 // Global Variables
@@ -55,11 +57,13 @@ var _PCBTbl;
 var _ReadyQTbl;
 var _ReadyQ: any=null;
 var _TotalPCBs: number=0;
-
+var _HDDTBL;
 var _Console: any;
 var _DefaultFontFamily: string = "sans";        // Ignored, I think. The was just a place-holder in 2008, but the HTML canvas may have use for it.
 var _DefaultFontSize: number = 13;
 var _FontHeightMargin: number = 4;              // Additional space added to font size when advancing a line.
+var _krnFSDriver;
+
 
 var _Trace: boolean = true;  // Default the OS trace to be on.
 

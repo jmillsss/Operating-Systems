@@ -46,6 +46,7 @@ var TSOS;
             _CPUTbl = document.getElementById('cpuTbl');
             _PCBTbl = document.getElementById('pcbTbl');
             _ReadyQTbl = document.getElementById('readyQueueTbl');
+            _HDDTBL = document.getElementById('hddTBL');
             //call initialize for mem table
             this.initMemoryTbl();
             // Get a global reference to the drawing context.

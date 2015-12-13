@@ -5,6 +5,7 @@
 ///<reference path="../host/cpu.ts"/>
 ///<reference path="../host/devices.ts"/>
 ///<reference path="../os/kernel.ts"/>
+///<reference path="../os/deviceDriverFileSystem.ts"/>
 /* ------------
      Control.ts
 
@@ -46,6 +47,7 @@ var TSOS;
             _CPUTbl = document.getElementById('cpuTbl');
             _PCBTbl = document.getElementById('pcbTbl');
             _ReadyQTbl = document.getElementById('readyQueueTbl');
+            _HDDTBL = document.getElementById('hddTBL');
             //call initialize for mem table
             this.initMemoryTbl();
             // Get a global reference to the drawing context.
@@ -146,6 +148,15 @@ var TSOS;
             _PCBTbl.rows[1].cells[5].innerHTML = _CPU.thisPCB.Yreg;
             _PCBTbl.rows[1].cells[6].innerHTML = _CPU.thisPCB.Zflag;
         };
+        Control.initHDDTbl = function () {
+            var x = 1;
+            for (var i = 0; i < _krnFSDriver.trks; i++) {
+                for (var j = 0; j < _krnFSDriver.sections; j++) {
+                    for (var y = 0; y < _krnFSDriver.blocks; y++) {
+                    }
+                }
+            }
+        };
         Control.hostLog = function (msg, source) {
             if (source === void 0) { source = "?"; }
             // Note the OS CLOCK.
@@ -184,6 +195,9 @@ var TSOS;
             _Kernel = new TSOS.Kernel();
             _Mode = 1;
             _Kernel.krnBootstrap(); // _GLaDOS.afterStartup() will get called in there, if configured.
+            _Kernel.krnTrace("Tracks: " + _krnFSDriver.trks);
+            //init hdd table
+            //this.initHDDTBL
         };
         Control.hostBtnHaltOS_click = function (btn) {
             Control.hostLog("Emergency halt", "host");

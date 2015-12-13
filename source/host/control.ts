@@ -5,6 +5,7 @@
 ///<reference path="../host/cpu.ts"/>
 ///<reference path="../host/devices.ts"/>
 ///<reference path="../os/kernel.ts"/>
+///<reference path="../os/deviceDriverFileSystem.ts"/>
 
 /* ------------
      Control.ts
@@ -52,6 +53,7 @@ module TSOS {
             _CPUTbl = <HTMLTableElement>document.getElementById('cpuTbl');
             _PCBTbl= <HTMLTableElement>document.getElementById('pcbTbl');
             _ReadyQTbl=<HTMLTableElement>document.getElementById('readyQueueTbl');
+            _HDDTBL=<HTMLTableElement>document.getElementById('hddTBL');
             //call initialize for mem table
 
             this.initMemoryTbl();
@@ -173,6 +175,17 @@ module TSOS {
 
         }
 
+        public static initHDDTbl():void{
+            var x=1;
+            for(var i=0; i<_krnFSDriver.trks; i++){
+                for(var j=0; j<_krnFSDriver.sections; j++){
+                    for(var y=0; y<_krnFSDriver.blocks; y++){
+
+                    }
+                }
+            }
+        }
+
 
 
         public static hostLog(msg: string, source: string = "?"): void {
@@ -216,7 +229,9 @@ module TSOS {
             _Mode=1;
             _Kernel.krnBootstrap();  // _GLaDOS.afterStartup() will get called in there, if configured.
 
-
+            _Kernel.krnTrace("Tracks: " + _krnFSDriver.trks);
+            //init hdd table
+            //this.initHDDTBL
 
 
         }

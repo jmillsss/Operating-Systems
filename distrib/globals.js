@@ -19,6 +19,7 @@ var KEYBOARD_IRQ = 1;
 var SCHEDULER_INIT_IRQ = 2;
 var CPU_PROCESS_CHANGE_IRQ = 3;
 var CPU_REPLACE_IRQ = 4;
+var HDD_IRQ = 5;
 //
 // Global Variables
 // TODO: Make a global object and use that instead of the "_" naming convention in the global namespace.
@@ -42,6 +43,7 @@ var _PCBTbl;
 var _ReadyQTbl;
 var _ReadyQ = null;
 var _TotalPCBs = 0;
+var _HDDTBL;
 var _Console;
 var _DefaultFontFamily = "sans"; // Ignored, I think. The was just a place-holder in 2008, but the HTML canvas may have use for it.
 var _DefaultFontSize = 13;
