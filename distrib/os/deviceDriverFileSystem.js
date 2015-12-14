@@ -42,6 +42,14 @@ var TSOS;
             }
             return fileData.concat(occupy);
         };
+        FSDriver.prototype.occupyData = function (data) {
+            _Kernel.krnTrace("File Data Length: " + data.length);
+            var occupy = "";
+            for (var x = 0; x < (120 - data.length); x++) {
+                occupy += "0";
+            }
+            return data.concat(occupy);
+        };
         FSDriver.prototype.createFile = function (filename) {
             filename = TSOS.Utils.hexFromString(filename);
             _Kernel.krnTrace("New File Name: " + filename);
@@ -62,9 +70,40 @@ var TSOS;
             }
             return false;
         };
+        FSDriver.prototype.readFile = function (file) {
+            file = this.occupyData(TSOS.Utils.hexFromString(file));
+            var interm;
+            var mbr;
+            var readFile = "";
+            var nextFile;
+            for (var x = 0; x < this.sections; x++) {
+                for (var y = 0; y < this.blocks; y++) {
+                    interm = this.selectData(0, x, y);
+                    if (interm == file) {
+                        mbr = this.selectMBR(0, x, y);
+                        do {
+                            readFile += sessionStorage.getItem(mbr).substr(4);
+                            nextFile = sessionStorage.getItem(mbr).substr(1, 3);
+                            mbr = nextFile;
+                        } while (mbr != "000");
+                        readFile = TSOS.Utils.stringFromeHex(readFile);
+                        _Kernel.krnTrace("Reading File: " + readFile);
+                        return readFile;
+                    }
+                }
+            }
+        };
         FSDriver.prototype.selectMeta = function (t, s, b) {
             var m = sessionStorage.getItem(t + "" + s + "" + b).substr(0, 4);
             return m;
+        };
+        FSDriver.prototype.selectData = function (t, s, b) {
+            var fileData = sessionStorage.getItem(t + "" + s + "" + b).substr(4);
+            return fileData;
+        };
+        FSDriver.prototype.selectMBR = function (t, s, b) {
+            var mbr = sessionStorage.getItem(t + "" + s + "" + b).substr(1, 3);
+            return mbr;
         };
         FSDriver.prototype.findEmptySpace = function () {
             var mbr = "000";
@@ -87,7 +126,7 @@ var TSOS;
             var z;
             switch (x) {
                 case 0:
-                    _Kernel.krnTrace("FILE: " + y + "IS BOUTA BE CREATED");
+                    _Kernel.krnTrace("FILE: " + y + "IS BEING CREATED");
                     if (_krnFSDriver.createFile(y)) {
                         _StdOut.putText("File:  " + y + " successfully created");
                         _StdOut.advanceLine();
@@ -96,6 +135,13 @@ var TSOS;
                         _StdOut.putText("Error Creating File: " + y);
                         _StdOut.advanceLine();
                     }
+                    break;
+                case 1:
+                    _Kernel.krnTrace("READING FILE WITH NAME: " + y);
+                    var fileRead = _krnFSDriver.readFile(y);
+                    _StdOut.putText("File: " + y);
+                    _StdOut.advanceLine();
+                    _StdOut.putText(fileRead);
             }
         };
         return FSDriver;

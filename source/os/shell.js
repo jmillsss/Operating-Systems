@@ -93,6 +93,9 @@ var TSOS;
             //shellCreateFile
             sc = new TSOS.ShellCommand(this.shellCreateFile, "create", "<string> - creates new file with given name");
             this.commandList[this.commandList.length] = sc;
+            //shellReadFile
+            sc = new TSOS.ShellCommand(this.shellReadFile, "read", "<string> - reads an existing file");
+            this.commandList[this.commandList.length] = sc;
             // Display the initial prompt.
             this.putPrompt();
         };
@@ -488,6 +491,10 @@ var TSOS;
             var file = args;
             _Kernel.krnTrace("New File: " + file);
             _KernelInterruptQueue.enqueue(new TSOS.Interrupt(HDD_IRQ, [0, file]));
+        };
+        Shell.prototype.shellReadFile = function (args) {
+            var file = args;
+            _KernelInterruptQueue.enqueue(new TSOS.Interrupt(HDD_IRQ, [1, file]));
         };
         return Shell;
     })();
