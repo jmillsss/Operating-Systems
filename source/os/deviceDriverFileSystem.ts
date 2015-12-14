@@ -2,6 +2,7 @@
  * Created by jarettmiller on 12/13/15.
  */
 ///<reference path="../globals.ts" />
+///<reference path="../utils.ts" />
 ///<reference path="deviceDriver.ts" />
 ///<reference path="../host/control.ts" />
 
@@ -12,7 +13,7 @@ export class FSDriver extends DeviceDriver{
 
     constructor() {
 
-        super(this.krnHDDriverEnt);
+        super(this.krnHDDriverEnt, this.fileToDisk);
 
     }
 
@@ -102,6 +103,18 @@ export class FSDriver extends DeviceDriver{
     public fileToDisk(params){
         var x = params[0];
         var y = params[1];
+        var z;
+        switch(x) {
+            case 0:
+            _Kernel.krnTrace("FILE: "+ y + "IS BOUTA BE CREATED");
+            if(_krnFSDriver.createFile(y)){
+                _StdOut.putText("File " + y + " successfully created");
+                _StdOut.advanceLine();
+            }else{
+                _StdOut.putText("Error Creating File: " + y);
+                _StdOut.advanceLine();
+            }
+        }
     }
 
 

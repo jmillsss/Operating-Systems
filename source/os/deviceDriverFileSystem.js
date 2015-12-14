@@ -2,6 +2,7 @@
  * Created by jarettmiller on 12/13/15.
  */
 ///<reference path="../globals.ts" />
+///<reference path="../utils.ts" />
 ///<reference path="deviceDriver.ts" />
 ///<reference path="../host/control.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
@@ -14,7 +15,7 @@ var TSOS;
     var FSDriver = (function (_super) {
         __extends(FSDriver, _super);
         function FSDriver() {
-            _super.call(this, this.krnHDDriverEnt);
+            _super.call(this, this.krnHDDriverEnt, this.fileToDisk);
         }
         FSDriver.prototype.krnHDDriverEnt = function () {
             this.status = "loaded";
@@ -83,6 +84,19 @@ var TSOS;
         FSDriver.prototype.fileToDisk = function (params) {
             var x = params[0];
             var y = params[1];
+            var z;
+            switch (x) {
+                case 0:
+                    _Kernel.krnTrace("FILE: " + y + "IS BOUTA BE CREATED");
+                    if (_krnFSDriver.createFile(y)) {
+                        _StdOut.putText("File " + y + " successfully created");
+                        _StdOut.advanceLine();
+                    }
+                    else {
+                        _StdOut.putText("Error Creating File: " + y);
+                        _StdOut.advanceLine();
+                    }
+            }
         };
         return FSDriver;
     })(TSOS.DeviceDriver);
