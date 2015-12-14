@@ -176,9 +176,9 @@ var TSOS;
                         var tsb = i + ":" + j + ":" + y;
                         var meta = sessionStorage.getItem(i + "" + j + "" + y).substr(0, 4);
                         var data = sessionStorage.getItem(i + "" + j + "" + y).substr(4);
-                        _HDDTBL.rows[i].cells[0].innerHTML = tsb;
-                        _HDDTBL.rows[i].cells[1].innerHTML = meta;
-                        _HDDTBL.rows[i].cells[2].innerHTML = data;
+                        _HDDTBL.rows[x].cells[0].innerHTML = tsb;
+                        _HDDTBL.rows[x].cells[1].innerHTML = meta;
+                        _HDDTBL.rows[x].cells[2].innerHTML = data;
                         x++;
                     }
                 }

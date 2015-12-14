@@ -2,6 +2,7 @@
  * Created by jarettmiller on 12/13/15.
  */
 ///<reference path="../globals.ts" />
+///<reference path="../utils.ts" />
 ///<reference path="deviceDriver.ts" />
 ///<reference path="../host/control.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
@@ -88,7 +89,7 @@ var TSOS;
                 case 0:
                     _Kernel.krnTrace("FILE: " + y + "IS BOUTA BE CREATED");
                     if (_krnFSDriver.createFile(y)) {
-                        _StdOut.putText("File " + y + " successfully created");
+                        _StdOut.putText("File:  " + y + " successfully created");
                         _StdOut.advanceLine();
                     }
                     else {

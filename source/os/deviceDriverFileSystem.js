@@ -89,7 +89,7 @@ var TSOS;
                 case 0:
                     _Kernel.krnTrace("FILE: " + y + "IS BOUTA BE CREATED");
                     if (_krnFSDriver.createFile(y)) {
-                        _StdOut.putText("File " + y + " successfully created");
+                        _StdOut.putText("File:  " + y + " successfully created");
                         _StdOut.advanceLine();
                     }
                     else {

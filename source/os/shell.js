@@ -487,7 +487,7 @@ var TSOS;
         Shell.prototype.shellCreateFile = function (args) {
             var file = args;
             _Kernel.krnTrace("New File: " + file);
-            _KernelInputQueue.enqueue(new TSOS.Interrupt(HDD_IRQ, [0, file]));
+            _KernelInterruptQueue.enqueue(new TSOS.Interrupt(HDD_IRQ, [0, file]));
         };
         return Shell;
     })();

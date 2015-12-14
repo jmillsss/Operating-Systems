@@ -54,6 +54,17 @@ var TSOS;
                 }
             }
         };
+        //handle backspace
+        Console.prototype.backspace = function () {
+            var stringBufferLength = this.buffer.length;
+            var lastChar = stringBufferLength - 1;
+            this.buffer = this.buffer.substring(0, lastChar);
+            //clear current line of text
+            _DrawingContext.clearRect(0, this.currentYPosition - this.currentFontSize, _Canvas.width, this.currentFontSize + 10);
+            this.currentXPosition = 0;
+            //replace remaining text
+            this.putText(">" + this.buffer);
+        };
         Console.prototype.putText = function (text) {
             // My first inclination here was to write two functions: putChar() and putString().
             // Then I remembered that JavaScript is (sadly) untyped and it won't differentiate
@@ -71,6 +82,17 @@ var TSOS;
                 this.currentXPosition = this.currentXPosition + offset;
             }
         };
+        Console.prototype.scroll = function () {
+            //take the image of the current canvas
+            var myImageData = _DrawingContext.getImageData(0, this.currentFontSize + 10, _Canvas.width, _Canvas.height);
+            //reset the screen of the canvas
+            this.clearScreen();
+            this.currentYPosition -= _DefaultFontSize + _DrawingContext.fontDescent(this.currentFont, this.currentFontSize) + _FontHeightMargin;
+            //extend the height
+            // just kidding we dont want to do this -- _Canvas.height += 15;
+            // replace original canvas text
+            _DrawingContext.putImageData(myImageData, 0, 0);
+        };
         Console.prototype.advanceLine = function () {
             this.currentXPosition = 0;
             /*
@@ -78,8 +100,16 @@ var TSOS;
              * Font descent measures from the baseline to the lowest point in the font.
              * Font height margin is extra spacing between the lines.
              */
-            this.currentYPosition += _DefaultFontSize + _DrawingContext.fontDescent(this.currentFont, this.currentFontSize) + _FontHeightMargin;
-            // TODO: Handle scrolling. (iProject 1)
+            this.currentYPosition += _DefaultFontSize + _DrawingContext.fontDescent(this.currentFont, this.currentFontSize)
+                + _FontHeightMargin;
+            if (this.currentYPosition > _Canvas.height) {
+                _Kernel.krnTrace("End canvas, Scrolling...");
+                this.scroll();
+            }
+            else if (this.currentXPosition > _Canvas.width) {
+                _Kernel.krnTrace("");
+                this.scroll();
+            }
         };
         return Console;
     })();

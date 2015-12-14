@@ -104,12 +104,14 @@ export class FSDriver extends DeviceDriver{
         var x = params[0];
         var y = params[1];
         var z;
+
         switch(x) {
             case 0:
             _Kernel.krnTrace("FILE: "+ y + "IS BOUTA BE CREATED");
             if(_krnFSDriver.createFile(y)){
-                _StdOut.putText("File " + y + " successfully created");
+                _StdOut.putText("File:  " + y + " successfully created");
                 _StdOut.advanceLine();
+
             }else{
                 _StdOut.putText("Error Creating File: " + y);
                 _StdOut.advanceLine();
