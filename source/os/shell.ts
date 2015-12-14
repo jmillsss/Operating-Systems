@@ -152,6 +152,18 @@ module TSOS {
             sc=new ShellCommand(this.shellReadFile, "read", "<string> - reads an existing file");
             this.commandList[this.commandList.length]=sc;
 
+            //shellWriteFile
+            sc=new ShellCommand(this.shellWriteFile, "write", "<string> - writes data to an existing file");
+            this.commandList[this.commandList.length]=sc;
+
+            //shellDeleteFile
+            sc=new ShellCommand(this.shellDeleteFile, "delete", "<string> - deletes an existing file");
+            this.commandList[this.commandList.length]=sc;
+
+            //shellls
+            sc=new ShellCommand(this.shellls, "ls", "Lists all existing files");
+            this.commandList[this.commandList.length]=sc;
+
             // Display the initial prompt.
             this.putPrompt();
         }
@@ -601,6 +613,25 @@ module TSOS {
         public shellReadFile(args){
             var file=args;
             _KernelInterruptQueue.enqueue(new TSOS.Interrupt(HDD_IRQ, [1,file]));
+        }
+
+        public shellWriteFile(args){
+
+    }
+        public shellDeleteFile(args){
+
+        }
+
+        public shellls(args){
+        _krnFSDriver.listFiles();
+        }
+
+        public shellFormat(args){
+
+        }
+
+        public shellSetScheduler(args){
+
         }
 
          }

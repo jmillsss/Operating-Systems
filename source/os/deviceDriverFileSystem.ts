@@ -174,6 +174,24 @@ export class FSDriver extends DeviceDriver{
     }
 
 
+    public listFiles():void{
+        var file;
+        for(var x=0; x<this.sections;x++){
+            for(var y=0;y<this.blocks; y++){
+                file=this.selectData(0,x,y);
+
+                if(file!=this.freeSpace){
+                    file=Utils.stringFromeHex(file);
+                    _Kernel.krnTrace("File name: " + file);
+                    _StdOut.putText(" "+file);
+                    _StdOut.advanceLine();
+                }
+            }
+        }
+        _StdOut.advanceLine();
+    }
+
+
 }
 
 

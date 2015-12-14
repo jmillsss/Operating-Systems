@@ -96,6 +96,15 @@ var TSOS;
             //shellReadFile
             sc = new TSOS.ShellCommand(this.shellReadFile, "read", "<string> - reads an existing file");
             this.commandList[this.commandList.length] = sc;
+            //shellWriteFile
+            sc = new TSOS.ShellCommand(this.shellWriteFile, "write", "<string> - writes data to an existing file");
+            this.commandList[this.commandList.length] = sc;
+            //shellDeleteFile
+            sc = new TSOS.ShellCommand(this.shellDeleteFile, "delete", "<string> - deletes an existing file");
+            this.commandList[this.commandList.length] = sc;
+            //shellls
+            sc = new TSOS.ShellCommand(this.shellls, "ls", "Lists all existing files");
+            this.commandList[this.commandList.length] = sc;
             // Display the initial prompt.
             this.putPrompt();
         };
@@ -495,6 +504,17 @@ var TSOS;
         Shell.prototype.shellReadFile = function (args) {
             var file = args;
             _KernelInterruptQueue.enqueue(new TSOS.Interrupt(HDD_IRQ, [1, file]));
+        };
+        Shell.prototype.shellWriteFile = function (args) {
+        };
+        Shell.prototype.shellDeleteFile = function (args) {
+        };
+        Shell.prototype.shellls = function (args) {
+            _krnFSDriver.listFiles();
+        };
+        Shell.prototype.shellFormat = function (args) {
+        };
+        Shell.prototype.shellSetScheduler = function (args) {
         };
         return Shell;
     })();

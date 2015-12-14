@@ -144,6 +144,21 @@ var TSOS;
                     _StdOut.putText(fileRead);
             }
         };
+        FSDriver.prototype.listFiles = function () {
+            var file;
+            for (var x = 0; x < this.sections; x++) {
+                for (var y = 0; y < this.blocks; y++) {
+                    file = this.selectData(0, x, y);
+                    if (file != this.freeSpace) {
+                        file = TSOS.Utils.stringFromeHex(file);
+                        _Kernel.krnTrace("File name: " + file);
+                        _StdOut.putText(" " + file);
+                        _StdOut.advanceLine();
+                    }
+                }
+            }
+            _StdOut.advanceLine();
+        };
         return FSDriver;
     })(TSOS.DeviceDriver);
     TSOS.FSDriver = FSDriver;
