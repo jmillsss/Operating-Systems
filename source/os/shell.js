@@ -105,6 +105,9 @@ var TSOS;
             //shellls
             sc = new TSOS.ShellCommand(this.shellls, "ls", "Lists all existing files");
             this.commandList[this.commandList.length] = sc;
+            //shellFormat
+            sc = new TSOS.ShellCommand(this.shellFormat, "format", "Formats the Disk Space");
+            this.commandList[this.commandList.length] = sc;
             // Display the initial prompt.
             this.putPrompt();
         };
@@ -547,6 +550,10 @@ var TSOS;
             _krnFSDriver.listFiles();
         };
         Shell.prototype.shellFormat = function (args) {
+            _krnFSDriver.init();
+            TSOS.Control.editHDDTbl();
+            _StdOut.putText("Formatting Disk... Successful");
+            _StdOut.advanceLine();
         };
         Shell.prototype.shellSetScheduler = function (args) {
         };

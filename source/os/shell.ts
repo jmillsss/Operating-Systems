@@ -164,6 +164,11 @@ module TSOS {
             sc=new ShellCommand(this.shellls, "ls", "Lists all existing files");
             this.commandList[this.commandList.length]=sc;
 
+            //shellFormat
+            sc=new ShellCommand(this.shellFormat, "format", "Formats the Disk Space");
+            this.commandList[this.commandList.length]=sc;
+
+
             // Display the initial prompt.
             this.putPrompt();
         }
@@ -657,11 +662,14 @@ module TSOS {
         }
 
         public shellls(args){
-        _krnFSDriver.listFiles();
+            _krnFSDriver.listFiles();
         }
 
         public shellFormat(args){
-
+            _krnFSDriver.init();
+            Control.editHDDTbl();
+            _StdOut.putText("Formatting Disk... Successful");
+            _StdOut.advanceLine();
         }
 
         public shellSetScheduler(args){
