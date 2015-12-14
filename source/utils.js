@@ -44,6 +44,23 @@ var TSOS;
             }
             return retVal;
         };
+        Utils.hexFromString = function (string) {
+            var str = "";
+            for (var x = 0; x < string.toString().length; x++) {
+                var interm = (string.toString().charCodeAt(x)).toString(16).toUpperCase();
+                interm = new Array(2 - interm.length).join('0') + interm;
+                str += interm;
+            }
+            return str;
+        };
+        Utils.stringFromeHex = function (hex) {
+            var str = "";
+            var list = hex.match(/.{1,2}/g);
+            for (var x = 0; x < list.length; x++) {
+                str += String.fromCharCode(parseInt(list[x], 16));
+            }
+            return str;
+        };
         return Utils;
     })();
     TSOS.Utils = Utils;

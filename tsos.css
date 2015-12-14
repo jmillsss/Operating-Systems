@@ -103,6 +103,27 @@ float: right;
     width: 330px;
     overflow:scroll;
 }
+
+#hddTBL tr,th,td{
+    border:1px solid black;
+    padding:5px;
+}
+
+#hddTBL th{
+    text-align:left;
+}
+#hardDrive{
+    height: 200px;
+    width: 330px;
+    overflow:scroll;
+}
+#hddTBL{
+    border-collapse:collapse;
+    width: 760px;;
+    background-color: white;
+    overflow: scroll;
+}
+
 #memoryTable{
     margin-top: 5px;
     height: 50px;

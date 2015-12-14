@@ -156,13 +156,13 @@ var TSOS;
                         var tsb = i + ":" + j + ":" + y;
                         var meta = sessionStorage.getItem(i + "" + j + "" + y).substr(0, 4);
                         var data = sessionStorage.getItem(i + "" + j + "" + y).substr(4);
-                        var row = _HDDTBL.insertRow(i);
+                        var row = _HDDTBL.insertRow(x);
                         for (var m = 0; m < 3; m++) {
-                            var cell = row.insertCell(j);
+                            var cell = row.insertCell(m);
                         }
-                        _HDDTBL.rows[i].cells[0].innerHTML = tsb;
-                        _HDDTBL.rows[i].cells[1].innerHTML = meta;
-                        _HDDTBL.rows[i].cells[2].innerHTML = data;
+                        _HDDTBL.rows[x].cells[0].innerHTML = tsb;
+                        _HDDTBL.rows[x].cells[1].innerHTML = meta;
+                        _HDDTBL.rows[x].cells[2].innerHTML = data;
                         x++;
                     }
                 }
@@ -224,7 +224,8 @@ var TSOS;
             _Kernel.krnBootstrap(); // _GLaDOS.afterStartup() will get called in there, if configured.
             _Kernel.krnTrace("Tracks: " + _krnFSDriver.trks);
             //init hdd table
-            //this.initHDDTBL
+            this.initHDDTbl();
+            _Kernel.krnTrace("Tracks: " + _krnFSDriver.trks);
         };
         Control.hostBtnHaltOS_click = function (btn) {
             Control.hostLog("Emergency halt", "host");

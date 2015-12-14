@@ -90,6 +90,9 @@ var TSOS;
             //RunAll
             sc = new TSOS.ShellCommand(this.shellRunAll, "runall", "Runs all programs stored in memory");
             this.commandList[this.commandList.length] = sc;
+            //shellCreateFile
+            sc = new TSOS.ShellCommand(this.shellCreateFile, "create", "<string> - creates new file with given name");
+            this.commandList[this.commandList.length] = sc;
             // Display the initial prompt.
             this.putPrompt();
         };
@@ -480,6 +483,11 @@ var TSOS;
                 _StdOut.putText("No processes are executing");
                 _StdOut.advanceLine();
             }
+        };
+        Shell.prototype.shellCreateFile = function (args) {
+            var file = args;
+            _Kernel.krnTrace("New File: " + file);
+            _KernelInputQueue.enqueue(new TSOS.Interrupt(HDD_IRQ, [0, file]));
         };
         return Shell;
     })();

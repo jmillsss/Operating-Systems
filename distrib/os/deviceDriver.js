@@ -14,6 +14,12 @@ var TSOS;
             this.version = '0.07';
             this.status = 'unloaded';
             this.preemptable = false;
+            this.trks = 4;
+            this.sections = 8;
+            this.blocks = 8;
+            this.blkLength = 64;
+            this.meta = "";
+            this.freeSpace = "";
         }
         return DeviceDriver;
     })();

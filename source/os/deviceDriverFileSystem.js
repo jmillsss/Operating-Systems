@@ -3,6 +3,7 @@
  */
 ///<reference path="../globals.ts" />
 ///<reference path="deviceDriver.ts" />
+///<reference path="../host/control.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -13,15 +14,9 @@ var TSOS;
     var FSDriver = (function (_super) {
         __extends(FSDriver, _super);
         function FSDriver() {
-            _super.call(this, this.krnHDDDriverEnt());
-            this.trks = 4;
-            this.sections = 8;
-            this.blocks = 8;
-            this.blkLength = 64;
-            this.meta = "";
-            this.freeSpace = "";
+            _super.call(this, this.krnHDDriverEnt);
         }
-        FSDriver.prototype.krnHDDDriverEnt = function () {
+        FSDriver.prototype.krnHDDriverEnt = function () {
             this.status = "loaded";
             this.init();
         };
@@ -39,14 +34,55 @@ var TSOS;
                 }
             }
         };
-        FSDriver.prototype.createFile = function (filename) {
-            return;
+        FSDriver.prototype.occupyBlock = function (fileData) {
+            var occupy = "";
+            for (var x = 0; x < (124 - fileData.length); x++) {
+                occupy += "0";
+            }
+            return fileData.concat(occupy);
         };
-        FSDriver.prototype.findMeta = function (t, s, b) {
-            return "";
+        FSDriver.prototype.createFile = function (filename) {
+            filename = TSOS.Utils.hexFromString(filename);
+            _Kernel.krnTrace("New File Name: " + filename);
+            for (var x = 0; x < this.sections; x++) {
+                for (var y = 0; y < this.blocks; y++) {
+                    var m = this.selectMeta(0, x, y);
+                    if (m.charAt(0) == "0") {
+                        var i = this.findEmptySpace();
+                        if (i != "unavailable") {
+                            var file = "1" + i.concat(filename);
+                            file = this.occupyBlock(file);
+                            sessionStorage.setItem("0" + x + "" + y, file);
+                        }
+                        TSOS.Control.editHDDTbl();
+                        return true;
+                    }
+                }
+            }
+            return false;
+        };
+        FSDriver.prototype.selectMeta = function (t, s, b) {
+            var m = sessionStorage.getItem(t + "" + s + "" + b).substr(0, 4);
+            return m;
         };
         FSDriver.prototype.findEmptySpace = function () {
-            return "";
+            var mbr = "000";
+            for (var x = 1; x < this.trks; x++) {
+                for (var y = 0; y < this.sections; y++) {
+                    for (var z = 0; z < this.blocks; z++) {
+                        var m = this.selectMeta(x, y, z);
+                        if (m.charAt(0) == "0") {
+                            sessionStorage.setItem(x + "" + y + "" + z, "1" + mbr.concat(this.freeSpace));
+                            return x + "" + y + "" + z;
+                        }
+                    }
+                }
+            }
+            return "unavailable";
+        };
+        FSDriver.prototype.fileToDisk = function (params) {
+            var x = params[0];
+            var y = params[1];
         };
         return FSDriver;
     })(TSOS.DeviceDriver);

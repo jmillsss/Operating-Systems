@@ -144,6 +144,10 @@ module TSOS {
             sc= new ShellCommand(this.shellRunAll, "runall", "Runs all programs stored in memory");
             this.commandList[this.commandList.length]= sc;
 
+            //shellCreateFile
+            sc=new ShellCommand(this.shellCreateFile, "create", "<string> - creates new file with given name");
+            this.commandList[this.commandList.length]=sc;
+
             // Display the initial prompt.
             this.putPrompt();
         }
@@ -581,6 +585,13 @@ module TSOS {
                 _StdOut.advanceLine();
 
             }
+        }
+
+
+        public shellCreateFile(args){
+            var file=args;
+            _Kernel.krnTrace("New File: " + file);
+            _KernelInputQueue.enqueue(new TSOS.Interrupt(HDD_IRQ, [0,file]));
         }
 
          }

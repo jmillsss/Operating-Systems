@@ -139,6 +139,11 @@ var TSOS;
                     _Scheduler.swapProcess();
                     _Mode = 1;
                     break;
+                case HDD_IRQ:
+                    _Mode = 0;
+                    _krnFSDriver.isr(params);
+                    _Mode = 1;
+                    break;
                 default:
                     this.krnTrapError("Invalid Interrupt Request. irq=" + irq + " params=[" + params + "]");
             }

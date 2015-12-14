@@ -3,27 +3,22 @@
  */
 ///<reference path="../globals.ts" />
 ///<reference path="deviceDriver.ts" />
+///<reference path="../host/control.ts" />
+
 
 module TSOS{
 
 export class FSDriver extends DeviceDriver{
 
-        public trks=4;
-        public sections=8;
-        public blocks=8;
-        public blkLength=64;
-        public meta="";
-        public freeSpace="";
-
-
-
     constructor() {
 
-       super(this.krnHDDDriverEnt());
+        super(this.krnHDDriverEnt);
+
     }
 
 
-    public krnHDDDriverEnt():void{
+    public krnHDDriverEnt():void{
+
         this.status="loaded";
         this.init();
 
@@ -31,6 +26,7 @@ export class FSDriver extends DeviceDriver{
 
 
     public init():void{
+
         for(var x=0; x<60; x++){
             this.freeSpace+="--";
 
@@ -50,20 +46,62 @@ export class FSDriver extends DeviceDriver{
             }
         }
     }
-
+    private occupyBlock(fileData): string{
+        var occupy="";
+        for(var x=0; x<(124-fileData.length); x++){
+            occupy+="0";
+        }
+        return fileData.concat(occupy);
+    }
     public createFile(filename): boolean{
-        return ;
+        filename=Utils.hexFromString(filename);
+        _Kernel.krnTrace("New File Name: " + filename);
+        for(var x=0; x<this.sections;x++){
+            for(var y=0; y<this.blocks; y++){
+                var m = this.selectMeta(0,x,y);
+                if(m.charAt(0)=="0"){
+                    var i = this.findEmptySpace();
+                    if(i!="unavailable"){
+                        var file="1"+i.concat(filename);
+                        file=this.occupyBlock(file);
+                        sessionStorage.setItem("0"+x+""+y, file);
+                    }
+
+                    Control.editHDDTbl();
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 
-    public findMeta(t,s,b): String{
-        return"";
-
+    public selectMeta(t,s,b): String{
+        var m=sessionStorage.getItem(t+""+s+""+b).substr(0,4);
+        return m;
     }
 
     public findEmptySpace(): String{
-        return"";
+        var mbr="000";
+        for(var x=1; x<this.trks;x++){
+            for (var y=0; y<this.sections;y++){
+                for(var z=0; z<this.blocks;z++){
+                    var m = this.selectMeta(x,y,z);
+                    if(m.charAt(0)=="0"){
+                        sessionStorage.setItem(x+""+y+""+z, "1"+mbr.concat(this.freeSpace));
+                        return x+""+y+""+z;
+                    }
+                }
+            }
+        }
 
+        return"unavailable";
+
+    }
+
+    public fileToDisk(params){
+        var x = params[0];
+        var y = params[1];
     }
 
 
