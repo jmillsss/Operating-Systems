@@ -97,7 +97,7 @@ var TSOS;
             sc = new TSOS.ShellCommand(this.shellReadFile, "read", "<string> - reads an existing file");
             this.commandList[this.commandList.length] = sc;
             //shellWriteFile
-            sc = new TSOS.ShellCommand(this.shellWriteFile, "write", "<string> \"data\"- writes data to an existing file");
+            sc = new TSOS.ShellCommand(this.shellWriteFile, "write", "<string> \"data\" - writes data to an existing file");
             this.commandList[this.commandList.length] = sc;
             //shellDeleteFile
             sc = new TSOS.ShellCommand(this.shellDeleteFile, "delete", "<string> - deletes an existing file");
@@ -507,14 +507,15 @@ var TSOS;
         };
         Shell.prototype.shellWriteFile = function (args) {
             var x = 0;
-            var write = args.toString();
+            //var write=args.toString();
+            //args=args.toString().replace(/,/g, " ");
             var file = "";
             var writeData = "";
             while (x < args.length || args.toString().charAt(x) != String.fromCharCode(44)) {
                 file += args.toString().charAt(x);
                 x++;
             }
-            var y = x + 1;
+            var y = x + 2;
             while (y < args.length || args.toString().charAt(y) != String.fromCharCode(34)) {
                 writeData += args.toString().charAt(y);
                 y++;
@@ -523,7 +524,7 @@ var TSOS;
             _StdOut.putText("File: " + file + ", Data: " + writeData);
             //if/else
             if (_krnFSDriver.writeToFile(file, writeData)) {
-                _StdOut.putText("File: " + file + ", was successfully written");
+                _StdOut.putText(";  File: " + file + ", was successfully written");
                 _StdOut.advanceLine();
             }
             else {

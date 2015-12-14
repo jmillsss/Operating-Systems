@@ -153,7 +153,7 @@ module TSOS {
             this.commandList[this.commandList.length]=sc;
 
             //shellWriteFile
-            sc=new ShellCommand(this.shellWriteFile, "write", "<string> \"data\"- writes data to an existing file");
+            sc=new ShellCommand(this.shellWriteFile, "write", "<string> \"data\" - writes data to an existing file");
             this.commandList[this.commandList.length]=sc;
 
             //shellDeleteFile
@@ -617,7 +617,8 @@ module TSOS {
 
         public shellWriteFile(args){
             var x=0;
-            var write=args.toString();
+            //var write=args.toString();
+            //args=args.toString().replace(/,/g, " ");
             var file="";
             var writeData="";
 
@@ -625,17 +626,17 @@ module TSOS {
                 file+=args.toString().charAt(x);
                 x++;
             }
-            var y = x+1;
+            var y = x+2;
             while(y<args.length || args.toString().charAt(y)!=String.fromCharCode(34)){
                 writeData+=args.toString().charAt(y);
                 y++;
             }
             file=file.trim();
-            _StdOut.putText("File: "+file+", Data: "+writeData);
+            _StdOut.putText("File: " +file+ ", Data: "+writeData);
 
             //if/else
             if(_krnFSDriver.writeToFile(file,writeData)){
-                _StdOut.putText("File: "+file+", was successfully written");
+                _StdOut.putText(";  File: "+file+", was successfully written");
                 _StdOut.advanceLine();
             }else{
                 _StdOut.putText("Error: "+file+" could NOT be written");
