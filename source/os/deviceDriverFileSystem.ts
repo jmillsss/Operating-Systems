@@ -19,7 +19,7 @@ export class FSDriver extends DeviceDriver{
 
     constructor() {
 
-        super(this.krnHDDDriverEnt);
+       super(this.krnHDDDriverEnt());
     }
 
 

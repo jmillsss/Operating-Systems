@@ -13,7 +13,7 @@ var TSOS;
     var FSDriver = (function (_super) {
         __extends(FSDriver, _super);
         function FSDriver() {
-            _super.call(this, this.krnHDDDriverEnt);
+            _super.call(this, this.krnHDDDriverEnt());
             this.trks = 4;
             this.sections = 8;
             this.blocks = 8;

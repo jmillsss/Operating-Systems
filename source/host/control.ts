@@ -181,7 +181,41 @@ module TSOS {
                 for(var j=0; j<_krnFSDriver.sections; j++){
                     for(var y=0; y<_krnFSDriver.blocks; y++){
 
+                        var tsb= i+":"+j+":"+y;
+                        var meta =sessionStorage.getItem(i+""+j+""+y).substr(0,4);
+                        var data =sessionStorage.getItem(i+""+j+""+y).substr(4);
+
+                        var row=_HDDTBL.insertRow(i);
+                        for(var m=0; m<3; m++){
+                            var cell=row.insertCell(j);
+                        }
+                      _HDDTBL.rows[i].cells[0].innerHTML=tsb;
+                      _HDDTBL.rows[i].cells[1].innerHTML=meta;
+                      _HDDTBL.rows[i].cells[2].innerHTML=data;
+
+                        x++;
                     }
+                }
+            }
+        }
+
+        public static editHDDTbl():void{
+            var x =1;
+            for(var i=0; i<_krnFSDriver.trks; i++){
+                for(var j=0; j<_krnFSDriver.sections;j++){
+                    for(var y=0; y<_krnFSDriver.blocks; y++){
+
+                        var tsb= i+":"+j+":"+y;
+                        var meta =sessionStorage.getItem(i+""+j+""+y).substr(0,4);
+                        var data =sessionStorage.getItem(i+""+j+""+y).substr(4);
+
+                        _HDDTBL.rows[i].cells[0].innerHTML=tsb;
+                        _HDDTBL.rows[i].cells[1].innerHTML=meta;
+                        _HDDTBL.rows[i].cells[2].innerHTML=data;
+
+                        x++;
+                    }
+
                 }
             }
         }
