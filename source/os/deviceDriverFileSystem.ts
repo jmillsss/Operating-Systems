@@ -173,6 +173,49 @@ export class FSDriver extends DeviceDriver{
         }
     }
 
+    public writeToFile(file,writeData): boolean{
+        writeData=Utils.hexFromString(writeData);
+        file=this.occupyData(Utils.hexFromString(file));
+        var totalBlocks=Math.ceil(writeData.length/60);
+
+        var interm;
+        var mbr;
+        var next=0;
+        var write="";
+        var followingBlock;
+        var lim=0;
+        for(var x=0; x<this.sections;x++){
+            for(var y=0; y<this.blocks;y++){
+                interm=this.selectData(0,x,y);
+                if(interm==file){
+                    mbr=this.selectMBR(0,x,y);
+                    for(var z=0; z<totalBlocks;z++){
+                        followingBlock="000";
+                        if(z!=totalBlocks-1){
+                            followingBlock=this.findEmptySpace();
+                        }
+                        while(next<writeData.length && lim<60){
+                            write+=writeData.charAt(next);
+                            next++;
+                            lim++;
+                        }
+                        var newData=this.occupyBlock("1"+followingBlock.concat(write));
+                        sessionStorage.setItem(mbr,newData);
+                        write="";
+                        lim=0;
+                        mbr=followingBlock;
+                    }
+                    Control.editHDDTbl();
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+
+
+
     public deleteFile(file): boolean{
         file=this.occupyData(Utils.hexFromString(file));
         var interm;
