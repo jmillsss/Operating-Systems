@@ -508,6 +508,15 @@ var TSOS;
         Shell.prototype.shellWriteFile = function (args) {
         };
         Shell.prototype.shellDeleteFile = function (args) {
+            var file = args;
+            if (_krnFSDriver.deleteFile(file)) {
+                _StdOut.putText("File: " + file + "sucessfully deleted");
+                _StdOut.advanceLine();
+            }
+            else {
+                _StdOut.putText("Error: " + file + "was not deleted");
+                _StdOut.advanceLine();
+            }
         };
         Shell.prototype.shellls = function (args) {
             _krnFSDriver.listFiles();

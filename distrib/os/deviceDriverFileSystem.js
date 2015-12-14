@@ -144,6 +144,30 @@ var TSOS;
                     _StdOut.putText(fileRead);
             }
         };
+        FSDriver.prototype.deleteFile = function (file) {
+            file = this.occupyData(TSOS.Utils.hexFromString(file));
+            var interm;
+            var mbr;
+            var followingBlock;
+            for (var x = 0; x < this.sections; x++) {
+                for (var y = 0; y < this.blocks; y++) {
+                    interm = this.selectData(0, x, y);
+                    if (interm == file) {
+                        mbr = this.selectMBR(0, x, y);
+                        sessionStorage.setItem("0" + x + "" + y, "0000" + this.freeSpace);
+                        do {
+                            followingBlock = sessionStorage.getItem(mbr).substr(1, 3);
+                            //
+                            sessionStorage.setItem(mbr, "0000" + this.freeSpace);
+                            mbr = followingBlock;
+                        } while (mbr != "000");
+                        TSOS.Control.editHDDTbl();
+                        return true;
+                    }
+                }
+            }
+            return false;
+        };
         FSDriver.prototype.listFiles = function () {
             var file;
             for (var x = 0; x < this.sections; x++) {
