@@ -61,7 +61,7 @@ module TSOS {
                 }
 
                 this.execCpuCycle();
-                _Kernel.krnTrace("PCB: "+this.thisPCB.pid /* b,l,pc*/);
+                //_Kernel.krnTrace("PCB: "+this.thisPCB.PiD /* b,l,pc*/);
                 //update tables while program is executing
                 Control.initCPUTbl();
                 Control.editMemoryTbl();
@@ -205,8 +205,8 @@ module TSOS {
                                 this.PC++;
                             } else if (this.Xreg == 2) {
                                 i = this.Yreg+this.thisPCB.base;
-                                z = parseInt("00");
-                                while (_Memory.mem[i] != z) {
+                                //z = parseInt("00");
+                                while (_Memory.mem[i] != "00") {
 
 
                                     str = String.fromCharCode(parseInt(_Memory.mem[i], 16));
@@ -283,7 +283,7 @@ module TSOS {
 
             //_Kernel.krnTrace("Terminate Resident List");
             for(var x=0; x<_ResList.getSize(); x++){
-                _Kernel.krnTrace("pID: "+_ResList.getObj(x).pid+" located in: " + _ResList.getObj(x).locality);
+                _Kernel.krnTrace("pID: "+_ResList[x].pid+" located in: " + _ResList[x].locality);
 
             }
             _StdOut.advanceLine();

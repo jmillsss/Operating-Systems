@@ -271,8 +271,8 @@ var TSOS;
             }
         };
         FSDriver.prototype.diskRun = function (fsprog) {
-            if (_ResList.getSize() > 0) {
-                var swapPCB = _ResList.getObj(0);
+            if (_ResList.length > 0) {
+                var swapPCB = _ResList[0];
                 _Kernel.krnTrace("Replace Pid: " + swapPCB.PiD);
                 this.fsSwitch(fsprog, swapPCB);
                 fsprog.base = swapPCB.base;

@@ -524,22 +524,25 @@ module TSOS {
             if(args == _ResList[i].PiD){
                 exists=true;
 
-                enq=_ResList.remove(_ResList.getObj(i).PiD);
-                enq.state="Ready";
+                _ResList[i].state="Ready";
+                _ResList[i].PC=_ResList[i].base;
+                _ReadyQ.enqueue(_ResList[i]);
+                //enq=_ResList.removeQueue(_ResList[i].PiD);
+                //enq.state="Ready";
                 //enq.PC=_ResList[i].base;
 
-                if(enq.locality==1){
-                    _krnFSDriver.diskRun(enq);
-                    _Kernel.krnTrace("Run Process: "+enq.PiD+" in Disk FS")
+                if(_ResList[i].locality==1){
+                    _krnFSDriver.diskRun(_ResList[i]);
+                    _Kernel.krnTrace("Run Process: "+_ResList.PiD+" in Disk FS")
                 }
-                enq.PC=enq.base;
-                for(var j=0; j<_ResList.getSize();j++){
-                    _Kernel.krnTrace("Pid: "+_ResList.getObj(j).PiD+" is Located at "+_ResList.getObj(j).locality);
+                _ResList[i].PC=_ResList[i].base;
+                for(var j=0; j<_ResList.length;j++){
+                    _Kernel.krnTrace("Pid: "+_ResList[j].PiD+" is Located at "+_ResList[j].locality);
                 }
 
 
                 Control.editMemoryTbl();
-                _ReadyQ.enqueue(enq);
+                _ReadyQ.enqueue(_ResList);
                 _CPU.isExecuting=true;
             }
             }
@@ -621,7 +624,7 @@ module TSOS {
                     }else{
                         for(var x =0; x<_ReadyQ.getSize();x++){
                             if(id==_ReadyQ.getIndex(x).PiD){
-                                _ReadyQ.remove(id);
+                                _ReadyQ.removeQueue(id);
                                 _StdOut.putText("Process: " + id + " has been killed");
                                 _StdOut.advanceLine();
                                 exists=true;

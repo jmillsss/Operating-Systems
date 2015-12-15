@@ -132,7 +132,7 @@ module TSOS {
                 _ReadyQTbl.deleteRow(1);
             }
             for (var i=1; i<=_ReadyQ.getSize(); ++i){
-                thisPCB=_ReadyQ.getObj(i-1);
+                thisPCB=_ReadyQ.getIndex(i-1);
                 var tblrow = _ReadyQTbl.insertRow(i);
                 //var tblrownum = i+1;
                 for(var x=0; x< 6; ++x){

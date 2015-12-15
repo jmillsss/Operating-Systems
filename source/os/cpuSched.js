@@ -24,7 +24,7 @@ var TSOS;
                 var prog = _krnFSDriver.readFile(ready.PiD);
                 _krnFSDriver.deleteFile(ready.PiD);
                 while (x < _ReadyQ.getSize() && !exists) {
-                    interm = _ReadyQ.getObj(x);
+                    interm = _ReadyQ.getIndex(x);
                     if (interm.locality == 0) {
                         exists = true;
                     }
@@ -50,7 +50,7 @@ var TSOS;
         };
         cpuSched.prototype.changeProcess = function () {
             if (_ReadyQ.getSize() > 0) {
-                if (_ReadyQ.getObj(0).locality == 1) {
+                if (_ReadyQ.getIndex(0).locality == 1) {
                     _KernelInterruptQueue.enqueue(new TSOS.Interrupt(SWAPPER_IRQ, 0));
                 }
                 else {

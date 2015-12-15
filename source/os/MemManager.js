@@ -120,4 +120,4 @@ var TSOS;
     })();
     TSOS.MemManager = MemManager;
 })(TSOS || (TSOS = {}));
-//# sourceMappingURL=MemManager.js.map
+//# sourceMappingURL=memManager.js.map

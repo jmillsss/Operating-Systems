@@ -47,12 +47,14 @@ var TSOS;
             array[X] = i;
         };
         Queue.prototype.removeQueue = function (pid) {
+            var el;
             for (var x = 0; x < this.getSize(); x++) {
                 if (this.q[x].PiD = pid) {
                     this.switchQueue(this.q, 0, x);
-                    this.dequeue();
+                    el = this.dequeue();
                 }
             }
+            return el;
         };
         Queue.prototype.formatPart = function (left, right) {
             var mid = this.q[Math.floor((right + left) / 2)].priority;
