@@ -16,6 +16,7 @@ var TSOS;
             var ready = _ReadyQ.dequeue();
             ready.State = "Running";
             _CPU.thisPCB = ready;
+            _CPU.PC = ready.base;
         };
         cpuSched.prototype.changeProcess = function () {
             if (_ReadyQ.getSize() > 0) {

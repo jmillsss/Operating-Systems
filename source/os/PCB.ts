@@ -18,21 +18,23 @@ module TSOS{
                     public Yreg: number = 0,
                     public Zflag: number = 0,
                     public base: number=0,
-                    public limit: number=0
+                    public limit: number=0,
+                    public locality: number=0
                     ) {
 
         }
 
-        public init(base,limit):void {
+        public init(base,limit,locality):void {
             this.PiD = _OsShell.pid;
             this.State="new";
             this.PC=this.base;
-            this.Acc=0
+            this.Acc=0;
             this.Xreg=0;
             this.Yreg=0;
             this.Zflag=0;
             this.base=base;
-            this.limit=limit
+            this.limit=limit;
+            this.locality=locality;
 
         }
 

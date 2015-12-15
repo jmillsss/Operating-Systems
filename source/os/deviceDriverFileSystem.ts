@@ -260,6 +260,58 @@ export class FSDriver extends DeviceDriver{
         _StdOut.advanceLine();
     }
 
+    public diskSwitch(file,fileData,pcb):void{
+        _Kernel.krnTrace(fileData.length);
+        var totalBlocks=Math.ceil(fileData.length/60);
+        var interm;
+        var mbr;
+        var next=0;
+        var write="";
+        var followingBlock;
+        var lim=0;
+        var fName;
+        for(var x=0; x<this.sections;x++){
+            for(var y=0;y<this.blocks;y++){
+                interm=this.selectData(0,x,y);
+                if(interm==file){
+                    mbr=this.selectMBR(0,x,y);
+                    fName="1"+mbr.concat(pcb.PiD);
+                    sessionStorage.setItem("0"+x+""+y, fName)
+
+                    for(var z=0;z<totalBlocks;z++){
+                        followingBlock="000";
+                        if(z!=totalBlocks-1){
+                            followingBlock=this.selectMBR(parseInt(mbr.charAt(0)),parseInt(mbr.charAt(1)),parseInt(mbr.charAt(2)));
+                            if(followingBlock=="000"){
+                                followingBlock=this.findEmptySpace();
+                            }
+                        }
+                        while(next<fileData.length && lim<60){
+                            write+=fileData.charAt(next);
+                            next++;
+                            lim++;
+                        }
+                        sessionStorage.setItem(mbr,"1"+followingBlock.concat(write));
+                        write="";
+                        lim=0;
+                        mbr=followingBlock;
+                    }
+                    Control.editHDDTbl();
+                    return;
+                }
+            }
+        }
+    }
+
+
+    public diskRun(fsProg):void{
+
+        if(_ResList.getSize()>0){
+            var swapPCB=_ResList.getObj(0);
+            //need another func
+        }
+    }
+
 
 }
 

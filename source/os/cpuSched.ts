@@ -22,6 +22,8 @@ module TSOS {
             var ready=_ReadyQ.dequeue();
             ready.State="Running";
             _CPU.thisPCB=ready;
+            _CPU.PC=ready.base;
+
 
         }
 

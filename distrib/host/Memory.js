@@ -17,6 +17,9 @@ var TSOS;
             this.mem[768];
             this.memBase = 0;
             this.memLimit = 768;
+            for (var x = 0; x < 768; x++) {
+                this.mem[x] = "00";
+            }
         };
         return Memory;
     })();
