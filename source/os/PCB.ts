@@ -19,12 +19,13 @@ module TSOS{
                     public Zflag: number = 0,
                     public base: number=0,
                     public limit: number=0,
-                    public locality: number=0
+                    public locality: number=0,
+                    public priority: number=0
                     ) {
 
         }
 
-        public init(base,limit,locality):void {
+        public init(base,limit,locality,priority):void {
             this.PiD = _OsShell.pid;
             this.State="new";
             this.PC=this.base;
@@ -34,7 +35,8 @@ module TSOS{
             this.Zflag=0;
             this.base=base;
             this.limit=limit;
-            this.locality=locality;
+            this.locality=locality;;
+            this.priority=priority;
 
         }
 

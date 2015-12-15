@@ -108,6 +108,12 @@ var TSOS;
             //shellFormat
             sc = new TSOS.ShellCommand(this.shellFormat, "format", "Formats the Disk Space");
             this.commandList[this.commandList.length] = sc;
+            //shellSetSchedule
+            sc = new TSOS.ShellCommand(this.shellSetSchedule, "setschedule", "<string> -rr, fcfs, priority Sets the Schulinf Algorithm ");
+            this.commandList[this.commandList.length] = sc;
+            //shellGetSchedule
+            sc = new TSOS.ShellCommand(this.shellGetSchedule, "getschedule", "Displays the scheduling Algorithm being used");
+            this.commandList[this.commandList.length] = sc;
             // Display the initial prompt.
             this.putPrompt();
         };
@@ -376,8 +382,16 @@ var TSOS;
         };
         //load
         Shell.prototype.shellLoad = function (args) {
+            var priority;
             var prog = _UserProgIn.value;
             var accept = 0;
+            if (args == "") {
+                priority = 10;
+            }
+            else if ((priority = parseInt(args) <= 0)) {
+                _StdOut.putText("Priority must be set to a positive number");
+                return;
+            }
             if (prog != "") {
                 prog = prog.replace(/\s+/g, '').toUpperCase();
             }
@@ -395,7 +409,7 @@ var TSOS;
                 _StdOut.advanceLine();
                 //load the process in to memory
                 _Kernel.krnTrace("Program: " + prog);
-                _MemoryManager.loadInputProg(prog);
+                _MemoryManager.loadInputProg(prog, priority);
             }
         };
         //status
@@ -408,12 +422,23 @@ var TSOS;
         };
         Shell.prototype.shellRun = function (args) {
             var exists = false;
+            var enq;
             for (var i = 0; i < _ResList.length; i++) {
                 if (args == _ResList[i].PiD) {
                     exists = true;
-                    _ResList[i].state = "Ready";
-                    _ResList[i].PC = _ResList[i].base;
-                    _ReadyQ.enqueue(_ResList[i]);
+                    enq = _ResList.remove(_ResList.getObj(i).PiD);
+                    enq.state = "Ready";
+                    //enq.PC=_ResList[i].base;
+                    if (enq.locality == 1) {
+                        _krnFSDriver.diskRun(enq);
+                        _Kernel.krnTrace("Run Process: " + enq.PiD + " in Disk FS");
+                    }
+                    enq.PC = enq.base;
+                    for (var j = 0; j < _ResList.getSize(); j++) {
+                        _Kernel.krnTrace("Pid: " + _ResList.getObj(j).PiD + " is Located at " + _ResList.getObj(j).locality);
+                    }
+                    TSOS.Control.editMemoryTbl();
+                    _ReadyQ.enqueue(enq);
                     _CPU.isExecuting = true;
                 }
             }
@@ -422,12 +447,21 @@ var TSOS;
             }
         };
         Shell.prototype.shellRunAll = function (args) {
-            for (var j = 0; j < _ResList.length; j++) {
-                _Kernel.krnTrace("Process " + j + ", PID of: " + _ResList[j].PiD);
-                _ResList[j].state = "Ready";
-                _ReadyQ.enqueue(_ResList[j]);
+            var enq;
+            if (_Scheduler.scheduler = "priority") {
+                _ResList.sortQueue(0, _ResList.getSize() - 1);
+            }
+            while (_ResList.isEmpty() == false) {
+                enq = _ResList.dequeue();
+                enq.state = "Ready";
+                _ReadyQ.enqueue(enq);
             }
             _CPU.isExecuting = true;
+            /*  for(var j=0; j<_ResList.length; j++){
+                  _Kernel.krnTrace("Process " + j + ", PID of: " + _ResList[j].PiD);
+                  _ResList[j].state="Ready";
+                  _ReadyQ.enqueue(_ResList[j]);
+              } _CPU.isExecuting=true;*/
         };
         Shell.prototype.clearMemory = function (args) {
             for (var i = 0; i < 768; i++) {
@@ -555,7 +589,19 @@ var TSOS;
             _StdOut.putText("Formatting Disk... Successful");
             _StdOut.advanceLine();
         };
-        Shell.prototype.shellSetScheduler = function (args) {
+        Shell.prototype.shellSetSchedule = function (args) {
+            var scheduler = args;
+            _Kernel.krnTrace(scheduler);
+            if (scheduler != "rr" && scheduler != "fcfs" && scheduler != "priority") {
+                _StdOut.putText("Please enter an existing scheduling algorithm");
+            }
+            else {
+                _Scheduler.scheduler = scheduler;
+                _StdOut.putText("Current Scheduleing Algo:: " + _Scheduler.scheduler);
+            }
+        };
+        Shell.prototype.shellGetSchedule = function (args) {
+            _StdOut.putText("Current Scheduleing Algo: " + _Scheduler.scheduler);
         };
         return Shell;
     })();

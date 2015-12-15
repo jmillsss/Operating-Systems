@@ -60,6 +60,39 @@ module TSOS {
             }
 
         }
+        private formatPart(left,right){
+            var mid = this.q[Math.floor((right+left)/2)].priority;
+            var x = left;
+            var y = right;
+            while(x<=y){
+                while(this.q[x].priority<mid){
+                    x++;
+                }
+                while(this.q[y].priority>mid){
+                    y--;
+                }
+                if(x<=y){
+                    this.switchQueue(this.q, x,y);
+                    x++;
+                    y--;
+                }
+            }
+            return x;
+        }
+
+        public sortQueue(left,right){
+            var i;
+            if(this.q.length>1){
+                i=this.formatPart(left,right);
+                if(left<i-1){
+                    this.sortQueue(left,i-1);
+                }
+                if(i<right){
+                    this.sortQueue(i,right);
+                }
+            }
+            return this.q;
+        }
 
     }
 }

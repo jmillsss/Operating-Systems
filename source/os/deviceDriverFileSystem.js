@@ -123,7 +123,6 @@ var TSOS;
         FSDriver.prototype.fileToDisk = function (params) {
             var x = params[0];
             var y = params[1];
-            var z;
             switch (x) {
                 case 0:
                     _Kernel.krnTrace("FILE: " + y + "IS BEING CREATED");
@@ -262,9 +261,55 @@ var TSOS;
                 }
             }
         };
-        FSDriver.prototype.diskRun = function (fsProg) {
+        FSDriver.prototype.diskRun = function (fsprog) {
             if (_ResList.getSize() > 0) {
                 var swapPCB = _ResList.getObj(0);
+                _Kernel.krnTrace("Replace Pid: " + swapPCB.PiD);
+                this.fsSwitch(fsprog, swapPCB);
+                fsprog.base = swapPCB.base;
+                fsprog.limit = swapPCB.limit;
+                fsprog.locality = 0;
+                swapPCB.locality = 1;
+                _Kernel.krnTrace("Replaced Pid location: " + swapPCB.locality);
+            }
+            else {
+                fsprog.base = 0;
+                fsprog.limit = 255;
+                fsprog.locality = 0;
+                this.getPCB(fsprog);
+            }
+        };
+        FSDriver.prototype.fsSwitch = function (fsprog, memprog) {
+            _Kernel.krnTrace("Pid in: " + fsprog.PiD + " Pid Out: " + memprog.PiD);
+            var base = memprog.base;
+            var limit = memprog.limit;
+            var take = "";
+            var place = _krnFSDriver.readFile(fsprog.PiD);
+            var atMem;
+            var i = memprog.base;
+            for (var x = base; x < limit; x++) {
+                take += _Memory.mem[x];
+            }
+            _Kernel.krnTrace("Switch Into: " + place);
+            _Kernel.krnTrace("Switch Out: " + take);
+            _krnFSDriver.diskSwitch(fsprog.PiD, take, memprog);
+            for (var y = 0; y < place.length; y++) {
+                atMem = place.slice(y, y + 2);
+                _Memory.mem[i] = atMem;
+                y++;
+                i++;
+            }
+        };
+        FSDriver.prototype.getPCB = function (pcb) {
+            var fsprog = _krnFSDriver.readFile(pcb.PiD);
+            var i = pcb.base;
+            var atMemory;
+            _krnFSDriver.deleteFile(pcb.pid);
+            for (var x = 0; x < fsprog.length; i++) {
+                atMemory = fsprog.slice(x, x + 2);
+                _Memory.mem[i] = atMemory;
+                x++;
+                i++;
             }
         };
         return FSDriver;

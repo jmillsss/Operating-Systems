@@ -60,6 +60,7 @@ var TSOS;
                     }
                 }
                 this.execCpuCycle();
+                _Kernel.krnTrace("PCB: " + this.thisPCB.pid /* b,l,pc*/);
                 //update tables while program is executing
                 TSOS.Control.initCPUTbl();
                 TSOS.Control.editMemoryTbl();
@@ -210,7 +211,9 @@ var TSOS;
                         this.isExecuting = false;
                         _StdOut.putText("Invalid operation:" + _Memory.mem[this.PC]);
                 }
-                _Scheduler.tab++;
+                if (_Scheduler.scheduler == "rr") {
+                    _Scheduler.tab++;
+                }
             }
             else {
                 this.updatePCB();
@@ -256,6 +259,12 @@ var TSOS;
             this.thisPCB.Zflag = this.Zflag;
             TSOS.Control.runPCBTbl();
             this.init();
+            _Kernel.krnTrace("Terminate Resident List");
+            for (var x = 0; x < _ResList.getSize(); x++) {
+                _Kernel.krnTrace("pID: " + _ResList.getObj(x).pid + " located in: " + _ResList.getObj(x).locality);
+            }
+            _StdOut.advanceLine();
+            _OsShell.putPrompt();
         };
         return Cpu;
     })();

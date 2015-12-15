@@ -13,7 +13,8 @@ module TSOS {
     export class cpuSched{
         constructor(
             public quantum: number=6,
-            public tab: number=0
+            public tab: number=0,
+            public scheduler: string="rr"
         ){}
 
 
@@ -36,6 +37,21 @@ module TSOS {
 
             var dequeue = _ReadyQ.dequeue();
             dequeue.state="Running";
+
+            if(dequeue.locality==1){
+                dequeue.location=0;
+                dequeue.base=enqueue.base;
+                dequeue.limit=enqueue.limit;
+                dequeue.PC= dequeue.base+dequeue.PC;
+
+                enqueue.PC=enqueue.PC-enqueue.base;
+                enqueue.base=0;
+                enqueue.limit=0;
+                enqueue.location=1;
+
+                _krnFSDriver.fsSwitch(dequeue,enqueue);
+            }
+
             _ReadyQ.enqueue(enqueue);
 
             _Kernel.krnTrace("Enqueued PID: " + enqueue.PiD + " Dequeued PID: " + dequeue.PiD);
@@ -48,6 +64,7 @@ module TSOS {
             _CPU.isExecuting = true;
             _CPU.thisPCB = dequeue;
             Control.runPCBTbl();
+            Control.editHDDTbl();
         }
         this.tab=0;
     }

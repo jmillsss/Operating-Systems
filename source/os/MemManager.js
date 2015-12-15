@@ -15,7 +15,7 @@ var TSOS;
             this.blockBases = blockBases;
             this.blockLimits = blockLimits;
         }
-        MemManager.prototype.loadInputProg = function (prog) {
+        MemManager.prototype.loadInputProg = function (prog, priority) {
             var insertToMem;
             var memIndex = this.blockBases[this.memBlock];
             if (this.memBlock < 3) {
@@ -29,9 +29,9 @@ var TSOS;
                 var base = this.blockBases[this.memBlock];
                 var limit = this.blockLimits[this.memBlock];
                 _PCB = new TSOS.PCB();
-                _PCB.init(base, limit, 0);
+                _PCB.init(base, limit, 0, priority);
                 _ResList[_ResList.length] = _PCB;
-                _StdOut.putText("Progam Loaded To memory, Pid = " + _ResList[this.memBlock].PiD + ", Base: " + _ResList[this.memBlock].base + ", Limit: " + _ResList[this.memBlock].limit);
+                _StdOut.putText("Progam Loaded To memory, Pid = " + _ResList[this.memBlock].PiD + ", Base: " + _ResList[this.memBlock].base + ", Limit: " + _ResList[this.memBlock].limit + ", Priority: " + _PCB.priority);
                 _OsShell.pid++;
                 _TotalPCBs++;
                 TSOS.Control.editMemoryTbl();
@@ -44,14 +44,14 @@ var TSOS;
                 base = 0;
                 limit = 0;
                 _PCB = new TSOS.PCB();
-                _PCB.init(base, limit, 1);
+                _PCB.init(base, limit, 1, priority);
                 _ResList.enqueue(_PCB);
                 var file = _PCB.PiD;
                 _krnFSDriver.createFile(file);
                 _krnFSDriver.writeToFile(file, prog);
                 _StdOut.putText("New PCB located in: " + _PCB.locality);
                 _StdOut.advanceLine();
-                _StdOut.putText("pID: " + _PCB.PiD + ", Base: " + _PCB.base + ", Limit: " + _PCB.limit);
+                _StdOut.putText("pID: " + _PCB.PiD + ", Base: " + _PCB.base + ", Limit: " + _PCB.limit + ", Priority: " + _PCB.priority);
                 _OsShell.pid++;
                 _PCB = null;
             }

@@ -124,6 +124,7 @@ module TSOS {
 
         public static editReadyQTbl(): void{
 
+            var locality;
 
             var thisPCB;
 
@@ -134,10 +135,17 @@ module TSOS {
                 thisPCB=_ReadyQ.getIndex(i-1);
                 var tblrow = _ReadyQTbl.insertRow(i);
                 //var tblrownum = i+1;
-                for(var x=0; x< 5; ++x){
+                for(var x=0; x< 6; ++x){
 
                     var cell = tblrow.insertCell(x);
 
+                }
+                if(thisPCB.locality==0){
+                    locality="Memory";
+                }
+
+                if(thisPCB.locality==1){
+                    locality="Disk";
                 }
 
                 _ReadyQTbl.rows[i].cells[0].innerHTML= thisPCB.PiD;
@@ -145,6 +153,7 @@ module TSOS {
                 _ReadyQTbl.rows[i].cells[2].innerHTML= thisPCB.base;
                 _ReadyQTbl.rows[i].cells[3].innerHTML= thisPCB.limit;
                 _ReadyQTbl.rows[i].cells[4].innerHTML= thisPCB.PC;
+                _ReadyQTbl.rows[i].cells[5].innerHTML= thisPCB.locality;
 
             }
 

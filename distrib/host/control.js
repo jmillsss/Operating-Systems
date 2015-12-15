@@ -111,6 +111,7 @@ var TSOS;
             }
         };
         Control.editReadyQTbl = function () {
+            var locality;
             var thisPCB;
             while (_ReadyQTbl.rows.length != 1) {
                 _ReadyQTbl.deleteRow(1);
@@ -119,14 +120,21 @@ var TSOS;
                 thisPCB = _ReadyQ.getIndex(i - 1);
                 var tblrow = _ReadyQTbl.insertRow(i);
                 //var tblrownum = i+1;
-                for (var x = 0; x < 5; ++x) {
+                for (var x = 0; x < 6; ++x) {
                     var cell = tblrow.insertCell(x);
+                }
+                if (thisPCB.locality == 0) {
+                    locality = "Memory";
+                }
+                if (thisPCB.locality == 1) {
+                    locality = "Disk";
                 }
                 _ReadyQTbl.rows[i].cells[0].innerHTML = thisPCB.PiD;
                 _ReadyQTbl.rows[i].cells[1].innerHTML = thisPCB.state;
                 _ReadyQTbl.rows[i].cells[2].innerHTML = thisPCB.base;
                 _ReadyQTbl.rows[i].cells[3].innerHTML = thisPCB.limit;
                 _ReadyQTbl.rows[i].cells[4].innerHTML = thisPCB.PC;
+                _ReadyQTbl.rows[i].cells[5].innerHTML = thisPCB.locality;
             }
         };
         //populate the cpu table from values stored in the cpu

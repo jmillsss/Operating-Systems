@@ -211,7 +211,9 @@ var TSOS;
                         this.isExecuting = false;
                         _StdOut.putText("Invalid operation:" + _Memory.mem[this.PC]);
                 }
-                _Scheduler.tab++;
+                if (_Scheduler.scheduler == "rr") {
+                    _Scheduler.tab++;
+                }
             }
             else {
                 this.updatePCB();
