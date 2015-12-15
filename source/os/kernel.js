@@ -144,6 +144,8 @@ var TSOS;
                     _krnFSDriver.isr(params);
                     _Mode = 1;
                     break;
+                case SWAPPER_IRQ:
+                    _Mode = 0;
                 default:
                     this.krnTrapError("Invalid Interrupt Request. irq=" + irq + " params=[" + params + "]");
             }

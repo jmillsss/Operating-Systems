@@ -28,6 +28,8 @@ const CPU_REPLACE_IRQ: number =4;
 
 const HDD_IRQ: number=5;
 
+const SWAPPER_IRQ: number=6;
+
 
 //
 // Global Variables
@@ -63,7 +65,7 @@ var _DefaultFontFamily: string = "sans";        // Ignored, I think. The was jus
 var _DefaultFontSize: number = 13;
 var _FontHeightMargin: number = 4;              // Additional space added to font size when advancing a line.
 var _krnFSDriver;
-
+var _Prog:string="";
 
 var _Trace: boolean = true;  // Default the OS trace to be on.
 

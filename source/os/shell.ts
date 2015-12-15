@@ -722,7 +722,7 @@ module TSOS {
                 _StdOut.putText("Please enter an existing scheduling algorithm")
             }else{
                 _Scheduler.scheduler=scheduler;
-                _StdOut.putText("Current Scheduleing Algo:: "+_Scheduler.scheduler);
+                _StdOut.putText("Current Scheduleing Algo: "+_Scheduler.scheduler);
             }
         }
 

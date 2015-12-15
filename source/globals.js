@@ -20,6 +20,7 @@ var SCHEDULER_INIT_IRQ = 2;
 var CPU_PROCESS_CHANGE_IRQ = 3;
 var CPU_REPLACE_IRQ = 4;
 var HDD_IRQ = 5;
+var SWAPPER_IRQ = 6;
 //
 // Global Variables
 // TODO: Make a global object and use that instead of the "_" naming convention in the global namespace.
@@ -49,6 +50,7 @@ var _DefaultFontFamily = "sans"; // Ignored, I think. The was just a place-holde
 var _DefaultFontSize = 13;
 var _FontHeightMargin = 4; // Additional space added to font size when advancing a line.
 var _krnFSDriver;
+var _Prog = "";
 var _Trace = true; // Default the OS trace to be on.
 // The OS Kernel and its queues.
 var _Kernel;

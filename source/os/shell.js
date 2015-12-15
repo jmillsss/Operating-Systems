@@ -597,7 +597,7 @@ var TSOS;
             }
             else {
                 _Scheduler.scheduler = scheduler;
-                _StdOut.putText("Current Scheduleing Algo:: " + _Scheduler.scheduler);
+                _StdOut.putText("Current Scheduleing Algo: " + _Scheduler.scheduler);
             }
         };
         Shell.prototype.shellGetSchedule = function (args) {

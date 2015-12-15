@@ -35,7 +35,7 @@ module TSOS{
             this.Zflag=0;
             this.base=base;
             this.limit=limit;
-            this.locality=locality;;
+            this.locality=locality;
             this.priority=priority;
 
         }
