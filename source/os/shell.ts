@@ -552,21 +552,26 @@ module TSOS {
         public shellRunAll(args){
             var enq;
 
-            if(_Scheduler.scheduler="priority"){
-                _ResList.sortQueue(0,_ResList.getSize()-1);
+           /* if(_Scheduler.scheduler="priority"){
+                _ResList.sortQueue(0,_ResList.length-1);
+            }*/
+            for(var j=0; j<_ResList.length; j++){
+                _Kernel.krnTrace("Process " + j + ", PID of: " + _ResList[j].PiD);
+                _ResList[j].state="Ready";
+                _ResList[j]=_ReadyQ.dequeue(_ResList[j]);
+                _ReadyQ.enqueue(_ResList[j]);
+            } _CPU.isExecuting=true;
 
-            }
+
+            /*
             while(_ResList.isEmpty()==false){
                 enq=_ResList.dequeue();
                 enq.state="Ready";
                 _ReadyQ.enqueue(enq);
             }
-            _CPU.isExecuting=true;
-          /*  for(var j=0; j<_ResList.length; j++){
-                _Kernel.krnTrace("Process " + j + ", PID of: " + _ResList[j].PiD);
-                _ResList[j].state="Ready";
-                _ReadyQ.enqueue(_ResList[j]);
-            } _CPU.isExecuting=true;*/
+            _CPU.isExecuting=true;*/
+
+
         }
 
 

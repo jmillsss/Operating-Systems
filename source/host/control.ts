@@ -132,7 +132,7 @@ module TSOS {
                 _ReadyQTbl.deleteRow(1);
             }
             for (var i=1; i<=_ReadyQ.getSize(); ++i){
-                thisPCB=_ReadyQ.getIndex(i-1);
+                thisPCB=_ReadyQ.getObj(i-1);
                 var tblrow = _ReadyQTbl.insertRow(i);
                 //var tblrownum = i+1;
                 for(var x=0; x< 6; ++x){
@@ -153,7 +153,7 @@ module TSOS {
                 _ReadyQTbl.rows[i].cells[2].innerHTML= thisPCB.base;
                 _ReadyQTbl.rows[i].cells[3].innerHTML= thisPCB.limit;
                 _ReadyQTbl.rows[i].cells[4].innerHTML= thisPCB.PC;
-                _ReadyQTbl.rows[i].cells[5].innerHTML= thisPCB.locality;
+                _ReadyQTbl.rows[i].cells[5].innerHTML= locality;
 
             }
 
