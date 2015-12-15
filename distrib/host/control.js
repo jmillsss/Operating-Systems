@@ -150,11 +150,13 @@ var TSOS;
         Control.runPCBTbl = function () {
             _PCBTbl.rows[1].cells[0].innerHTML = _CPU.thisPCB.PiD;
             _PCBTbl.rows[1].cells[1].innerHTML = _CPU.thisPCB.state;
-            _PCBTbl.rows[1].cells[2].innerHTML = _CPU.thisPCB.PC;
-            _PCBTbl.rows[1].cells[3].innerHTML = _CPU.thisPCB.Acc;
-            _PCBTbl.rows[1].cells[4].innerHTML = _CPU.thisPCB.Xreg;
-            _PCBTbl.rows[1].cells[5].innerHTML = _CPU.thisPCB.Yreg;
-            _PCBTbl.rows[1].cells[6].innerHTML = _CPU.thisPCB.Zflag;
+            _PCBTbl.rows[1].cells[2].innerHTML = _CPU.thisPCB.base;
+            _PCBTbl.rows[1].cells[3].innerHTML = _CPU.thisPCB.limit;
+            _PCBTbl.rows[1].cells[4].innerHTML = _CPU.thisPCB.PC;
+            _PCBTbl.rows[1].cells[5].innerHTML = _CPU.thisPCB.Acc;
+            _PCBTbl.rows[1].cells[6].innerHTML = _CPU.thisPCB.Xreg;
+            _PCBTbl.rows[1].cells[7].innerHTML = _CPU.thisPCB.Yreg;
+            _PCBTbl.rows[1].cells[8].innerHTML = _CPU.thisPCB.Zflag;
         };
         Control.initHDDTbl = function () {
             var x = 1;
@@ -191,6 +193,8 @@ var TSOS;
                     }
                 }
             }
+        };
+        Control.memSlot = function () {
         };
         Control.hostLog = function (msg, source) {
             if (source === void 0) { source = "?"; }

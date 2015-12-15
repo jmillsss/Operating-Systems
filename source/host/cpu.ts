@@ -77,6 +77,7 @@ module TSOS {
                 var x;
                 var y;
                 var z;
+                var hold;
                 command = _Memory.mem[this.PC] ;
                 if (_Scheduler.tab<_Scheduler.quantum) {
                     switch (command) {
@@ -115,7 +116,12 @@ module TSOS {
                         case "8D":
                             this.Operation = "8D";//store the acc in memory   //test prog: A9 03 8D 41 00 A9 01 8D 40 00 AC 40 00 A2 01 FF EE 40 00 AE 40 00 EC 41 00 D0 EF A9 44 8D 42 00 A9 4F 8D 43 00 A9 4E 8D 44 00 A9 45 8D 45 00 A9 00 8D 46 00 A2 02 A0 42 FF 00
                             i = this.atMemory();
-                            _Memory.mem[i] = this.Acc.toString(16);
+                            hold = this.Acc.toString(16);
+                            if(hold.length<2){
+                                hold="0"+hold;
+                            }
+                            _Memory.mem[i]=hold;
+                            _Kernel.krnTrace("Storing "+hold+" to memory");
                             this.PC++;
                             break;
                         case "6D":
@@ -185,7 +191,11 @@ module TSOS {
                             i = this.atMemory();
                             x = parseInt(_Memory.mem[i], 16);
                             x = x + 1;
-                            _Memory.mem[i] = x.toString(16);
+                            hold = x.toString(16);
+                            if(hold.length<2){
+                                hold="0"+hold;
+                            }
+                            _Memory.mem[i]=hold;
                             this.PC++;
                             break;
                         case"FF":
@@ -268,8 +278,10 @@ module TSOS {
             this.thisPCB.Yreg=this.Yreg;
             this.thisPCB.Zflag=this.Zflag;
             Control.runPCBTbl();
+            _krnFSDriver.delete(this.thisPCB.PiD);
             this.init();
-            _Kernel.krnTrace("Terminate Resident List");
+
+            //_Kernel.krnTrace("Terminate Resident List");
             for(var x=0; x<_ResList.getSize(); x++){
                 _Kernel.krnTrace("pID: "+_ResList.getObj(x).pid+" located in: " + _ResList.getObj(x).locality);
 

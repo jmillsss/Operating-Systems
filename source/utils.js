@@ -57,9 +57,14 @@ var TSOS;
             var str = "";
             var list = hex.match(/.{1,2}/g);
             for (var x = 0; x < list.length; x++) {
-                str += String.fromCharCode(parseInt(list[x], 16));
+                var str1 = String.fromCharCode(this.hexToDecimal(list[x]));
+                str += str1;
             }
             return str;
+        };
+        Utils.hexToDecimal = function (hex) {
+            var d = parseInt(hex, 16);
+            return d;
         };
         return Utils;
     })();

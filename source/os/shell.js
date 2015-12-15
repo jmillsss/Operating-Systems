@@ -388,7 +388,7 @@ var TSOS;
             if (args == "") {
                 priority = 10;
             }
-            else if ((priority = parseInt(args) <= 0)) {
+            else if ((priority = parseInt(args) < 0)) {
                 _StdOut.putText("Priority must be set to a positive number");
                 return;
             }
@@ -493,7 +493,7 @@ var TSOS;
                 else {
                     if (id == _CPU.thisPCB.PiD) {
                         if (_ReadyQ.isEmpty() == false) {
-                            _Scheduler.swapProcess();
+                            _KernelInterruptQueue.enqueue(new TSOS.Interrupt(CPU_REPLACE_IRQ, 0));
                         }
                         else {
                             _CPU.killProcess();
@@ -558,6 +558,7 @@ var TSOS;
                 y++;
             }
             file = file.trim();
+            writeData = TSOS.Utils.hexFromString(writeData);
             _StdOut.putText("File: " + file + ", Data: " + writeData);
             //if/else
             if (_krnFSDriver.writeToFile(file, writeData)) {

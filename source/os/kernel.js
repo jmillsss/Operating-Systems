@@ -146,6 +146,9 @@ var TSOS;
                     break;
                 case SWAPPER_IRQ:
                     _Mode = 0;
+                    _MemoryManager.swap(_CPU.thisPCB);
+                    _Mode = 1;
+                    break;
                 default:
                     this.krnTrapError("Invalid Interrupt Request. irq=" + irq + " params=[" + params + "]");
             }

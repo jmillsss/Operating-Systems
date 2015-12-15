@@ -41,7 +41,6 @@ var TSOS;
             this.base = base;
             this.limit = limit;
             this.locality = locality;
-            ;
             this.priority = priority;
         };
         return PCB;

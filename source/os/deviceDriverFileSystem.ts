@@ -148,7 +148,8 @@ export class FSDriver extends DeviceDriver{
     public fileToDisk(params){
         var x = params[0];
         var y = params[1];
-
+        var z =params[2];
+        var fileData=params[3];
         switch(x) {
             case 0:
             _Kernel.krnTrace("FILE: "+ y + "IS BEING CREATED");
@@ -166,16 +167,20 @@ export class FSDriver extends DeviceDriver{
                 var fileRead=_krnFSDriver.readFile(y);
                 _StdOut.putText("File: "+ y);
                 _StdOut.advanceLine();
-                _StdOut.putText(fileRead);
+                _StdOut.putText("Data: "+ fileRead);
+            break;
+            case 2:
+                this.diskSwap(z,fileData,y);
+                break;
 
 
         }
     }
 
     public writeToFile(file,writeData): boolean{
-        writeData=Utils.hexFromString(writeData);
+       // writeData=Utils.hexFromString(writeData);
         file=this.occupyData(Utils.hexFromString(file));
-        var totalBlocks=Math.ceil(writeData.length/60);
+        var totalBlocks=Math.ceil(writeData.length/120);
 
         var interm;
         var mbr;
@@ -193,12 +198,15 @@ export class FSDriver extends DeviceDriver{
                         if (z != totalBlocks - 1) {
                             followingBlock = this.findEmptySpace();
                         }
-                        while (next < writeData.length && lim < 60) {
+                        while (next < writeData.length && lim < 120) {
                             write += writeData.charAt(next);
                             next++;
                             lim++
                         }
-                        var newData = this.occupyBlock("1" + followingBlock.concat(write));
+                        if(write.length<120-1){
+                            write+=this.occupyData(write);
+                        }
+                        var newData = "1" + followingBlock.concat(write);
                         sessionStorage.setItem(mbr, newData);
                         write = "";
                         lim = 0;
@@ -361,6 +369,15 @@ export class FSDriver extends DeviceDriver{
             i++;
         }
 
+    }
+
+    public diskSwap(oldFile,fileData,newFile):void{
+        this.deleteFile(oldFile);
+        this.createFile(newFile);
+        this.writeToFile(newFile,fileData);
+
+        Control.editHDDTbl();
+        return;
     }
 
 

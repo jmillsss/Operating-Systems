@@ -466,7 +466,7 @@ module TSOS {
 
             if(args==""){
                 priority=10;
-            }else if((priority=parseInt(args)<=0)){
+            }else if((priority=parseInt(args)<0)){
                 _StdOut.putText("Priority must be set to a positive number");
                 return;
             }
@@ -604,7 +604,8 @@ module TSOS {
                     }else{
                     if(id==_CPU.thisPCB.PiD){
                         if(_ReadyQ.isEmpty()==false){
-                            _Scheduler.swapProcess();
+                            _KernelInterruptQueue.enqueue(new Interrupt(CPU_REPLACE_IRQ,0));
+
                         }else{
                             _CPU.killProcess();
                         }
@@ -678,6 +679,7 @@ module TSOS {
                 y++;
             }
             file=file.trim();
+            writeData=Utils.hexFromString(writeData);
             _StdOut.putText("File: " +file+ ", Data: "+writeData);
 
             //if/else
