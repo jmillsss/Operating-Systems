@@ -57,8 +57,9 @@ var TSOS;
             var str = "";
             var list = hex.match(/.{1,2}/g);
             for (var x = 0; x < list.length; x++) {
-                var str1 = String.fromCharCode(this.hexToDecimal(list[x]));
-                str += str1;
+                //var str1=String.fromCharCode(this.hexToDecimal(list[x]));
+                //str+=str1;
+                str = String.fromCharCode(this.hexToDecimal(list[x]));
             }
             return str;
         };

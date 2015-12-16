@@ -86,7 +86,7 @@ module TSOS {
                             this.Operation = "00"; // Break or sys call
                             //check ready queue
                             if(_ReadyQ.isEmpty()==false){
-                            this.thisPCB.state="Complete"
+                            this.thisPCB.state="Complete";
                             this.thisPCB.PC=this.PC;
                             this.thisPCB.Acc=this.Acc;
                             this.thisPCB.Xreg=this.Xreg;

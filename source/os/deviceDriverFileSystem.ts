@@ -148,8 +148,7 @@ export class FSDriver extends DeviceDriver{
     public fileToDisk(params){
         var x = params[0];
         var y = params[1];
-        var z =params[2];
-        var fileData=params[3];
+        var fileData=params[2];
         switch(x) {
             case 0:
             _Kernel.krnTrace("FILE: "+ y + "IS BEING CREATED");
@@ -170,7 +169,11 @@ export class FSDriver extends DeviceDriver{
                 _StdOut.putText("Data: "+ fileRead);
             break;
             case 2:
-                this.diskSwap(z,fileData,y);
+            var fileRead=_krnFSDriver.readFile(y);
+            _Prog=fileRead;
+            break;
+            case 3:
+                this.diskSwap(fileData,y);
                 break;
 
 
@@ -283,7 +286,7 @@ export class FSDriver extends DeviceDriver{
                 if(interm==file){
                     mbr=this.selectMBR(0,x,y);
                     fName="1"+mbr.concat(pcb.PiD);
-                    sessionStorage.setItem("0"+x+""+y, fName)
+                    sessionStorage.setItem("0"+x+""+y, fName);
 
                     for(var z=0;z<totalBlocks;z++){
                         followingBlock="000";
@@ -371,10 +374,26 @@ export class FSDriver extends DeviceDriver{
 
     }
 
-    public diskSwap(oldFile,fileData,newFile):void{
-        this.deleteFile(oldFile);
-        this.createFile(newFile);
-        this.writeToFile(newFile,fileData);
+    public diskSwap(data,file):void{
+  /*  public diskSwap(oldFile,fileData,newFile):void{*/
+
+        var hexfile = this.occupyData(Utils.hexFromString(file));
+        //var blocks=Math.ceil(data.length/60);
+        var interm;
+
+        for(var x=0;x<this.sections;x++){
+            for(var y=0; y<this.blocks;y++){
+                interm=this.selectData(0,x,y);
+                if(interm==hexfile){
+                    this.writeToFile(file, data);
+                    return;
+                }
+            }
+        }
+
+        //this.deleteFile(oldFile);
+        this.createFile(file);
+        this.writeToFile(file,data);
 
         Control.editHDDTbl();
         return;

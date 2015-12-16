@@ -433,7 +433,8 @@ var TSOS;
                     //enq.state="Ready";
                     //enq.PC=_ResList[i].base;
                     if (_ResList[i].locality == 1) {
-                        _krnFSDriver.diskRun(_ResList[i]);
+                        // enq=Utils.hexFromString(_ResList[i].toString());
+                        _krnFSDriver.diskRun(_ResList[i].PiD);
                         _Kernel.krnTrace("Run Process: " + _ResList.PiD + " in Disk FS");
                     }
                     _ResList[i].PC = _ResList[i].base;
@@ -441,7 +442,7 @@ var TSOS;
                         _Kernel.krnTrace("Pid: " + _ResList[j].PiD + " is Located at " + _ResList[j].locality);
                     }
                     TSOS.Control.editMemoryTbl();
-                    _ReadyQ.enqueue(_ResList);
+                    _ReadyQ.enqueue(_ResList[i]);
                     _CPU.isExecuting = true;
                 }
             }

@@ -99,10 +99,10 @@ module TSOS{
             _krnFSDriver.diskSwap(newPCB.PiD, thisProg, pcb.PiD);
             _ReadyQ.enqueue(pcb);
             _CPU.PC=newPCB.PC;
-            _CPU.Acc-newPCB.Acc;
+            _CPU.Acc=newPCB.Acc;
             _CPU.Xreg=newPCB.Xreg;
             _CPU.Yreg=newPCB.Yreg;
-            _CPU.Zflag-newPCB.Zflag;
+            _CPU.Zflag=newPCB.Zflag;
             _CPU.thisPCB=newPCB;
 
             //update tbls

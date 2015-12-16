@@ -123,8 +123,7 @@ var TSOS;
         FSDriver.prototype.fileToDisk = function (params) {
             var x = params[0];
             var y = params[1];
-            var z = params[2];
-            var fileData = params[3];
+            var fileData = params[2];
             switch (x) {
                 case 0:
                     _Kernel.krnTrace("FILE: " + y + "IS BEING CREATED");
@@ -145,7 +144,11 @@ var TSOS;
                     _StdOut.putText("Data: " + fileRead);
                     break;
                 case 2:
-                    this.diskSwap(z, fileData, y);
+                    var fileRead = _krnFSDriver.readFile(y);
+                    _Prog = fileRead;
+                    break;
+                case 3:
+                    this.diskSwap(fileData, y);
                     break;
             }
         };
@@ -321,10 +324,23 @@ var TSOS;
                 i++;
             }
         };
-        FSDriver.prototype.diskSwap = function (oldFile, fileData, newFile) {
-            this.deleteFile(oldFile);
-            this.createFile(newFile);
-            this.writeToFile(newFile, fileData);
+        FSDriver.prototype.diskSwap = function (data, file) {
+            /*  public diskSwap(oldFile,fileData,newFile):void{*/
+            var hexfile = this.occupyData(TSOS.Utils.hexFromString(file));
+            //var blocks=Math.ceil(data.length/60);
+            var interm;
+            for (var x = 0; x < this.sections; x++) {
+                for (var y = 0; y < this.blocks; y++) {
+                    interm = this.selectData(0, x, y);
+                    if (interm == hexfile) {
+                        this.writeToFile(file, data);
+                        return;
+                    }
+                }
+            }
+            //this.deleteFile(oldFile);
+            this.createFile(file);
+            this.writeToFile(file, data);
             TSOS.Control.editHDDTbl();
             return;
         };
