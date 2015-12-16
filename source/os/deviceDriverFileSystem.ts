@@ -102,7 +102,7 @@ export class FSDriver extends DeviceDriver{
                     }while(mbr!="000");
 
 
-                    readFile=Utils.stringFromeHex(readFile);
+                    //readFile=Utils.stringFromeHex(readFile);
                     _Kernel.krnTrace("Reading File: "+ readFile);
                     return readFile;
                     }
@@ -164,6 +164,7 @@ export class FSDriver extends DeviceDriver{
             case 1:
                 _Kernel.krnTrace("READING FILE WITH NAME: " + y);
                 var fileRead=_krnFSDriver.readFile(y);
+                fileRead=Utils.stringFromeHex(fileRead);
                 _StdOut.putText("File: "+ y);
                 _StdOut.advanceLine();
                 _StdOut.putText("Data: "+ fileRead);
@@ -172,9 +173,9 @@ export class FSDriver extends DeviceDriver{
             var fileRead=_krnFSDriver.readFile(y);
             _Prog=fileRead;
             break;
-            case 3:
+            /*case 3:
                 this.diskSwap(fileData,y);
-                break;
+                break;*/
 
 
         }
@@ -363,8 +364,8 @@ export class FSDriver extends DeviceDriver{
         var fsprog=_krnFSDriver.readFile(pcb.PiD);
         var i = pcb.base;
         var atMemory;
-        _krnFSDriver.deleteFile(pcb.pid);
-        for (var x=0; x<fsprog.length; i++){
+        _krnFSDriver.deleteFile(pcb.PiD);
+        for (var x=0; x<fsprog.length; x++){
 
             atMemory=fsprog.slice(x, x+2);
             _Memory.mem[i]=atMemory;
@@ -374,26 +375,13 @@ export class FSDriver extends DeviceDriver{
 
     }
 
-    public diskSwap(data,file):void{
-  /*  public diskSwap(oldFile,fileData,newFile):void{*/
+    public diskSwap(oldFile,fileData,newFile):void{
 
-        var hexfile = this.occupyData(Utils.hexFromString(file));
-        //var blocks=Math.ceil(data.length/60);
-        var interm;
 
-        for(var x=0;x<this.sections;x++){
-            for(var y=0; y<this.blocks;y++){
-                interm=this.selectData(0,x,y);
-                if(interm==hexfile){
-                    this.writeToFile(file, data);
-                    return;
-                }
-            }
-        }
 
-        //this.deleteFile(oldFile);
-        this.createFile(file);
-        this.writeToFile(file,data);
+        this.deleteFile(oldFile);
+        this.createFile(newFile);
+        this.writeToFile(newFile,fileData);
 
         Control.editHDDTbl();
         return;

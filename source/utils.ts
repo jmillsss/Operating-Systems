@@ -47,22 +47,25 @@ module TSOS {
         public static hexFromString(string: string): string{
             var str="";
             for(var x=0; x<string.toString().length;x++){
-                var interm=(string.toString().charCodeAt(x)).toString(16).toUpperCase();
-                interm=new Array(2-interm.length).join('0')+interm;
+                var interm=this.decToHex(string.toString().charCodeAt(x));
+
+                if(interm.length<2){
+                    interm="0"+interm;
+                }
                 str+=interm;
+
             }
             return str;
         }
 
         public static stringFromeHex(hex: string):string{
             var str="";
-            var list=hex.match(/.{1,2}/g);
-            for(var x=0; x<list.length;x++){
 
+            for(var x=0; x<hex.length-1;x++){
 
-                //var str1=String.fromCharCode(this.hexToDecimal(list[x]));
-                //str+=str1;
-                str=String.fromCharCode(this.hexToDecimal(list[x]));
+             var str1=String.fromCharCode(this.hexToDecimal(hex.charAt(x)+hex.charAt(x+1)));
+             str+=str1;
+            x++;
             }
             return str;
         }
@@ -70,6 +73,11 @@ module TSOS {
         public static hexToDecimal(hex:string):number{
             var d=parseInt(hex,16);
             return d;
+        }
+
+        public static decToHex(dec: number): string{
+            var hex=dec.toString(16).toUpperCase();
+            return hex;
         }
     }
 }

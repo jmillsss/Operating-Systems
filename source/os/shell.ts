@@ -533,7 +533,7 @@ module TSOS {
 
                 if(_ResList[i].locality==1){
                    // enq=Utils.hexFromString(_ResList[i].toString());
-                    _krnFSDriver.diskRun(_ResList[i].PiD);
+                    _krnFSDriver.diskRun(_ResList[i]);
                     _Kernel.krnTrace("Run Process: "+_ResList.PiD+" in Disk FS")
                 }
                 _ResList[i].PC=_ResList[i].base;
@@ -674,6 +674,7 @@ module TSOS {
         public shellWriteFile(args){
             var x=0;
             //var write=args.toString();
+
             //args=args.toString().replace(/,/g, " ");
             var file="";
             var writeData="";
