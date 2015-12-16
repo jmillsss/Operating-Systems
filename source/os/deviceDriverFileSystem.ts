@@ -173,9 +173,6 @@ export class FSDriver extends DeviceDriver{
             var fileRead=_krnFSDriver.readFile(y);
             _Prog=fileRead;
             break;
-            /*case 3:
-                this.diskSwap(fileData,y);
-                break;*/
 
 
         }

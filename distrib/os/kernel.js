@@ -147,7 +147,6 @@ var TSOS;
                 case SWAPPER_IRQ:
                     _Mode = 0;
                     _MemoryManager.swap(_CPU.thisPCB);
-                    //_krnFSDriver.diskSwap(_CPU.thisPCB);
                     _Mode = 1;
                     break;
                 default:

@@ -82,7 +82,7 @@ var TSOS;
             var i = newPCB.base;
             for (var y = 0; y < nextProg.length; y++) {
                 atMemory = nextProg.slice(y, y + 2);
-                _Memory.mem[i];
+                _Memory.mem[i] = atMemory;
                 i++;
                 y++;
             }

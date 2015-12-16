@@ -451,24 +451,26 @@ var TSOS;
             }
         };
         Shell.prototype.shellRunAll = function (args) {
+            if (_Scheduler.scheduler = "priority") {
+                _ReadyQ.sortQueue(0, _ResList.length - 1);
+            }
             var enq;
-            /* if(_Scheduler.scheduler="priority"){
-                 _ResList.sortQueue(0,_ResList.length-1);
-             }*/
-            for (var j = 0; j < _ResList.length; j++) {
-                _Kernel.krnTrace("Process " + j + ", PID of: " + _ResList[j].PiD);
-                _ResList[j].state = "Ready";
-                _ResList[j] = _ReadyQ.dequeue(_ResList[j]);
-                _ReadyQ.enqueue(_ResList[j]);
+            while (_ResList.length > 0) {
+                //enq=_ResList.dequeue();
+                //enq=_ReadyQ.dequeue(_ResList);
+                // enq.state="Ready";
+                _ReadyQ.enqueue(_ResList[0]);
             }
             _CPU.isExecuting = true;
             /*
-            while(_ResList.isEmpty()==false){
-                enq=_ResList.dequeue();
-                enq.state="Ready";
-                _ReadyQ.enqueue(enq);
-            }
-            _CPU.isExecuting=true;*/
+
+
+              for(var j=0; j<_ResList.length; j++){
+              _Kernel.krnTrace("Process " + j + ", PID of: " + _ResList[j].PiD);
+              _ResList[j].state="Ready";
+              _ResList[j]=_ReadyQ.dequeue(_ResList[j]);
+              _ReadyQ.enqueue(_ResList[j]);
+              } _CPU.isExecuting=true;*/
         };
         Shell.prototype.clearMemory = function (args) {
             for (var i = 0; i < 768; i++) {

@@ -40,7 +40,7 @@ var TSOS;
                 change.PC = 0;
                 change.locality = 1;
                 _ReadyQ.enqueue(change);
-                if (this.scheduler == "Priority") {
+                if (this.scheduler == "priority") {
                     _ReadyQ.sortQueue(0, _ReadyQ.getSize() - 1);
                 }
             }
@@ -74,7 +74,7 @@ var TSOS;
             this.tab = 0;
         };
         cpuSched.prototype.swapProcess = function () {
-            _krnFSDriver.delete(_CPU.thisPCB.PiD);
+            _krnFSDriver.deleteFile(_CPU.thisPCB.PiD);
             var dequeue = _ReadyQ.dequeue();
             if (dequeue.locality == 1) {
                 dequeue.base = 0;
@@ -82,7 +82,7 @@ var TSOS;
                 var prog = _krnFSDriver.readFile(dequeue.PiD).substr(0, 509);
                 var i = dequeue.base;
                 var atMemory;
-                _krnFSDriver.delete(dequeue.PiD);
+                _krnFSDriver.deleteFile(dequeue.PiD);
                 for (var y = 0; y < prog.length; y++) {
                     atMemory = prog.slice(y, y + 2);
                     _Memory.mem[i] = atMemory;
